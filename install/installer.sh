@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pacman -Qe paru || {
+pacman -Qe paru >/dev/null || {
 	cd $HOME
 	sudo pacman -S --needed base-devel
 	git clone https://aur.archlinux.org/paru.git
@@ -10,7 +10,7 @@ pacman -Qe paru || {
 
 PKGLIST=$(curl -fsSL https://raw.githubusercontent.com/matsumiya8/dotfiles/refs/heads/main/install/packages.txt | paste -sd ' ')
 
-paru -S --skipreview --nosudoloop $PKGLIST
+paru -S --skipreview --nosudoloop --noredownload --norebuild $PKGLIST
 
 chezmoi init https://github.com/matsumiya8/dotfiles.git
 chezmoi apply

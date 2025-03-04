@@ -1,0 +1,95 @@
+ {
+    "position": "bottom",
+    "layer": "top",
+    "height": 12,
+    "margin-top": 0,
+    "margin-bottom": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "modules-left": ["hyprland/workspaces", "custom/weather",],
+    "modules-center": ["custom/cat", "custom/playerctl"],
+    "modules-right": [
+      "tray",
+      "clock"
+    ],
+
+    "clock": {
+      	"format": "󱑍 {:%H:%M} ",
+      	"format-alt": " {:%a, %b %d, %Y}",
+      	"tooltip-format": "<tt><small>{calendar}</small></tt>",
+      	"calendar": {
+      		"mode"          : "month",
+      		"mode-mon-col"  : 3,
+      		"weeks-pos"     : "right",
+      		"on-scroll"     : 1,
+      		"on-click-right": "mode",
+      		"format": {
+      			"months":     "<span color='#ffead3'><b>{}</b></span>",
+      			"days":       "<span color='#ecc6d9'><b>{}</b></span>",
+      			"weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+      			"weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+      			"today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+      		}
+      	},
+      	"actions": {
+      		"on-click-right": "mode",
+      		"on-click-forward": "tz_up",
+      		"on-click-backward": "tz_down",
+      		"on-scroll-up": "shift_up",
+      		"on-scroll-down": "shift_down"
+      	}
+      },
+
+    "hyprland/workspaces": {
+      "format": "{icon}",
+      "active-only": false,
+      "all-outputs": false,
+      "disable-scroll": false,
+      "on-scroll-up": "hyprctl dispatch workspace e-1",
+      "on-scroll-down": "hyprctl dispatch workspace e+1",
+	  "on-click": "activate",
+      "show-special": "false",
+      "sort-by-number": true,
+      "format-icons": {
+      	"1": "󰟒",
+      	"2": "󰈹",
+      	"3": "󰌌",
+      	"4": "",
+      	"5": "󰟒",
+      	"6": "󰙯",
+      	"7": "󰝚",
+      	"8": ""
+       },
+    },
+
+    "custom/cat": {
+    	"format": " 🐱 ",
+    	"on-click": "/home/pyne/.config/waybar/scripts/window_focus.sh",
+		"smooth-scrolling-threshold": 2,
+		"on-scroll-up": "playerctl -p playerctld pause && sleep 0.2 && playerctld shift && playerctl -p playerctld play",
+		"on-scroll-down": "playerctl -p playerctld pause && sleep 0.2 && playerctld unshift && playerctl -p playerctld play",
+		"on-click-right": "/home/pyne/.config/cmus/scripts/shuffle.sh",
+    	"tooltip": false
+    },
+
+	"custom/weather": {
+    	"format": "{}",
+    	"tooltip": true,
+    	"interval": 1800,
+    	"exec": "wttrbar --location Palhoca --date-format %d-%m-%Y",
+    	"return-type": "json"
+	},
+
+    "custom/playerctl": {
+    	"format": "{}",
+    	"escape": true,
+    	"max-length": 50,
+    	"on-click": "playerctl -p playerctld play-pause",
+    	"on-click-right": "playerctl -p playerctld stop",
+   		"smooth-scrolling-threshold": 2, // This value was tested using a trackpad, it should be lowered if using a mouse.
+	    "on-scroll-up": "playerctl -p playerctld next",
+	    "on-scroll-down": "playerctl -p playerctld previous",
+	    "tooltip": true,
+	    "exec": "stdbuf -i0 -e0 -o0 playerctl -p playerctld metadata --follow --format '{{ emoji(status) }} {{ artist }} - {{ title }}'"
+    },
+}

@@ -1,0 +1,103 @@
+*{
+font-family: "IBM Plex Sans JP";
+font-weight: bold;
+min-height: 0;
+/* set font-size to 100% if font scaling is set to 1.00 using nwg-look */
+font-size: 100%;
+font-feature-settings: '"zero", "ss01", "ss02", "ss03", "ss04", "ss05", "cv31"';
+padding: 0.5px;
+margin-top: 0px;
+margin-bottom: 1px;
+
+}
+
+window#waybar {
+    background: rgba(0, 0, 0, 0);
+    /*border-bottom: 1px solid @unfocused_borders;*/
+    /*border-radius: 10px;*/
+    color: #d8dee9;
+    /*color: #cba6f7;*/
+    border: 0px solid #cba6f7;
+}
+
+window#waybar.hidden {
+    opacity: 0.5;
+}
+   
+tooltip {
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    /*border: 1px solid #cba6f7;*/
+}
+
+tooltip label {
+    color: #cba6f7;
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+/*-----module groups----*/
+.modules-right {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 0px solid #b4befe;
+    border-radius: 10px;
+}
+
+.modules-center {
+	background-color: rgba(0, 0, 0, 0.6);
+	border: 0px solid #b4befe;
+    border-radius: 10px;
+}
+
+.modules-left {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 0px solid #b4befe;
+    border-radius: 10px;
+   
+}
+
+#workspaces button {
+    padding: 2px;
+    color: #6E6A86;
+    margin-right: 5px;
+    font-size: 16px;
+}
+   
+#workspaces button.active {
+    color: #cba6f7;
+    border-radius: 15px 15px 15px 15px;
+}
+  
+#workspaces button.focused {
+    color: #d8dee9;
+}
+   
+#workspaces button.urgent {
+    color: #10b2c7;
+    border-radius: 10px;
+}
+       
+#workspaces button:hover {
+    color: #9CCFD8;
+    border-radius: 15px;
+}
+
+#custom-weather {
+	font-size: 18px;
+	border-right: 0px solid #b4befe;
+	padding-right: 3px;
+}
+
+#custom-playerctl {
+	font-size: 16px;
+}
+
+#custom-cat {
+	font-size: 16px;
+}
+
+
+#clock {
+	padding: 0px 10px;
+	font-size: 16px;
+}

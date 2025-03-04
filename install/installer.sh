@@ -1,10 +1,12 @@
 #!/bin/bash
 
-cd $HOME
-#sudo pacman -S --needed base-devel
-#git clone https://aur.archlinux.org/paru.git
-#cd paru
-#makepkg -si
+pacman -Qe paru || {
+	cd $HOME
+	sudo pacman -S --needed base-devel
+	git clone https://aur.archlinux.org/paru.git
+	cd paru && makepkg -si
+	cd .. && rm -rf paru
+}
 
 PKGLIST=$(curl -fsSL https://raw.githubusercontent.com/matsumiya8/dotfiles/refs/heads/main/install/packages.txt | paste -sd ' ')
 

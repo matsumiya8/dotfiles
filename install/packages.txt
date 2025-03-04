@@ -84,6 +84,7 @@ wine-gecko
 wine-mono
 wine-staging
 winetricks
+wl-clipboard
 wl-clip-persist-git
 wlgout
 wttrbar

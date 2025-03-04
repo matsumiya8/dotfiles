@@ -30,5 +30,5 @@ else
 		exit
 	fi
     islep=$(zenity --entry --entry-text "20m" --text "Enter duration:")
-	/home/pyne/.config/scripts/alarm.sh "$islep" &
+	$HOME/.config/scripts/alarm.sh "$islep" &
 fi

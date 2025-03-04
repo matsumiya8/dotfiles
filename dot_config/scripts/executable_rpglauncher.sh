@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Setting variables for the path to the games and nwjs
-base_dir="/home/pyne/Games/RPGMAKER"
-node_dir="/home/pyne/.config/rpglauncher"
+base_dir="$HOME/RPGMAKER/games"
+nwjs_dir="$HOME/RPGMAKER/launcher"
 
 # Showing each directory name in a wofi menu
 selected_game=$(ls --quoting-style=literal $base_dir | walker -d)
@@ -20,4 +20,4 @@ hyprctl dispatch workspace 4
 
 # Editing package.json if necessary and launching the game
 jq 'if .name == "" then .name = "{}" else . end' "$game_dir/package.json" > /tmp/package.json && mv /tmp/package.json "$game_dir/package.json"
-$node_dir/nw --nwapp="$game_dir" --ozone-platform-hint=wayland
+$nwjs_dir/nw --nwapp="$game_dir" --ozone-platform-hint=wayland

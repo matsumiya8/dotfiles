@@ -12,7 +12,7 @@ sudo sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 test -e $HOME/packages.txt || curl -o $HOME/packages.txt https://raw.githubusercontent.com/matsumiya8/dotfiles/refs/heads/main/install/packages.txt
 PKGLIST=$(cat $HOME/packages.txt |  paste -sd ' ')
 
-paru -S --skipreview --nosudoloop --norebuild --noconfirm --noprovides --needed $PKGLIST
+paru -Syu --skipreview --nosudoloop --norebuild --noconfirm --noprovides --needed $PKGLIST
 
 chezmoi init https://github.com/matsumiya8/dotfiles.git
 chezmoi apply

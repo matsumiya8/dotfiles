@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pacman -Qe paru >/dev/null || {
+pacman -Qe paru-bin >/dev/null || {
 	cd $HOME
 	sudo pacman -S --noconfirm --needed base-devel git
 	git clone https://aur.archlinux.org/paru-bin.git

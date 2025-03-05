@@ -4,8 +4,8 @@ pacman -Qe paru >/dev/null || {
 	cd $HOME
 	sudo pacman -S --noconfirm --needed base-devel git
 	git clone https://aur.archlinux.org/paru-bin.git
-	cd paru && makepkg -si
-	cd .. && rm -rf paru
+	cd paru-bin && makepkg -si
+	cd .. && rm -rf paru-bin
 }
 
 [ ! -f $HOME/packages.txt ] && wget https://raw.githubusercontent.com/matsumiya8/dotfiles/refs/heads/main/install/packages.txt -O $HOME/packages.txt

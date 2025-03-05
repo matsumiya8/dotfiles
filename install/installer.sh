@@ -8,7 +8,7 @@ pacman -Qe paru-bin >/dev/null || {
 	cd .. && rm -rf paru-bin
 }
 
-[ -f $HOME/packages.txt ] && curl -o $HOME/packages.txt https://raw.githubusercontent.com/matsumiya8/dotfiles/refs/heads/main/install/packages.txt
+test -e $HOME/packages.txt || curl -o $HOME/packages.txt https://raw.githubusercontent.com/matsumiya8/dotfiles/refs/heads/main/install/packages.txt
 PKGLIST=$(cat $HOME/packages.txt |  paste -sd ' ')
 
 paru -S --skipreview --nosudoloop --norebuild --noconfirm --noprovides --needed $PKGLIST

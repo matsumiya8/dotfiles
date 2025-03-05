@@ -17,5 +17,5 @@ paru -Syu --skipreview --nosudoloop --norebuild --noconfirm --noprovides --neede
 chezmoi init https://github.com/matsumiya8/dotfiles.git
 chezmoi apply
 systemctl --user enable --now pipewire-pulse.service
-sudo chsh -s /usr/bin/zsh
+chsh -s /usr/bin/zsh
 sudo systemctl enable ly.service

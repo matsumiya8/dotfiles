@@ -18,4 +18,5 @@ chezmoi init https://github.com/matsumiya8/dotfiles.git
 chezmoi apply
 systemctl --user enable --now pipewire-pulse.service
 chsh -s /usr/bin/zsh
+sudo chsh -s /usr/bin/zsh
 sudo systemctl enable ly.service

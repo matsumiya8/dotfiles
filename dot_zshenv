@@ -3,10 +3,10 @@ QT_IM_MODULE=fcitx
 SDL_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 GLFW_IM_MODULE=ibus
-STARDICT_DATA_DIR=/home/pyne/.config/stardict/
+STARDICT_DATA_DIR=$HOME/.config/stardict/
 EDITOR=micro
 VISUAL=micro
 BROWSER=chromium
 TERMINAL=kitty
-PATH="$PATH:/home/pyne/.cargo/bin"
+PATH="$PATH:$HOME/.cargo/bin"
 alias op="xdg-open"

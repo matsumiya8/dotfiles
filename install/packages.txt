@@ -1,7 +1,7 @@
 bitwarden
 chezmoi
 chromium
-cmus-git
+cmus
 colloid-dracula-gtk-theme-git
 downgrade
 dunst
@@ -32,7 +32,7 @@ imagemagick
 kitty
 kvantum
 kvantum-qt5
-kvantum-theme-catpuccin-git
+kvantum-theme-catppuccin-git
 lxqt-archiver
 ly
 mcomix
@@ -43,7 +43,7 @@ noto-fonts
 noto-fonts-cjk
 ntfs-3g
 nwg-look
-papirus-folder-catppucin-git
+papirus-folders-catppuccin-git
 papirus-icon-theme
 parsec-bin
 pavucontrol
@@ -55,7 +55,6 @@ pipewire-alsa
 pipewire-pulse
 playerctl
 playerctld-systemd-unit
-polkit
 polkit-gnome
 proton-vpn-gtk-app
 qt5-wayland
@@ -86,7 +85,7 @@ wine-staging
 winetricks
 wl-clipboard
 wl-clip-persist-git
-wlgout
+wlogout
 wttrbar
 xdg-desktop-portal
 xdg-desktop-portal-gtk

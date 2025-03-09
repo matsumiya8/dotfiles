@@ -3,6 +3,7 @@ chezmoi
 chromium
 cmus
 colloid-dracula-gtk-theme-git
+colloid-dracula-theme-git
 downgrade
 dunst
 dxvk-mingw

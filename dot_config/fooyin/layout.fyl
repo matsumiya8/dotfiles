@@ -4,7 +4,7 @@
     "Widgets": [
         {
             "SplitterVertical": {
-                "State": "AAAA/wAAAAEAAAADAAAGfgAAAGEAAAAYAP////8BAAAAAgA=",
+                "State": "AAAA/wAAAAEAAAADAAAGfgAAAGEAAAAaAP////8BAAAAAgA=",
                 "Widgets": [
                     {
                         "SplitterHorizontal": {
@@ -18,7 +18,7 @@
                                                 "LibraryTree": {
                                                     "Grouping": 0,
                                                     "ID": "122c028f9dbb4239aaeec741e6cdac84",
-                                                    "State": "AAAABHja+////38ACfoD/Q=="
+                                                    "State": "AAAAFHjaY2BgELgi23Ozn2ETy8sGzhlvfjjVAQBGIAha"
                                                 }
                                             },
                                             {
@@ -44,7 +44,7 @@
                                             {
                                                 "Playlist": {
                                                     "Columns": "8:132|3|0:2|1|7:2",
-                                                    "HeaderState": "AAAAZXjaY2BgYGVgYNBiYGAUANKWUNqdASIOAoxAzATEzEDMAhK3X7cj8HWr3A77G2AqyH5L1UP3dSLVcP7OmSAwC6SR4T8QAACwThmA",
+                                                    "HeaderState": "AAAAZXjaY2BgYGVgYFAD4o9AbASl7Rkg4iDACMRMQMwMxCwgcft1OwJft8rtsL8BpoLst1Q9dF8nUg3n75wJArNAGhn+AwEAQJkbLQ==",
                                                     "ID": "511616f3dc23497aa55c682fed8c95f7",
                                                     "Preset": 0,
                                                     "SingleMode": false

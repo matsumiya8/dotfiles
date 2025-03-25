@@ -72,6 +72,7 @@ swww-git
 syncplay
 transmission-qt
 ttf-ibm-plex
+ttf-nerd-fonts-symbols
 ttf-twemoji
 tutanota-desktop-bin
 unrar
@@ -92,6 +93,7 @@ xdg-desktop-portal
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 xorg-xwayland
+yazi
 yt-dlp
 zsh
 zsh-autosuggestions

@@ -8,5 +8,5 @@ EDITOR=micro
 VISUAL=micro
 BROWSER=chromium
 TERMINAL=kitty
-PATH="$PATH:$HOME/.cargo/bin"
+PATH="$PATH:$HOME/.local/bin"
 alias op="xdg-open"

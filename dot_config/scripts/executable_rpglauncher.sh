@@ -17,4 +17,5 @@ fi
 
 # Editing package.json if necessary and launching the game
 jq 'if .name == "" then .name = "{}" else . end' "$game_dir/package.json" > /tmp/package.json && mv /tmp/package.json "$game_dir/package.json"
+export LANG=ja_JP.UTF-8
 hyprctl dispatch -- exec "[float;center;workspace 4] $nwjs_dir/nw --nwapp='$game_dir'"

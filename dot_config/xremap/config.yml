@@ -1,0 +1,13 @@
+modmap:
+  - name: Apps to swap side button with the mouse wheel
+    application:
+      only: [blender,/^steam_app_.*/]
+    remap:
+      BTN_EXTRA: BTN_MIDDLE
+      BTN_SIDE: KEY_PLAYPAUSE
+
+keymap:
+   - name: Home Workspace
+     remap:
+       WIN-CAPSLOCK: WIN-INSERT
+       WIN-SHIFT-CAPSLOCK: WIN-SHIFT-INSERT

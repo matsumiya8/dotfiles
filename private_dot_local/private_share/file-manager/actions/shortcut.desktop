@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Action
+Tooltip=Create a shortcut on the Start Menu
+Name=Create Shortcut
+Profiles=profile-one;
+
+[X-Action-Profile profile-one]
+MimeTypes=application/x-msdownload;application/vnd.microsoft.portable-executable;application/octet-stream;application/x-msi;application/x-bat;
+Exec=/home/pyne/.config/scripts/shortcut.sh "%f"
+Name=Default profile

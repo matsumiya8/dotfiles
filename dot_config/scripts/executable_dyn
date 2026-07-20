@@ -1,0 +1,578 @@
+#!/usr/bin/perl
+
+use IO::Socket::IP;
+use POSIX;
+use File::stat;
+use File::Basename;
+use Cwd 'abs_path';
+use Socket;
+use IO::Socket;
+use URI::Escape;
+use Encode qw(decode encode decode_utf8);
+use Socket qw(:all);
+use IO::Select;
+use File::Path qw(make_path);
+
+my $dynamicIsActive = 1;
+
+$testMode=0;
+$MIN_PLAY_QUEUE_DESIRED_LENGTH=10;
+$MAX_PLAY_QUEUE_DESIRED_LENGTH=500;
+$DEFAULT_PLAY_QUEUE_DESIRED_LENGTH=10;
+$playQueueDesiredLength=$DEFAULT_PLAY_QUEUE_DESIRED_LENGTH;
+
+my $mpdHost = "localhost";
+my $mpdPort = "6600";
+my $mpdPasswd ="";
+
+my $sock;
+my $ipc_sock;
+my $sel = IO::Select->new();
+
+$mpdDbUpdated=0;
+$rulesChanged=1;
+@includeRules=();
+$numMpdSongs=0;
+
+# Read MPDs host, port, and password details from env - if set
+sub readConnectionDetails() {
+    my $hostEnv=$ENV{'MPD_HOST'};
+    my $portEnv=$ENV{'MPD_PORT'};
+    if (length($portEnv)>2) {
+        $mpdPort=$portEnv;
+    }
+
+    if (length($hostEnv)>2) {
+        my $sep = index($hostEnv, '@');
+        if ($sep>0) {
+            $mpdPasswd=substr($hostEnv, 0, $sep);
+            $mpdHost=substr($hostEnv, $sep+1, length($hostEnv)-$sep);
+        } else {
+            $mpdHost=$hostEnv;
+        }
+    }
+}
+
+sub readReply() {
+    local $data;
+    my $socketData;
+    while ($sock->connected()) {
+        $sock->recv($data, 1024);
+        if (! $data) {
+            return '';
+        }
+        $socketData="${socketData}${data}";
+        $data="";
+        if (($socketData=~ m/(OK)$/) || ($socketData=~ m/^(OK)/)) {
+            return $socketData;
+        } elsif ($socketData=~ m/^(ACK)/) {
+            return '';
+        }
+    }
+}
+
+# Connect to MPD
+sub connectToMpd() {
+    if ($testMode==1) { print "Connecting to MPD ${mpdHost}:${mpdPort}\n"; }
+    my $connDetails="";
+    if ($sock) {
+        $sel->remove($sock);
+        eval { close $sock; }; undef $sock;
+    }
+    
+    if ($mpdHost=~ m/^(\/)/) {
+        $sock = new IO::Socket::UNIX(Peer => $mpdHost, Type => 0);
+        $connDetails=$mpdHost;
+    } else {
+        $sock = new IO::Socket::IP(PeerAddr => $mpdHost, PeerPort => $mpdPort, Proto => 'tcp');
+        $connDetails="${mpdHost}:${mpdPort}";
+    }
+    
+    if ($sock && $sock->connected()) {
+        $sel->add($sock);
+        if (&readReply()) {
+            if ($mpdPasswd) {
+                if ($testMode==1) { print "Send password\n"; }
+                $sock->send("password ${mpdPasswd} \n");
+                if (! &readReply()) {
+                    print "ERROR: Invalid password\n";
+                    $sel->remove($sock);
+                    eval { close $sock; }; undef $sock;
+                }
+            }
+        } else {
+            print "ERROR: Failed to read connection reply fom MPD (${connDetails})\n";
+            $sel->remove($sock);
+            close($sock);
+            undef $sock;
+        }
+    } else {
+        print "ERROR: Failed to connect to MPD (${connDetails})\n";
+    }
+    return $sock;
+}
+
+sub sendCommand() {
+    my $cmd = shift;
+    if ($testMode==1) { print "Send command ${cmd}\n"; }
+    if (! ($sock && $sock->connected())) {
+        $sock=&connectToMpd();
+    }
+    my $sockData;
+    $cmd="${cmd}\n";
+    if ($sock && $sock->connected()) {
+        print $sock encode('utf-8' => $cmd);
+        $sockData=&readReply();
+    }
+    my $dataLen=length($sockData);
+    if ($testMode==1) { print "Received ${dataLen} bytes\n"; }
+    if ($sockData ne '') {
+        return decode_utf8($sockData);
+    }
+    return $sockData;
+}
+
+sub waitForEvent() {
+    while (1) {
+        if (! ($sock && $sock->connected())) {
+           $sock=&connectToMpd();
+        }
+        if ($sock && $sock->connected()) {
+            my $cmd="idle player playlist\n";
+            if ($testMode==1) { print "Send command idle player playlist\n"; }
+            print $sock encode('utf-8' => $cmd);
+
+            while(1) {
+                my @ready = $sel->can_read();
+                my $mpd_ready = 0;
+                my $ipc_client = undef;
+                foreach my $fh (@ready) {
+                    if ($fh == $sock) {
+                        $mpd_ready = 1;
+                    } elsif ($fh == $ipc_sock) {
+                        $ipc_client = $ipc_sock->accept();
+                    }
+                }
+
+                if ($ipc_client) {
+                    my $msg = <$ipc_client>;
+                    if (defined $msg) {
+                        $msg = decode('utf-8', $msg);
+                        chomp $msg;
+                        
+                        if ($mpd_ready) {
+                            &readReply();
+                        } else {
+                            print $sock encode('utf-8', "noidle\n");
+                            &readReply();
+                        }
+                        
+                        &processIpcCommand($msg);
+                    }
+                    close $ipc_client;
+                    
+                    return 1;
+                } elsif ($mpd_ready) {
+                    &readReply();
+                    return 1;
+                }
+            }
+        } else {
+            sleep 2;
+            return 0;
+        }
+    }
+}
+
+sub getEntries() {
+    my $command=shift;
+    my $key=shift;
+    my @entries = ();
+    my $data=&sendCommand($command);
+    if (defined($data)) {
+        my @lines=split('\n', $data);
+        foreach my $line (@lines) {
+            if ($line=~ m/^($key\:)/) {
+                my $sep = index($line, ':');
+                if ($sep>0) {
+                    my $entry=substr($line, $sep+2, length($line)-($sep+1));
+                    push (@entries, $entry);
+                }
+            }
+        }
+    }
+    return @entries;
+}
+
+sub baseDir() {
+    my $cacheDir=$ENV{'XDG_CACHE_HOME'};
+    if (!$cacheDir) {
+        $cacheDir="$ENV{'HOME'}/.cache";
+    }
+    $cacheDir="${cacheDir}/dynamic";
+    return $cacheDir
+}
+
+sub lockFile() {
+    my $fileName=&baseDir();
+    $fileName="${fileName}/lock";
+    return $fileName;
+}
+
+sub setupIpc {
+    my $dir = &baseDir();
+    unless (-d $dir) {
+        make_path($dir);
+    }
+    my $ipc_path = "$dir/ipc.sock";
+    unlink($ipc_path);
+    my $server = IO::Socket::UNIX->new(
+        Type   => SOCK_STREAM,
+        Local  => $ipc_path,
+        Listen => 5,
+    ) or die "Failed to create IPC socket at $ipc_path: $!\n";
+    return $server;
+}
+
+sub processIpcCommand {
+    my $msg = shift;
+    if (defined($msg) && $msg =~ /^\s*reset\s*$/i) {
+        @includeRules = ();
+        $rulesChanged = 1;
+
+        if ($testMode) { print "Reset rules (full library)\n"; }
+        return;
+    }
+    my @args = split("\x00", $msg);
+    my $tag = lc(shift @args);
+    
+    if ($tag eq 'track') { $tag = 'Title'; }
+    elsif ($tag eq 'album') { $tag = 'Album'; }
+    elsif ($tag eq 'artist') { $tag = 'Artist'; }
+    else { return; }
+
+    my $exact = 0;
+    if (scalar(@args) > 0 && lc($args[0]) eq 'exact') {
+        $exact = 1;
+        shift @args;
+    }
+    
+    my $query = join(" ", @args);
+    if ($query eq "") { return; }
+    
+    my $ruleMatch = $exact ? "find" : "search";
+    my $newRule = "$ruleMatch $tag \"$query\"";
+    
+    # Pre-test rule. If zero tracks match, we ignore the input rule completely
+    my @songs = &getEntries($newRule, 'file');
+    if (scalar(@songs) > 0) {
+        @includeRules = ($newRule);
+        $rulesChanged = 1;
+        if ($testMode) { print "Applied new rule: $newRule\n"; }
+    } else {
+        if ($testMode) { print "Rule $newRule returned 0 songs. Ignored.\n"; }
+    }
+}
+
+# Remove duplicate entries from an array...
+sub uniq {
+    my %seen;
+    return grep { !$seen{$_}++ } @_;
+}
+
+# Use rules to obtain a list of songs from MPD...
+sub getSongs() {
+    if (scalar(@mpdSongs) < 1 || $rulesChanged == 1 || $mpdDbUpdated == 1) {
+        $numMpdSongs = 0;
+        @mpdSongs = ();
+     
+        if (scalar(@includeRules) > 0) {
+            # Filtered mode remains the same
+            my $mpdSong = 0;
+            foreach my $rule (@includeRules) {
+                my @songs = &getEntries($rule, 'file');
+                push(@mpdSongs, @songs);
+            }
+            @mpdSongs = uniq(@mpdSongs);
+        } else {
+            # OPTIMIZED: Full Library Mode
+            if (1 == $testMode) { print "Resetting to full library: Fetching all songs via listall...\n"; }
+            @mpdSongs = &getEntries("list file", "file");
+        }
+        
+        if (1 == $testMode) {
+            print "Library Updated: " . scalar(@mpdSongs) . " songs indexed.\n";
+        }
+        $numMpdSongs = scalar(@mpdSongs);
+        $rulesChanged = 0;
+    }
+}
+
+@playQueueHistory=();
+$playQueueHistoryLimit=0;
+$playQueueHistoryPos=0;
+sub canAdd() {
+    my $file=shift;
+    my $numSongs=shift;
+    my $pqLimit=0;
+    if (1==$numSongs) {
+        return 1;
+    } elsif ($numSongs<5) {
+        $pqLimit=int(($numSongs/2)+0.5);
+    } else {
+        $pqLimit=int(($numSongs*0.75)+0.5);
+        if ($pqLimit>200) {
+            $pqLimit=200;
+        }
+    }
+
+    if ($pqLimit != $playQueueHistoryLimit) {
+        $playQueueHistoryLimit=$pqLimit;
+        @playQueueHistory=();
+        return 1;
+    }
+
+    my $size=scalar(@playQueueHistory);
+    if ($size>$playQueueHistoryLimit) {
+        $size=$playQueueHistoryLimit;
+    }
+
+    for (my $i=0; $i<$size; ++$i) {
+        if ($playQueueHistory[$i] eq $file) {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+sub storeSong() {
+    my $file=shift;
+    if ($playQueueHistoryLimit<=0) {
+        $playQueueHistoryLimit=5;
+    }
+
+    if ($playQueueHistoryPos>=$playQueueHistoryLimit) {
+        $playQueueHistoryPos=0;
+    }
+    $playQueueHistory[$playQueueHistoryPos]=$file;
+    $playQueueHistoryPos++;
+}
+
+sub populatePlayQueue() {
+    &readConnectionDetails();
+    my $lastMpdDbUpdate=-1;
+    while (1) {
+        my $socketData='';
+        $socketData=&sendCommand("status");
+        
+        if (defined($socketData)) {
+            my @lines = split('\n', $socketData);
+            my $playQueueLength=0;
+            my $playQueueCurrentTrackPos=0;
+            my $isPlaying=0;
+            foreach my $val (@lines) {
+                if ($val=~ m/^(song\:)/) {
+                    my @vals = split(": ", $val);
+                    if (scalar(@vals)==2) {
+                        $playQueueCurrentTrackPos=scalar($vals[1]);
+                    }
+                } elsif ($val=~ m/^(state\:)/) {
+                    my @vals = split(": ", $val);
+                    if (scalar(@vals)==2 && $vals[1]=~ m/^(play)/) {
+                        $isPlaying=1;
+                    }
+                }
+            }
+
+            $mpdDbUpdated=0;
+            $socketData=&sendCommand("stats");
+            if (defined($socketData)) {
+                my @lines = split('\n', $socketData);
+                foreach my $val (@lines) {
+                    if ($val=~ m/^(db_update\:)/) {
+                        my @vals = split(": ", $val);
+                        if (scalar(@vals)==2) {
+                            my $mpdDbUpdate=scalar($vals[1]);
+                            if ($mpdDbUpdate!=$lastMpdDbUpdate) {
+                                $lastMpdDbUpdate=$mpdDbUpdate;
+                                $mpdDbUpdated=1;
+                            }
+                        }
+                        last;
+                    }
+                }
+            }
+
+            $socketData=&sendCommand("playlist");
+            if (defined($socketData)) {
+                my @lines = split('\n', $socketData);
+                my $playQueueLength=scalar(@lines);
+                if ($playQueueLength>0 && $lines[$playQueueLength-1]=~ m/^(OK)/) {
+                    $playQueueLength--;
+                }
+
+                my $wantCurrentPos = int($playQueueDesiredLength / 2);
+                my $numToDelete = $playQueueCurrentTrackPos - ($wantCurrentPos - 1);
+
+                if ($numToDelete > 0) {
+                    &sendCommand("delete 0:" . $numToDelete);
+                    $playQueueLength -= $numToDelete;
+                }
+                if ($playQueueLength<0) {
+                    $playQueueLength=0;
+                }
+
+                &getSongs();
+                if ($numMpdSongs>0) {
+                    my $failures=0;
+                    my $added=0;
+                    while ($playQueueLength < $playQueueDesiredLength && $numMpdSongs>0) {
+                        my $pos=int(rand($numMpdSongs));
+                        my $origFile=${mpdSongs[$pos]};
+                        my $file=$origFile;
+                        $file =~ s/\\/\\\\/g;
+                        $file =~ s/\"/\\\"/g;
+
+                        if ($failures > 100 || &canAdd($origFile, $numMpdSongs)) {
+                            if (&sendCommand("add \"${file}\"") ne '') {
+                                &storeSong($origFile);
+                                $playQueueLength++;
+                                $failures=0;
+                                $added++;
+                            }
+                        } else {
+                            $failures++;
+                        }
+                    }
+                    if ($numMpdSongs>0 && $isPlaying==0 && $added==$playQueueDesiredLength) {
+                        &sendCommand("play 0")
+                    }
+                }
+
+                if ($numMpdSongs>0) {
+                    &waitForEvent();
+                } else {
+                    sleep 2;
+                }
+            } else {
+                sleep 2;
+            }
+        } else {
+            sleep 2;
+        }
+    }
+}
+
+sub readPid() {
+    my $fileName=shift;
+    if (-e $fileName) {
+        open(my $fileHandle, $fileName);
+        my @lines = <$fileHandle>;
+        close($fileHandle);
+        if (scalar(@lines)>0) {
+            my $pid=$lines[0];
+            return scalar($pid);
+        }
+    }
+    return 0;
+}
+
+sub daemonize() {
+    my $fileName=shift;
+    chdir '/';
+    umask 0;
+    open STDIN,  '/dev/null'   or die "Can't read /dev/null: $!";
+    open STDOUT, '>>/dev/null' or die "Can't write to /dev/null: $!";
+    open STDERR, '>>/dev/null' or die "Can't write to /dev/null: $!";
+    defined( my $pid = fork ) or die "Can't fork: $!";
+    exit if $pid;
+    POSIX::setsid() or die "Can't start a new session.";
+
+    $SIG{INT} = $SIG{TERM} = $SIG{HUP} = \&signalHandler;
+    $SIG{PIPE} = 'ignore';
+    open(my $fileHandle, ">${fileName}");
+    print $fileHandle $$;
+    close $fileHandle;
+}
+
+sub start() {
+    my $pidFile=&lockFile();
+    my $pid=&readPid($pidFile);
+    if ($pid>0) {
+        my $exists = kill 0, $pid;
+        if ($exists) {
+            print "PROCESS $pid is running!\n";
+            return;
+        }
+    }
+
+    my $fileName=&lockFile();
+    &daemonize($fileName);
+    
+    $ipc_sock = &setupIpc();
+    $sel->add($ipc_sock);
+
+    &populatePlayQueue();
+}
+
+sub signalHandler {
+    unlink(&lockFile());
+    my $ipc_path = &baseDir() . "/ipc.sock";
+    unlink($ipc_path);
+    exit(0);
+}
+
+sub stop() {
+    my $pidFile=&lockFile();
+    my $pid=&readPid($pidFile);
+    if ($pid>0) {
+        system("kill", $pid);
+        system("pkill", "-P", $pid);
+    }
+}
+
+my $cmd = $ARGV[0] || "";
+
+if ($cmd eq "start") {
+    if (defined $ARGV[1] && $ARGV[1] =~ /^\d+$/) {
+        $playQueueDesiredLength = $ARGV[1];
+        if ($playQueueDesiredLength < $MIN_PLAY_QUEUE_DESIRED_LENGTH) {
+            $playQueueDesiredLength = $MIN_PLAY_QUEUE_DESIRED_LENGTH;
+        } elsif ($playQueueDesiredLength > $MAX_PLAY_QUEUE_DESIRED_LENGTH) {
+            $playQueueDesiredLength = $MAX_PLAY_QUEUE_DESIRED_LENGTH;
+        }
+    }
+    &start();
+} elsif ($cmd eq "stop") {
+    &stop();
+} elsif ($cmd eq "test") {
+    $testMode=1;
+    if (defined $ARGV[1] && $ARGV[1] =~ /^\d+$/) {
+        $playQueueDesiredLength = $ARGV[1];
+    }
+    $ipc_sock = &setupIpc();
+    $sel->add($ipc_sock);
+    &populatePlayQueue();
+} else {
+    if ($cmd ne "") {
+        my $ipc_path = &baseDir() . "/ipc.sock";
+        my $client = IO::Socket::UNIX->new(
+            Type => SOCK_STREAM,
+            Peer => $ipc_path,
+        );
+        if ($client) {
+            my @utf8_args = map { decode('UTF-8', $_) } @ARGV;
+            my $msg = join("\x00", @utf8_args);
+            print $client encode('utf-8', $msg . "\n");
+            close $client;
+            exit(0);
+        } else {
+            print "Is the script running? Failed to connect to IPC daemon.\n";
+            exit(1);
+        }
+    }
+
+    print "MPD Dynamizer script\n";
+    print "\n";
+    print "Usage: $0 start [num_tracks] | stop | test [num_tracks] | <track|album|artist|reset> [exact] <query>\n";
+}

@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Action
+Tooltip=Upload to R2
+Name=Upload to R2
+Profiles=profile-one;
+
+[X-Action-Profile profile-one]
+MimeTypes=all/allfiles;
+Exec=/home/pyne/.config/scripts/uploader.sh "%f"
+Name=Default profile

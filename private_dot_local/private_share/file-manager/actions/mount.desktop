@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Action
+Tooltip=Mount an Image File
+Name=Mount File
+Profiles=profile-one;
+
+[X-Action-Profile profile-one]
+MimeTypes=all/allfiles;
+Exec=/home/pyne/.config/scripts/mount.sh "%f"
+Name=Default profile

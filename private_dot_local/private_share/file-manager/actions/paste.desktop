@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Action
+Name=Paste Image
+Icon=edit-paste
+Profiles=on_folder;
+
+[X-Action-Profile on_folder]
+MimeTypes=inode/directory;
+Exec=/home/pyne/.config/scripts/paste.sh %f

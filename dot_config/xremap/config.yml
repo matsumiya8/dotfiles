@@ -1,13 +1,31 @@
 modmap:
   - name: Apps to swap side button with the mouse wheel
     application:
-      only: [blender,/^steam_app_.*/]
+      only: [pcsx2-qt,blender,/^steam_app_.*/,/.*\.exe/,steam_proton,gamescope]
     remap:
       BTN_EXTRA: BTN_MIDDLE
-      BTN_SIDE: KEY_PLAYPAUSE
+  - name: Granblue
+    application:
+      only: [steam_app_881020]
+    remap:
+      BTN_SIDE: Q
 
 keymap:
    - name: Home Workspace
      remap:
        WIN-CAPSLOCK: WIN-INSERT
        WIN-SHIFT-CAPSLOCK: WIN-SHIFT-INSERT
+   - name: Upscaler and Retroarch General config
+     application:
+       only: [xqueens,upscaler-overlay,com.libretro.RetroArch]
+     remap:
+       BTN_EXTRA: [WIN-X,WIN-S]
+   - name: RMPC general config
+     application:
+       only: [rmpc]
+     remap:
+       BTN_SIDE: WIN-F9
+       F9: WIN-F9
+       F10: WIN-F10
+       F11: WIN-F11
+       F12: WIN-F12

@@ -85,6 +85,7 @@ set ignore_duplicates=false
 set input.aac.priority=50
 set input.cdio.priority=50
 set input.cue.priority=50
+set input.ffmpeg.priority=30
 set input.flac.priority=50
 set input.mad.priority=55
 set input.modplug.priority=50
@@ -228,6 +229,7 @@ bind common y win-add-p
 bind common z player-prev
 bind common { vol -1% -0
 bind common } vol -0 -1%
+bind library ^F push live-filter 
 fset 90s=date>=1990&date<2000
 fset classical=genre="Classical"
 fset missing-tag=!stream&(artist=""|album=""|title=""|tracknumber=-1|date=-1)

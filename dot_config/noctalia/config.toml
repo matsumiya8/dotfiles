@@ -1,5 +1,5 @@
 [bar.default]
-background_opacity = 0.89999997988343239
+background_opacity = 0.88
 center = [ "group:g2" ]
 end = [ "weather", "group:g3" ]
 font_family = "IBM Plex Sans JP"
@@ -39,11 +39,16 @@ widget_spacing = 8
     padding = 6.0
 
 [control_center]
+show_shortcut_labels = false
+sidebar_section = "none"
 hidden_tabs = [ "monitor", "power", "network", "screen-time" ]
 width = 730
 
     [[control_center.shortcuts]]
     type = "nightlight"
+
+    [control_center.calendar]
+    show_events_card = false
 
 [desktop_widgets]
 schema_version = 2
@@ -52,8 +57,7 @@ schema_version = 2
 active_monitor_only = true
 auto_hide = false
 enabled = true
-monitors = [ "DP-2" ]
-pinned = [ "bitwarden", "tutanota-desktop", "zen", "pcmanfm-qt", "steam" ]
+pinned = [ "bitwarden", "tutanota-desktop", "zen", "pcmanfm-qt", "steam", "vesktop" ]
 position = "top"
 reserve_space = false
 show_dots = true
@@ -116,7 +120,7 @@ widget_order = [
 
 [nightlight]
 enabled = true
-temperature_night = 5000
+temperature_night = 4000
 
 [osd.kinds]
 brightness = false
@@ -125,6 +129,7 @@ dnd = false
 keyboard_backlight = false
 keyboard_layout = false
 lock_keys = false
+media = false
 nightlight = false
 power_profile = false
 wifi = false
@@ -171,9 +176,10 @@ show_location = false
     open_near_click_launcher = true
     polkit_placement = "attached"
     polkit_position = "auto"
+    transparency_mode = "soft"
 
     [shell.screenshot]
-    pipe_command = "cat > \"/bog/Screenshots/$(date +%Y-%m)/$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 7; echo .png)\""
+    pipe_command = "SS_FOLDER=/bog/Screenshots/$(date +%Y-%m) mkdir -p $SS_FOLDER && cat > \"$SS_FOLDER/$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 7; echo .png)\""
     pipe_to_command = true
     save_to_file = false
 
@@ -252,6 +258,8 @@ max_length = 300
 scroll_repeat = "steps"
 
     [widget.media.actions]
+    back = "media previous-player"
+    forward = "media next-player"
     scroll_down = "media next"
     scroll_up = "media previous"
 

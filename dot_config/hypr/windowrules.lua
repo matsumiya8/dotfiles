@@ -12,22 +12,20 @@ hl.window_rule({
   name = "transparency",
   opacity = 0.95,
   match = {
-    class = "^(dev.noctalia.Noctalia|transmission-qt|org.pulseaudio.pavucontrol|spotify|org.quickshell|lxqt-archiver|protonvpn-app|Bitwarden|gnome-system-monitor|pcmanfm-qt|DesktopEditors|vesktop|arqiver|org.nicotine_plus.Nicotine|tutanota-desktop|com.github.wwmm.easyeffects)$",
+    class = "^(dev.noctalia.Noctalia|transmission-qt|org.pulseaudio.pavucontrol|spotify|lxqt-archiver|protonvpn-app|Bitwarden|pcmanfm-qt|vesktop|org.nicotine_plus.Nicotine|tutanota-desktop|com.github.wwmm.easyeffects)$",
   },
 })
 
 -- windows that shouldn't be resized
 local fixed_res = {
-   -- [{1024,768}] = {"少女猟奇譚 獣の告白"},
+   [{1024,768}] = {"少女猟奇譚 獣の告白"},
 }
 
 for res, titles in pairs(fixed_res) do
     hl.window_rule({
         min_size = res,
         max_size = res,
-        match = {
-            title = "^(" .. table.concat(titles, "|") .. ")$"
-        }
+        match = {title = "^(" .. table.concat(titles, "|") .. ")$"}
     })
 end
 

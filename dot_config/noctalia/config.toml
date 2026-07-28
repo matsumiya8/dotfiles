@@ -8,7 +8,7 @@ margin_ends = 0
 padding = 8
 position = "bottom"
 radius = 0
-scale = 1.0500000081956387
+scale = 1.05
 shadow = false
 start = [ "launcher", "workspaces", "bar", "privacy" ]
 thickness = 40
@@ -47,24 +47,6 @@ width = 730
 
 [desktop_widgets]
 schema_version = 2
-widget_order = [ "desktop-widget-0000000000000001" ]
-
-    [desktop_widgets.grid]
-    cell_size = 16
-    major_interval = 4
-    visible = true
-
-    [desktop_widgets.widget.desktop-widget-0000000000000001]
-    box_height = 0.0
-    box_width = 0.0
-    cx = 960.0
-    cy = 540.0
-    output = "DP-2"
-    rotation = 0.0
-    type = "noctalia/timer:timer"
-
-        [desktop_widgets.widget.desktop-widget-0000000000000001.settings]
-        duration = 1800
 
 [dock]
 active_monitor_only = true
@@ -81,15 +63,10 @@ smart_auto_hide = true
 [hot_corners.top_left]
 action = "window_switcher"
 
-[location]
-address = "Palhoça"
-
 [lockscreen_widgets]
 enabled = false
 schema_version = 2
 widget_order = [
-    "lockscreen-login-box@WL-1",
-    "lockscreen-login-box@WAYLAND-1",
     "lockscreen-login-box@HDMI-A-1",
     "lockscreen-login-box@DP-2"
 ]
@@ -117,7 +94,6 @@ widget_order = [
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
-        show_password_hint = true
 
     [lockscreen_widgets.widget."lockscreen-login-box@HDMI-A-1"]
     box_height = 70.0
@@ -137,47 +113,6 @@ widget_order = [
         show_caps_lock = true
         show_keyboard_layout = true
         show_login_button = true
-        show_password_hint = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1"]
-    box_height = 70.0
-    box_width = 240.0
-    cx = 116.0
-    cy = 133.0
-    output = "WAYLAND-1"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@WAYLAND-1".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        input_opacity = 1.0
-        input_radius = 6.0
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_password_hint = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@WL-1"]
-    box_height = 70.0
-    box_width = 400.0
-    cx = 472.0
-    cy = 385.0
-    output = "WL-1"
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@WL-1".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        input_opacity = 1.0
-        input_radius = 6.0
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_password_hint = true
 
 [nightlight]
 enabled = true
@@ -194,27 +129,11 @@ nightlight = false
 power_profile = false
 wifi = false
 
-[plugin_settings."nightwatch75/file-search"]
-exclude_dirs = "umu, .moc, .gnupg, .mono, .zen, .nuget, .git, node_modules, .cache, .venv"
-max_results = 25
-show_hidden = true
-
 [plugin_settings."noctalia/notes"]
 extension = "txt"
 panel_open_near_click = true
 panel_placement = "floating"
 panel_position = "center_right"
-
-[plugin_settings."noctalia/screen_recorder"]
-video_codec = "av1"
-
-[plugin_settings."noctalia/wallhaven"]
-api_key = ""
-download_dir = ""
-
-[plugin_settings."whyoolw/dropwall"]
-copy_to_wallpaper_dir = true
-per_monitor = true
 
 [plugins]
 enabled = [ "noctalia/notes", "noctalia/timer" ]
@@ -226,10 +145,9 @@ font_family = "IBM Plex Sans Medm"
 polkit_agent = true
 settings_show_advanced = false
 show_location = false
-ui_scale = 1.0500000081956387
 
     [shell.animation]
-    speed = 1.1000000163912773
+    speed = 1.10
 
     [shell.launcher.providers.calculator]
     prefix = ""
@@ -265,7 +183,7 @@ ui_scale = 1.0500000081956387
     countdown_seconds = 0.0
     enabled = true
     glyph = "door-exit"
-    label = "Exit"
+    label = "Exit Noctalia"
     shortcut = "e"
     variant = "default"
 
@@ -312,51 +230,9 @@ per_monitor_directories = true
 transition = [ "fade" ]
 transition_duration = 400
 
-    [wallpaper.default]
-    path = "/home/pyne/Pictures/Wallpapers/DP-2/1.jpg"
-
-    [wallpaper.last]
-    path = "/home/pyne/.cache/wallpapers/2"
-
-    [wallpaper.monitor.DP-2]
-    directory = "/home/pyne/Pictures/Wallpapers/DP-2"
-
-    [wallpaper.monitors.DP-2]
-    path = "/home/pyne/.cache/wallpapers/2"
-
-    [wallpaper.monitors.HDMI-A-1]
-    path = "/home/pyne/.cache/wallpapers/8"
-
 [widget.bar]
-scale = 1.2000000000000002
 show_idle_on_horizontal = false
 type = "noctalia/timer:bar"
-
-[widget.cat]
-audio_spectrum = true
-tappy_mode = true
-type = "noctalia/bongocat:cat"
-use_mpris_filter = true
-
-[widget.cat_2]
-audio_spectrum = true
-tappy_mode = true
-type = "noctalia/bongocat:cat"
-
-[widget.cat_3]
-audio_spectrum = true
-tappy_mode = true
-type = "noctalia/bongocat:cat"
-
-[widget.cat_4]
-audio_spectrum = true
-tappy_mode = true
-type = "noctalia/bongocat:cat"
-
-[widget.cat_5]
-audio_spectrum = true
-tappy_mode = true
-type = "noctalia/bongocat:cat"
 
 [widget.clock]
 tooltip_format = "{:%H:%M:%S}"
@@ -382,10 +258,7 @@ hide_when_no_unread = true
 [widget.privacy]
 hide_inactive = true
 interactive = false
-scale = 1.2000000000000002
-
-[widget.recorder]
-type = "noctalia/screen_recorder:recorder"
+scale = 1.20
 
 [widget.spacer_2]
 length = 0
@@ -398,24 +271,21 @@ type = "spacer"
 [widget.taskbar]
 group_by_workspace = true
 occupied_color = "surface"
-scale = 1.4000000000000001
+scale = 1.40
 show_workspace_label = false
 
 [widget.tray]
 drawer = true
 
-[widget.wallhaven]
-type = "noctalia/wallhaven:wallhaven"
-
 [widget.weather]
 show_condition = false
 
 [widget.workspaces]
-active_pill_size = 1.9500000000000002
+active_pill_size = 1.95
 capsule = true
 capsule_opacity = 0.5
 capsule_padding = 8
 display = "none"
 empty_color = "outline"
-inactive_pill_size = 1.1000000000000001
+inactive_pill_size = 1.10
 occupied_color = "outline"

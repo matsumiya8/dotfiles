@@ -53,6 +53,10 @@ session    optional     pam_gnome_keyring.so auto_start
 session    optional     pam_kwallet5.so      auto_start
 EOF
 
+sudo tee "/etc/udev/rules.d/98-mchose-mouse.rules" > /dev/null <<'EOF'
+KERNEL=="hidraw*", ATTRS{idVendor}=="5253", ATTRS{idProduct}=="1021", MODE="0666", TAG+="uaccess"
+EOF
+
 echo ":executo:M::MZ::${HOME}/.config/scripts/exec.sh:" | sudo tee "/etc/binfmt.d/wine.conf" > /dev/null
 
 xdg-user-dirs-update

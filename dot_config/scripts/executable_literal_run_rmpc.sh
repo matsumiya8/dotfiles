@@ -1,9 +1,8 @@
 #/bin/bash
-if ! pgrep -x "dyn" > /dev/null; then
-	exec $HOME/.config/scripts/dyn start 44 &
-fi
+! pgrep -x "dyn" > /dev/null && exec $HOME/.config/scripts/dyn start 44 &
+! pgrep -x "rmpcd" > /dev/null && exec $HOME/.cargo/bin/rmpcd &>/dev/null &
 rmpc
+mpc stop
 pkill -x dyn
 pkill -x rmpcd
-mpc stop
 

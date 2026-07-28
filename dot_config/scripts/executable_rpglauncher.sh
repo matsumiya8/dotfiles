@@ -2,7 +2,7 @@
 
 # Setting variables for the path to the games and nwjs
 base_dir="$HOME/RPGMAKER/games"
-nwjs_bin="$HOME/nwjs/nw"
+nwjs_bin="$HOME/.local/share/nwjs/nw"
 
 # Showing each directory name in a wofi menu
 if [ "$#" -eq 0 ]; then

@@ -18,7 +18,7 @@ hl.window_rule({
 
 -- windows that shouldn't be resized
 local fixed_res = {
-    [{1024,768}] = {"少女猟奇譚 獣の告白"},
+   -- [{1024,768}] = {"少女猟奇譚 獣の告白"},
 }
 
 for res, titles in pairs(fixed_res) do

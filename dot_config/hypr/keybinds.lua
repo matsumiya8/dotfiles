@@ -1,7 +1,5 @@
 local mm = "SUPER+"
-local function noct(key, msg)
-	hl.bind(key, hl.dsp.exec_cmd("noctalia msg " .. msg))
-end
+local function noct(key, msg) hl.bind(key, hl.dsp.exec_cmd("noctalia msg " .. msg)) end
 
 -- move/resize
 hl.bind(mm .. "mouse:272", hl.dsp.window.drag(),   {mouse = true})
@@ -23,10 +21,10 @@ for _, key in ipairs({mm .. "F5", "XF86AudioPlay", "XF86AudioPause"}) do noct(ke
 for _, key in ipairs({mm .. "F6", "XF86AudioStop"}) do noct(key, "media stop") end
 for _, key in ipairs({mm .. "F7", "XF86AudioPrev"}) do noct(key, "media previous") end
 for _, key in ipairs({mm .. "F8", "XF86AudioNext"}) do noct(key, "media next") end
+hl.bind(mm .. "J", hl.dsp.exec_cmd("kitty --class rmpc_search -o font_size=22 ~/.config/scripts/rmpc_dynamic.sh input",{float=true,pin=true,stay_focused=true,size={500,50}}))
 hl.bind(mm .. "F9", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh"))
 hl.bind(mm .. "F10", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh artist"))
 hl.bind(mm .. "F11", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh album"))
-hl.bind(mm .. "F12", hl.dsp.exec_cmd("kitty --class rmpc_search -o font_size=22 ~/.config/scripts/rmpc_dynamic.sh input",{float=true,pin=true,stay_focused=true,size={500,50}}))
 noct(mm .. "F13", "volume-up 5")
 noct(mm .. "F14", "volume-down 5")
 

@@ -13,8 +13,8 @@ case "$1" in
     	bind 'Tab: self-insert'
     	bind '"\e": "\C-a\C-k\n""'
     	IFS= read -r -e input || exit; [[ -z $input ]] && exit
-    	if [[ "${input:0:1}" == "/" ]]; then
-    		$dyn artist "${input#/}"	
+    	if [[ "${input:0:1}" == "[" ]]; then
+    		$dyn artist "${input#[}"	
     	elif [[ "${input:0:1}" == $'\t' ]]; then
     		sed -E 's/\t([^\t]+)/ any "\1"/g' <<< "$input" | xargs bash -c 'mpc search "$@" | mpc insert' _
     		exit

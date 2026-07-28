@@ -8,7 +8,7 @@ if [ -f "$DIR_PATH/package.json" ]; then
 else
 	COMPATDIR="$HOME/.steam/steam/compatibilitytools.d"
 	PREFIX="main"
-	PROTON="GE-Proton11-1"
+	PROTON="Proton-GE Latest"
 	LANGUAGE="ja_JP.UTF-8"
 	WAYLAND=0
 	DLLOVERRIDES=""

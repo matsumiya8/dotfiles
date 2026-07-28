@@ -242,9 +242,18 @@ capsule_padding = 0
 glyph = "cat"
 scale = 2.0
 
+    [widget.launcher.actions]
+    right = "panel-toggle launcher /w"
+	
+
 [widget.media]
 hide_when_no_media = true
 max_length = 300
+scroll_repeat = "steps"
+
+    [widget.media.actions]
+    scroll_down = "media next"
+    scroll_up = "media previous"
 
 [widget.notes]
 type = "noctalia/notes:notes"

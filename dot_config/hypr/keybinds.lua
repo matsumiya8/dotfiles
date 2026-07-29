@@ -30,6 +30,7 @@ noct(mm .. "F14", "volume-down 5")
 
 -- other noctalia commands, screenshots and recording
 noct(mm .. "SUPER_L", "panel-toggle launcher")
+noct(mm .. "Space", "panel-toggle launcher \"/fs \"")
 noct(mm .. "Y", "panel-toggle clipboard")
 noct(mm .. "G", "panel-toggle noctalia/timer:panel")
 noct(mm .. "N", "panel-toggle noctalia/notes:panel")
@@ -55,7 +56,6 @@ end
 -- general binds
 hl.bind("CTRL+SHIFT+Escape", hl.dsp.exec_cmd("missioncenter", {size={1020,900}, pin=true, float=true}))
 hl.bind(mm .. "dead_acute", function() hl.dispatch(hl.dsp.exec_cmd("wl-copy " .. hl.get_active_window().class))end)
-hl.bind(mm .. "Space", hl.dsp.exec_cmd("kitty nnn -T t -n /"))
 hl.bind(mm .. "Q", hl.dsp.window.close())
 hl.bind(mm .. "W", hl.dsp.exec_cmd("kitty"))
 hl.bind(mm .. "E", hl.dsp.exec_cmd("pcmanfm-qt"))
@@ -66,6 +66,6 @@ hl.bind(mm .. "P", hl.dsp.exec_cmd("~/.config/scripts/sunshine.sh"))
 hl.bind(mm .. "B", hl.dsp.exec_cmd("zen-browser"))
 
 -- config shortcuts
-hl.bind(mm .. "comma", hl.dsp.exec_cmd('kitty micro ~/.config/hypr/hyprland.lua'))
-hl.bind(mm .. "period", hl.dsp.exec_cmd("kitty micro ~/.config/hypr/keybinds.lua"))
-hl.bind(mm .. "slash", hl.dsp.exec_cmd("kitty micro ~/.config/hypr/windowrules.lua"))
+hl.bind(mm .. "comma", hl.dsp.exec_cmd('kitty fresh ~/.config/hypr/hyprland.lua'))
+hl.bind(mm .. "period", hl.dsp.exec_cmd("kitty fresh ~/.config/hypr/keybinds.lua"))
+hl.bind(mm .. "slash", hl.dsp.exec_cmd("kitty fresh ~/.config/hypr/windowrules.lua"))

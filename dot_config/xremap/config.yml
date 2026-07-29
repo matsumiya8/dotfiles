@@ -24,7 +24,6 @@ keymap:
      application:
        only: [rmpc]
      remap:
-       BTN_SIDE: WIN-F9
        F9: WIN-F9
        F10: WIN-F10
        F11: WIN-F11

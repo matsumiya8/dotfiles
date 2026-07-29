@@ -8,4 +8,5 @@ VISUAL=micro
 TERMINAL=kitty
 PATH="$PATH:$HOME/.local/bin:/home/pyne/.cargo/bin"
 alias op="xdg-open"
-alias n="nnn -T t -n /"
+alias up="sudo pacman -Syu"
+alias f="fresh"

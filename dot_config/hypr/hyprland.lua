@@ -2,8 +2,6 @@ local autoexec = {
 	"noctalia --daemon",
 	"fcitx5 -d",
 	"wl-clip-persist --clipboard regular",
-	"~/.config/scripts/hypr_wallpaper.sh",
-	"xrandr --output DP-2 --primary",
 	"easyeffects -w --service-mode",
 	"xremap --watch=config,device --mouse ~/.config/xremap/config.yml",
 	"sleep 6; corectrl",
@@ -11,13 +9,10 @@ local autoexec = {
 
 local env_vars = {
 	["MESA_SHADER_CACHE_MAX_SIZE"] = "5G",
-	["PROTON_USE_NTSYNC"] = "1",
 	["SDL_VIDEODRIVER"] = "wayland",
 	["EDITOR"] = "micro",
 	["TERMINAL"] = "kitty",
 	["MPD_HOST"] = os.getenv("XDG_RUNTIME_DIR") .. "/mpd.socket",
-	["MANGOHUD"] = "1",
-	["MANGOHUD_CONFIG"] = "fps_limit=237, no_display",
 	["XDG_CURRENT_DESKTOP"] = "Hyprland",
 	["XDG_SESSION_TYPE"] = "wayland",
 	["QT_QPA_PLATFORM"] = "wayland",
@@ -28,28 +23,24 @@ local env_vars = {
 	["XCURSOR_SIZE"] = "16",
 }
 
-for key, value in pairs(env_vars) do
-	hl.env(key, value)
-end
+for key, value in pairs(env_vars) do hl.env(key, value) end
+hl.on("hyprland.start", function() for _, cmd in ipairs(autoexec) do hl.exec_cmd(cmd) end end)
 
-hl.on("hyprland.start", function()
-	for _, cmd in ipairs(autoexec) do
-		hl.exec_cmd(cmd)
-	end
-end)
+-- displays
+hl.monitor({output = "DP-2", mode = "1920x1080@239.760", position = "0x0"})
+hl.monitor({output = "HDMI-A-1", mode = "1920x1080@120.003", position = "1920x-385", transform = 3})
+hl.monitor({output = "SUNSHINE", mode = "800x600@90", position = "3000x0"})
 
--- mouse config
-for _, mouse_name in ipairs({"xremap-1", "realtek-mchose-m7-pro"}) do
-	hl.device({
-		name = mouse_name,
-		scroll_method = "on_button_down",
-		scroll_button = 276,
-		accel_profile = "flat",
-		scroll_button_lock = false,
-		sensitivity = -0.5,
-		scroll_factor = 1.4,
-	})
-end
+-- workspaces
+hl.workspace_rule({workspace = "1", monitor = "DP-2"})
+hl.workspace_rule({workspace = "2", monitor = "DP-2", default = true})
+hl.workspace_rule({workspace = "3", monitor = "DP-2", on_created_empty = "zen-browser"})
+hl.workspace_rule({workspace = "4", monitor = "DP-2", on_created_empty = "kitty"})
+hl.workspace_rule({workspace = "5", monitor = "DP-2"})
+hl.workspace_rule({workspace = "6", monitor = "HDMI-A-1", default = true})
+hl.workspace_rule({workspace = "7", monitor = "HDMI-A-1"})
+hl.workspace_rule({workspace = "8", monitor = "HDMI-A-1", on_created_empty = "kitty --class rmpc ~/.config/scripts/run_rmpc.sh"})
+hl.workspace_rule({workspace = "9", monitor = "HDMI-A-1", on_created_empty = "spotify"})
 
 -- variables
 hl.config({
@@ -115,27 +106,7 @@ hl.config({
 	render = {
 		direct_scanout = 2,
 	},
-	xwayland = {
-		force_zero_scaling = true,
-	}
 })
-
--- displays
-hl.monitor({output = "DP-2", mode = "1920x1080@239.760", position = "0x0"})
-hl.monitor({output = "HDMI-A-1", mode = "1920x1080@120.003", position = "1920x-385", transform = 3})
-hl.monitor({output = "SUNSHINE", mode = "800x600@90", position = "3000x0"})
-
--- workspaces
-hl.workspace_rule({workspace = "1", monitor = "DP-2"})
-hl.workspace_rule({workspace = "2", monitor = "DP-2", default = true})
-hl.workspace_rule({workspace = "3", monitor = "DP-2", on_created_empty = "zen-browser"})
-hl.workspace_rule({workspace = "4", monitor = "DP-2", on_created_empty = "kitty"})
-hl.workspace_rule({workspace = "5", monitor = "DP-2"})
-hl.workspace_rule({workspace = "6", monitor = "HDMI-A-1", default = true})
-hl.workspace_rule({workspace = "7", monitor = "HDMI-A-1"})
-hl.workspace_rule({workspace = "8", monitor = "HDMI-A-1", on_created_empty = "kitty --class rmpc ~/.config/scripts/run_rmpc.sh"})
-hl.workspace_rule({workspace = "9", monitor = "HDMI-A-1", on_created_empty = "spotify"})
-
 
 -- per workspace wallpapers
 local wallpapers = {}
@@ -145,7 +116,19 @@ for i = 1, 9 do
 end
 hl.on("workspace.active", function(ws) hl.exec_cmd("noctalia msg wallpaper-set " .. wallpapers[ws.id])end)
 
--- animations, keybinds and window rules
+-- mouse config
+for _, mouse_name in ipairs({"xremap-1", "realtek-mchose-m7-pro"}) do
+	hl.device({
+		name = mouse_name,
+		scroll_method = "on_button_down",
+		scroll_button = 276,
+		accel_profile = "flat",
+		scroll_button_lock = false,
+		sensitivity = -0.5,
+		scroll_factor = 1.4,
+	})
+end
+
 require("animations")
 require("keybinds")
 require("windowrules")

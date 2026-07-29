@@ -5,6 +5,7 @@ hl.window_rule({
   workspace = 1,
   match = {
     class = "^(spacecadetpinball|xqueens|flycast|Light.vn|Godot|xsystem35|com.libretro.RetroArch|pcsx2-qt|gamescope|steam_proton|steam_app.*|.*\\.exe)$",
+	title = ".+"
   },
 })
 
@@ -30,7 +31,6 @@ for res, titles in pairs(fixed_res) do
 end
 
 -- workspace rules
-hl.window_rule({workspace=3, match={class="^(zen)$"}})
 hl.window_rule({workspace=5, match={title="^(Steam|Sign in to Steam)$", class="^(steam)$"}})
 hl.window_rule({workspace=7, opacity=0.93, match={class="^(steam)", title="^(Friends List.*)$"}})
 hl.window_rule({workspace=7, match={class="^(vesktop)$"}})

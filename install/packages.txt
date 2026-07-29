@@ -25,6 +25,7 @@ ffmpeg
 ffmpegthumbnailer
 flatpak
 flycast-bin
+fresh-editor
 fuse2
 fzf
 fzf-tab-git
@@ -42,7 +43,6 @@ hip-runtime-amd
 hyprland
 icoextract
 imagemagick
-kate
 kdenlive
 kitty
 kvantum
@@ -56,15 +56,12 @@ libretro-np2kai-git
 linux-firmware
 lsp-plugins
 lxqt-archiver
-matugen
 mednafen
 mesa
-micro
 mission-center
 mpc
 mpd
 nicotine+
-nnn
 noctalia
 noctalia-greeter
 noto-fonts
@@ -116,7 +113,6 @@ ttf-twemoji
 tutanota-desktop-bin
 umu-launcher
 unarchiver
-unzip
 vesktop-bin
 vulkan-radeon
 wev
@@ -139,4 +135,3 @@ yt-dlp
 zsh
 zsh-autosuggestions
 zen-browser-bin
-zoxide

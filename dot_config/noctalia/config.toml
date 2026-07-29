@@ -122,6 +122,9 @@ widget_order = [
 enabled = true
 temperature_night = 4000
 
+[notification]
+history_retention_hours = 72
+
 [osd.kinds]
 brightness = false
 caffeine = false
@@ -134,6 +137,11 @@ nightlight = false
 power_profile = false
 wifi = false
 
+[plugin_settings."nightwatch75/file-search"]
+exclude_dirs = "downgrade, .cargo, mnt, Cos, wolf, mv_games, mozilla, chromium, retroarch, goldendict, queens, xqueens, blender_org, spicetify, BraveSoftware, .local, Spotify, bin, srv, dev, lib, boot, lib64, opt, ssl, ca-certificates, .mednafen, tutanota-desktop, Bitwarden, unity3d, proc, lost+found, root, run, sbin, tmp, var, usr, Screenshots, vesktop, .mozilla, sys, umu, {}, VN, RPG, Steam, .pki, .var, .java, .cmake, .wine, Games, .moc, .gnupg, .zen, .mono, .git, node_modules, .cache, .venv"
+search_folder = "/"
+show_hidden = true
+
 [plugin_settings."noctalia/notes"]
 extension = "txt"
 panel_open_near_click = true
@@ -141,7 +149,7 @@ panel_placement = "floating"
 panel_position = "center_right"
 
 [plugins]
-enabled = [ "noctalia/notes", "noctalia/timer" ]
+enabled = [ "noctalia/notes", "noctalia/timer", "nightwatch75/file-search" ]
 
 [shell]
 clipboard_confirm_clear_history = false
@@ -236,6 +244,12 @@ per_monitor_directories = true
 transition = [ "fade" ]
 transition_duration = 400
 
+	[wallpaper.monitor.DP-2]
+	directory = "/home/pyne/Pictures/Wallpapers/DP-2/"
+	
+	[wallpaper.monitor.HDMI-A-1]
+	directory = "~/Pictures/Wallpapers/HDMI-A-1"
+
 [widget.bar]
 show_idle_on_horizontal = false
 type = "noctalia/timer:bar"
@@ -250,6 +264,7 @@ scale = 2.0
 
     [widget.launcher.actions]
     right = "panel-toggle launcher /w"
+    forward = "panel-toggle launcher /fs"
 	
 
 [widget.media]
@@ -306,3 +321,4 @@ display = "none"
 empty_color = "outline"
 inactive_pill_size = 1.10
 occupied_color = "outline"
+scroll_repeat = "steps"

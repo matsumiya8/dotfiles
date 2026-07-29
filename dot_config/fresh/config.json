@@ -1,0 +1,15 @@
+{
+  "editor": {
+    "use_terminal_bg": true,
+    "restore_previous_session": false,
+    "hot_exit": false,
+    "auto_read_only": false
+  },
+  "theme": "builtin://terminal",
+  "file_browser": {
+    "show_hidden": true
+  },
+  "file_explorer": {
+    "show_hidden": true
+  }
+}

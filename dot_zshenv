@@ -3,10 +3,10 @@ QT_IM_MODULE=fcitx
 SDL_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 GLFW_IM_MODULE=ibus
-EDITOR=micro
-VISUAL=micro
-TERMINAL=kitty
 PATH="$PATH:$HOME/.local/bin:/home/pyne/.cargo/bin"
+TERMINAL=kitty
+EDITOR=fresh
+VISUAL=fresh
+alias f="fresh"
 alias op="xdg-open"
 alias up="sudo pacman -Syu"
-alias f="fresh"

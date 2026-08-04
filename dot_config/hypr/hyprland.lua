@@ -9,13 +9,11 @@ local autoexec = {
 
 local env_vars = {
 	["MESA_SHADER_CACHE_MAX_SIZE"] = "5G",
-	["SDL_VIDEODRIVER"] = "wayland",
-	["EDITOR"] = "micro",
-	["TERMINAL"] = "kitty",
 	["MPD_HOST"] = os.getenv("XDG_RUNTIME_DIR") .. "/mpd.socket",
 	["XDG_CURRENT_DESKTOP"] = "Hyprland",
+    ["SDL_VIDEODRIVER"] = "wayland",
 	["XDG_SESSION_TYPE"] = "wayland",
-	["QT_QPA_PLATFORM"] = "wayland",
+	["QT_QPA_PLATFORM"] = "wayland;xcb",
 	["QT_QPA_PLATFORMTHEME"] = "qt6ct",
 	["XCURSOR_THEME"] = "phinger-cursors-dark",
 	["QS_ICON_THEME"] = "Papirus-Light",

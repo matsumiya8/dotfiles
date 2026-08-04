@@ -21,7 +21,7 @@ for _, key in ipairs({mm .. "F5", "XF86AudioPlay", "XF86AudioPause"}) do noct(ke
 for _, key in ipairs({mm .. "F6", "XF86AudioStop"}) do noct(key, "media stop") end
 for _, key in ipairs({mm .. "F7", "XF86AudioPrev"}) do noct(key, "media previous") end
 for _, key in ipairs({mm .. "F8", "XF86AudioNext"}) do noct(key, "media next") end
-hl.bind(mm .. "J", hl.dsp.exec_cmd("kitty --class rmpc_search -o font_size=22 ~/.config/scripts/rmpc_dynamic.sh input",{float=true,pin=true,stay_focused=true,size={500,50}}))
+hl.bind(mm .. "J", hl.dsp.exec_cmd("kitty --class rmpc_search -o font_size=22 ~/.config/scripts/rmpc_dynamic.sh input", {float=true, pin=true, stay_focused=true, size={500,50}}))
 hl.bind(mm .. "F9", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh"))
 hl.bind(mm .. "F10", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh artist"))
 hl.bind(mm .. "F11", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh album"))
@@ -33,11 +33,12 @@ noct(mm .. "SUPER_L", "panel-toggle launcher")
 noct(mm .. "Space", "panel-toggle launcher \"/fs \"")
 noct(mm .. "Y", "panel-toggle clipboard")
 noct(mm .. "G", "panel-toggle noctalia/timer:panel")
+noct(mm .. "M", "panel-toggle launcher \"/bk \"")
 noct(mm .. "N", "panel-toggle noctalia/notes:panel")
 noct("XF86AudioRaiseVolume", "panel-toggle session")
 noct("ALT+1", "screenshot-region")
 noct("ALT+2", "screenshot-fullscreen")
-hl.bind("ALT+3", function() hl.dispatch(hl.dsp.exec_cmd("~/.config/scripts/capture.sh " .. hl.get_active_monitor().name))end)
+hl.bind("ALT+3", function() hl.dispatch(hl.dsp.exec_cmd("~/.config/scripts/capture.sh " .. hl.get_active_monitor().name)) end)
 
 -- layout shenanigans
 for _, key in ipairs({mm .. "grave", mm .. "dead_grave"}) do hl.bind(key, hl.dsp.group.toggle()) end
@@ -55,13 +56,13 @@ end
 
 -- general binds
 hl.bind("CTRL+SHIFT+Escape", hl.dsp.exec_cmd("missioncenter", {size={1020,900}, pin=true, float=true}))
-hl.bind(mm .. "dead_acute", function() hl.dispatch(hl.dsp.exec_cmd("wl-copy " .. hl.get_active_window().class))end)
+hl.bind(mm .. "dead_acute", function() hl.dispatch(hl.dsp.exec_cmd("wl-copy " .. hl.get_active_window().class)) end)
 hl.bind(mm .. "Q", hl.dsp.window.close())
 hl.bind(mm .. "W", hl.dsp.exec_cmd("kitty"))
 hl.bind(mm .. "E", hl.dsp.exec_cmd("pcmanfm-qt"))
-hl.bind(mm .. "R", function() hl.dispatch(hl.dsp.exec_cmd(string.format("~/.config/scripts/link_wallpaper.sh %s %s", hl.get_active_monitor().name, hl.get_active_workspace().id)))end)
+hl.bind(mm .. "R", function() hl.dispatch(hl.dsp.exec_cmd(string.format("~/.config/scripts/link_wallpaper.sh %s %s", hl.get_active_monitor().name, hl.get_active_workspace().id))) end)
 hl.bind(mm .. "T", hl.dsp.exec_cmd("tutanota-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland --no-sandbox %U"))
-hl.bind(mm .. "U", hl.dsp.exec_cmd("~/Tools/upscaler/.venv/bin/python ~/Tools/upscaler/.venv/bin/upscale -m 8x32 -f --target-delay 0 --focus-poll-interval 0.2", {float=true,fullscreen=true}))
+hl.bind(mm .. "U", hl.dsp.exec_cmd("~/Tools/upscaler/.venv/bin/python ~/Tools/upscaler/.venv/bin/upscale -m 8x32 -f --target-delay 0", {float=true,fullscreen=true}))
 hl.bind(mm .. "P", hl.dsp.exec_cmd("~/.config/scripts/sunshine.sh"))
 hl.bind(mm .. "B", hl.dsp.exec_cmd("zen-browser"))
 

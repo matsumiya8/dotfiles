@@ -1,7 +1,7 @@
 [bar.default]
 background_opacity = 0.88
-center = [ "group:g2" ]
-end = [ "weather", "group:g3" ]
+center = [ "media" ]
+end = [ "privacy", "group:g3" ]
 font_family = "IBM Plex Sans JP"
 margin_edge = 0
 margin_ends = 0
@@ -10,38 +10,38 @@ position = "bottom"
 radius = 0
 scale = 1.05
 shadow = false
-start = [ "launcher", "workspaces", "bar", "privacy" ]
+start = [ "launcher", "workspaces", "group:g4" ]
 thickness = 40
 widget_spacing = 8
 
     [[bar.default.capsule_group]]
     enabled = true
     fill = "surface_variant"
-    id = "g1"
-    members = [ "tray", "notes", "clipboard", "bluetooth", "notifications", "clock" ]
-    opacity = 0.5
-    padding = 8.0
-
-    [[bar.default.capsule_group]]
-    enabled = true
-    fill = "surface_variant"
     id = "g2"
     members = [ "media", "volume" ]
-    opacity = 0.5
+    opacity = 0.6
     padding = 8.0
 
     [[bar.default.capsule_group]]
     enabled = true
     fill = "surface_variant"
     id = "g3"
-    members = [ "tray", "clipboard", "notes_2", "bluetooth", "notifications", "clock" ]
-    opacity = 0.5
+    members = [ "tray", "bluetooth", "volume", "notifications", "notes", "clock" ]
+    opacity = 0.6
+    padding = 6.0
+
+    [[bar.default.capsule_group]]
+    enabled = true
+    fill = "surface_variant"
+    id = "g4"
+    members = [ "weather", "bar" ]
+    opacity = 0.6
     padding = 6.0
 
 [control_center]
 show_shortcut_labels = false
 sidebar_section = "none"
-hidden_tabs = [ "monitor", "power", "network", "screen-time" ]
+hidden_tabs = [ "monitor", "system", "power", "network", "screen-time" ]
 width = 730
 
     [[control_center.shortcuts]]
@@ -124,6 +124,7 @@ temperature_night = 4000
 
 [notification]
 history_retention_hours = 72
+background_opacity = 0.79999998211860657
 
 [osd.kinds]
 brightness = false
@@ -146,10 +147,10 @@ show_hidden = true
 extension = "txt"
 panel_open_near_click = true
 panel_placement = "floating"
-panel_position = "center_right"
+panel_position = "bottom_right"
 
 [plugins]
-enabled = [ "noctalia/notes", "noctalia/timer", "nightwatch75/file-search" ]
+enabled = [ "noctalia/notes", "noctalia/timer", "dunarand/bookmarks", "nightwatch75/file-search" ]
 
 [shell]
 clipboard_confirm_clear_history = false
@@ -187,7 +188,7 @@ show_location = false
     transparency_mode = "soft"
 
     [shell.screenshot]
-    pipe_command = "SS_FOLDER=/bog/Screenshots/$(date +%Y-%m) mkdir -p $SS_FOLDER && cat > \"$SS_FOLDER/$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 7; echo .png)\""
+    pipe_command = "SS_FOLDER=/bog/Screenshots/$(date +%Y-%m); mkdir -p $SS_FOLDER && cat > \"$SS_FOLDER/$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 7; echo .png)\""
     pipe_to_command = true
     save_to_file = false
 
@@ -232,10 +233,9 @@ show_location = false
 
 [theme]
 builtin = "Catppuccin"
-community_palette = "Catppuccin Lavender"
+community_palette = "Catppuccin Mocha Lavender"
 mode = "dark"
 source = "community"
-wallpaper_scheme = "vibrant"
 
 [wallpaper]
 enabled = true
@@ -251,11 +251,16 @@ transition_duration = 400
 	directory = "~/Pictures/Wallpapers/HDMI-A-1"
 
 [widget.bar]
+scale = 0.95000000000000007
 show_idle_on_horizontal = false
 type = "noctalia/timer:bar"
 
 [widget.clock]
-tooltip_format = "{:%H:%M:%S}"
+format = "{:%a %d・%H:%M}"
+scale = 0.95
+
+[widget.file-search]
+type = "nightwatch75/file-search:file-search"
 
 [widget.launcher]
 capsule_padding = 0
@@ -263,42 +268,37 @@ glyph = "cat"
 scale = 2.0
 
     [widget.launcher.actions]
-    right = "panel-toggle launcher /w"
-    forward = "panel-toggle launcher /fs"
+    back  = "panel-toggle dunarand/bookmarks:panel"
+    right = "panel-toggle launcher /fs"
 	
-
 [widget.media]
+art_size = 22
+capsule = true
+capsule_opacity = 0.6
+capsule_padding = 8
 hide_when_no_media = true
-max_length = 300
+max_length = 350
 scroll_repeat = "steps"
 
     [widget.media.actions]
     back = "media previous-player"
     forward = "media next-player"
+    middle = "panel-toggle launcher /bk aaa_"
     scroll_down = "media next"
     scroll_up = "media previous"
 
 [widget.notes]
-type = "noctalia/notes:notes"
-
-[widget.notes_2]
+glyph = "notebook"
+scale = 0.9
 type = "noctalia/notes:notes"
 
 [widget.notifications]
-hide_when_no_unread = true
+scale = 0.9
 
 [widget.privacy]
 hide_inactive = true
 interactive = false
 scale = 1.20
-
-[widget.spacer_2]
-length = 0
-type = "spacer"
-
-[widget.spacer_3]
-length = 10
-type = "spacer"
 
 [widget.taskbar]
 group_by_workspace = true
@@ -308,6 +308,11 @@ show_workspace_label = false
 
 [widget.tray]
 drawer = true
+pinned = [ "Fcitx" ]
+scale = 0.9
+
+[widget.volume]
+show_label = false
 
 [widget.weather]
 show_condition = false
@@ -315,10 +320,10 @@ show_condition = false
 [widget.workspaces]
 active_pill_size = 1.95
 capsule = true
-capsule_opacity = 0.5
+capsule_opacity = 0.6
 capsule_padding = 8
-display = "none"
 empty_color = "outline"
 inactive_pill_size = 1.10
 occupied_color = "outline"
 scroll_repeat = "steps"
+show_labels = false

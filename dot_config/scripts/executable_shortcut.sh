@@ -6,30 +6,27 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-EXE_PATH=$(echo $1 | tr -d "'")
+EXE_PATH="$1"
 EXE_DIR=$(dirname "$EXE_PATH")
 ICON_OUTPUT_DIR="$HOME/.local/share/icons/exes/"
 
-# Ensure the icon directory exists
+# Create icon directory if doesn't exist'
 mkdir -p "$ICON_OUTPUT_DIR"
 
 GAME_NAME=$(zenity --entry --title="Create Game Shortcut" --text="Enter the name of the game:" --entry-text="$(basename "${EXE_PATH%.*}")")
 
-# Check if user clicked Cancel or provided empty input
+# Empty input check
 if [ -z "$GAME_NAME" ]; then
     echo "Operation cancelled by user."
     exit 0
 fi
 
-# Removes everything except alphanumeric characters and converts to lowercase
+# Sanitize filename
 SAFE_NAME=$(echo "$GAME_NAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]//g')
 
 # Define paths
 ICON_PATH="$ICON_OUTPUT_DIR/ge_${SAFE_NAME}.png"
 DESKTOP_FILE="$HOME/.local/share/applications/ge_${SAFE_NAME}.desktop"
-
-# Extract and convert the icon
-echo "Attempting to extract icon from $EXE_PATH..."
 
 # Create a temporary file for the raw icon
 TEMP_ICO=$(mktemp --suffix=.ico)

@@ -288,7 +288,6 @@ scroll_repeat = "steps"
     scroll_up = "media previous"
 
 [widget.notes]
-glyph = "notebook"
 scale = 0.9
 type = "noctalia/notes:notes"
 

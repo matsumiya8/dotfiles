@@ -32,7 +32,7 @@ for res, titles in pairs(fixed_res) do
 end
 
 -- workspace rules
-hl.window_rule({workspace=5, match={title="^(Steam|Sign in to Steam)$", class="^(steam)$"}})
-hl.window_rule({workspace=7, opacity=0.93, match={class="^(steam)", title="^(Friends List.*)$"}})
-hl.window_rule({workspace=7, match={class="^(vesktop)$"}})
-hl.window_rule({workspace=9, match={class="^(spotify)$"}})
+hl.window_rule({workspace = 5, match={title = "^(Steam|Sign in to Steam)$", class = "^(steam)$"}})
+hl.window_rule({workspace = 7, opacity = 0.93, match = {class="^(steam)", title = "^(Friends List.*)$"}})
+hl.window_rule({workspace = 7, match = {class="^(vesktop)$"}})
+hl.window_rule({workspace = 9, match = {class="^(spotify)$"}})

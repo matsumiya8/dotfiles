@@ -3,7 +3,7 @@ set -o pipefail
 sep=$'\x1f'
 OUTPUT=$(yad --title="Proton Launch Config" --form \
  --field="Disc:SFL" "" \
- --field="Language:":CB $(awk 'NF&&$1!~/^#/{print$1}' /etc/locale.gen|tac|sed ':a;N;$!ba;s/\n/!\\/g') \
+ --field="Locale:":CB $(awk 'NF&&$1!~/^#/{print$1}' /etc/locale.gen|tac|sed ':a;N;$!ba;s/\n/!\\/g') \
  --field="Prefix:":CB "$(ls -t -1 "$HOME/Games/umu" | sed ':a;N;$!ba;s/\n/!/g')" \
  --field="Proton:":CB "$(ls -t -1 "$HOME/.steam/steam/compatibilitytools.d" | sed ':a;N;$!ba;s/\n/!/g;s/$/\!Wine/g')" \
  --field="Native Wayland":CHK 0 \

@@ -17,6 +17,8 @@ hl.window_rule({
   },
 })
 
+hl.window_rule({opacity = 0.95, size = {281,422}, float = true, match = {title = "Proton Launch Config"}})
+
 -- windows that shouldn't be resized
 local fixed_res = {
     -- [{800,600}] = {""},

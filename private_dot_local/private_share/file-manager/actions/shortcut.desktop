@@ -2,6 +2,7 @@
 Type=Action
 Tooltip=Create a shortcut on the Start Menu
 Name=Create Shortcut
+Icon=/usr/share/icons/Papirus-Dark/16x16/actions/link.svg
 Profiles=profile-one;
 
 [X-Action-Profile profile-one]

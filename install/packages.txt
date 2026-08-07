@@ -2,6 +2,7 @@
 amd-ucode
 antimicrox
 asar
+bibata-cursor-git
 bitwarden
 blender
 blueman

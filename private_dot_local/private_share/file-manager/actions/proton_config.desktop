@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Action
+Tooltip=Configure Proton launch arguments
+Name=Configure Launch
+Icon=/usr/share/icons/Papirus-Dark/16x16/actions/configure.svg
+Profiles=profile-one;
+
+[X-Action-Profile profile-one]
+MimeTypes=application/vnd.microsoft.portable-executable;application/octet-stream;application/x-msdownload;
+Exec=/home/pyne/.config/scripts/proton_config.sh %d
+Name=Default profile

@@ -4,7 +4,7 @@ local autoexec = {
 	"wl-clip-persist --clipboard regular",
 	"easyeffects -w --service-mode",
 	"xremap --watch=config,device --mouse ~/.config/xremap/config.yml",
-	"corectrl",
+	"sleep 3; corectrl",
 }
 
 local env_vars = {
@@ -15,10 +15,11 @@ local env_vars = {
 	["XDG_SESSION_TYPE"] = "wayland",
 	["QT_QPA_PLATFORM"] = "wayland;xcb",
 	["QT_QPA_PLATFORMTHEME"] = "qt6ct",
-	["XCURSOR_THEME"] = "phinger-cursors-dark",
 	["QS_ICON_THEME"] = "Papirus-Light",
-	["HYPRCURSOR_SIZE"] = "16",
-	["XCURSOR_SIZE"] = "16",
+    ["HYPRCURSOR_SIZE"] = "22",
+    ["XCURSOR_SIZE"] = "22", 
+    ["HYPRCURSOR_THEME"] = "Bibata-Modern-Ice",   
+    ["XCURSOR_THEME"] = "Bibata-Modern-Ice",
 }
 
 for key, value in pairs(env_vars) do hl.env(key, value) end

@@ -1,14 +1,14 @@
 #!/bin/bash
 
 GAME_DIR=$1
-NWJS_BIN=$(command -v nw) || "$HOME/.local/share/nwjs/nw"
+NWJS_BIN=$(command -v nw) || NWJS_BIN="$HOME/.local/share/nwjs/nw"
 
 if [ ! -x "$NWJS_BIN" ]; then
     VER=$(curl -s https://nwjs.io/versions.json | jq -r '.stable')
     DL_URL="https://dl.nwjs.io/$VER/nwjs-$VER-linux-x64.tar.gz"
     NODE_FOLDER=$(dirname "$NWJS_BIN")
     mkdir -p "$NODE_FOLDER"
-    notify-send -t 6000 "NW.js not found" "Downloading and unpacking, this may take a while"
+    notify-send -t 6000 "NW.js not found" "Downloading and unpacking, this may take a while"    
     curl -fsSL "$DL_URL" | tar -xzf - -C "$NODE_FOLDER" --strip-components=1
 fi
 

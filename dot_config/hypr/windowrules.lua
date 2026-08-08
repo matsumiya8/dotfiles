@@ -4,7 +4,7 @@ hl.window_rule({
   center = true,
   workspace = 1,
   match = {
-    class = "^(spacecadetpinball|xqueens|flycast|Light.vn|Godot|xsystem35|com.libretro.RetroArch|pcsx2-qt|gamescope|steam_proton|steam_app.*|.*\\.exe)$",
+    class = "^(spacecadetpinball|flycast|Light.vn|Godot|xsystem35|com.libretro.RetroArch|pcsx2-qt|gamescope|steam_proton|steam_app.*|.*\\.exe)$",
 	title = ".+"
   },
 })

@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Action
 Tooltip=Upload to R2
-Name=Upload to R2
+Name=Upload
 Icon=/usr/share/icons/Papirus-Dark/16x16/actions/cloud-upload.svg
 Profiles=profile-one;
 

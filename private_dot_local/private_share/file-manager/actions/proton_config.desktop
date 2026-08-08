@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Action
 Tooltip=Configure Proton launch arguments
-Name=Configure Launch
+Name=Configure
 Icon=/usr/share/icons/Papirus-Dark/16x16/actions/configure.svg
 Profiles=profile-one;
 

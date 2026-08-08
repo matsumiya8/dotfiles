@@ -1,5 +1,6 @@
 #!/bin/bash
 FILE_PATH="$1"
+FILE_ARGS="${@:2}"
 DIR_PATH=$(dirname "$FILE_PATH")
 ELECTRON=$(compgen -c electron | sort -V | tail -n 1)
 ELECTRON_FILE="$DIR_PATH/resources/app.asar"
@@ -21,8 +22,8 @@ launch() {
     GAME="$2"
     case "${XDG_CURRENT_DESKTOP,,}" in
         "hyprland")
-            ARGS="float = true, center = true, workspace = 1"
-            hyprctl dispatch "hl.dsp.exec_cmd(\"$LAUNCHER '$GAME'\", {$ARGS})"
+            HYPR_ARGS="float = true, center = true, workspace = 1"
+            hyprctl dispatch "hl.dsp.exec_cmd(\"$LAUNCHER '$GAME'\", {$HYPR_ARGS})"
             ;;
         *)
             $LAUNCHER $GAME
@@ -43,9 +44,9 @@ proton() {
     [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
     [ -n "$DISC" ] && cdemu load 0 "$DISC" 
     if [[ "${PROTON,,}" == "wine" ]]; then
-        WINEDLLOVERRIDES="$DLLOVERRIDES" WINEPREFIX="$HOME/Games/umu/$PREFIX" LANG="$LOCALE" wine "$FILE_PATH"
+        WINEDLLOVERRIDES="$DLLOVERRIDES" WINEPREFIX="$HOME/Games/umu/$PREFIX" LANG="$LOCALE" wine "$FILE_PATH" ${FILE_ARGS[@]}
     else
-        GAMEID=$PREFIX PROTON_ENABLE_WAYLAND=$WAYLAND WINEDLLOVERRIDES="winepulse.drv=d;$DLLOVERRIDES" PROTON_USE_D7VK=$D7VK PROTONPATH="$COMPATDIR/$PROTON" LANG="$LOCALE" PRESSURE_VESSEL_FILESYSTEMS_RW=/storage umu-run "$FILE_PATH"
+        GAMEID=$PREFIX PROTON_ENABLE_WAYLAND=$WAYLAND WINEDLLOVERRIDES="winepulse.drv=d;$DLLOVERRIDES" PROTON_USE_D7VK=$D7VK PROTONPATH="$COMPATDIR/$PROTON" LANG="$LOCALE" PRESSURE_VESSEL_FILESYSTEMS_RW=/storage umu-run "$FILE_PATH" ${FILE_ARGS[@]}
     fi
 }
 

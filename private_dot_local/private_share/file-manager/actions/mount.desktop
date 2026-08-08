@@ -1,10 +1,11 @@
 [Desktop Entry]
 Type=Action
-Tooltip=Mount an Image File
-Name=Mount File
+Tooltip=Mount an Image
+Name=Mount
+Icon=/usr/share/icons/Papirus-Dark/16x16/actions/udiskie-mount.svg
 Profiles=profile-one;
 
 [X-Action-Profile profile-one]
 MimeTypes=all/allfiles;
-Exec=/home/pyne/.config/scripts/mount.sh %f
+Exec=sh -c "cdemu unload 0 && sleep 2 && cdemu load 0 %f"
 Name=Default profile

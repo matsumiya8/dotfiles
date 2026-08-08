@@ -1,11 +1,27 @@
 #!/bin/bash
 
-nwjs_bin="$HOME/.local/share/nwjs/nw"
-game_dir=$1
-plugins_file=$(find "$game_dir" -name "plugins.js" -type f | head -1)
+GAME_DIR=$1
+NWJS_BIN=$(command -v nw) || "$HOME/.local/share/nwjs/nw"
 
-# Hyprland won't adjust the resolution properly, so we need to set it ourselves. Starting by digging it from the resizing plugin file
-if [[ -f "$plugins_file" ]]; then
+if [ ! -x "$NWJS_BIN" ]; then
+    VER=$(curl -s https://nwjs.io/versions.json | jq -r '.stable')
+    DL_URL="https://dl.nwjs.io/$VER/nwjs-$VER-linux-x64.tar.gz"
+    NODE_FOLDER=$(dirname "$NWJS_BIN")
+    mkdir -p "$NODE_FOLDER"
+    notify-send -t 6000 "NW.js not found" "Downloading and unpacking, this may take a while"
+    curl -fsSL "$DL_URL" | tar -xzf - -C "$NODE_FOLDER" --strip-components=1
+fi
+
+# Patching package.json with JQ if needed, it won't run if the name string is blank
+jq '(if .name == "" then .name = "{}" else . end)' \
+   "$GAME_DIR/package.json" > /tmp/package.json && mv /tmp/package.json "$GAME_DIR/package.json"
+
+[[ ${XDG_CURRENT_DESKTOP,,} != "hyprland" ]] && $NWJS_BIN --user-data-dir=$HOME/.config/mv_games "$GAME_DIR" && exit
+
+# Hyprland won't adjust the resolution properly, so we need to set it ourselves by digging it from the likely culprit
+PLUGINS_FILE=$(find "$GAME_DIR" -name "plugins.js" -type f | head -1)
+
+if [[ -f "$PLUGINS_FILE" ]]; then
 	read WIDTH HEIGHT < <(
 	  awk '
 	    BEGIN { IGNORECASE=1 }
@@ -14,17 +30,10 @@ if [[ -f "$plugins_file" ]]; then
 	      if (HEIGHT=="" && match($0, /"screen[ _-]*height"[[:space:]]*:[[:space:]]*"?([0-9]+)"?/, m)) HEIGHT=m[1]
 	    }
 	    END { print WIDTH, HEIGHT }
-	  ' "$plugins_file"
+	  ' "$PLUGINS_FILE"
 	)
+    [[ -n $WIDTH ]] && WINDOWSIZE="size={$WIDTH,$HEIGHT}"
 fi
 
-# If we can't find the resolution from plugins.js, read it from package.json (only accurate if the plugin didn't override it)
-if [ -z "$WIDTH" ]; then
-	IFS=$'\n' read -d '' WIDTH HEIGHT < <(jq '.window.width, .window.height' "$game_dir/package.json")
-fi
-
-# Patching package.json with JQ if needed, it won't run if the name string is blank
-jq '(if .name == "" then .name = "{}" else . end)' \
-   "$game_dir/package.json" > /tmp/package.json && mv /tmp/package.json "$game_dir/package.json"
-
-hyprctl dispatch "hl.dsp.exec_cmd(\"$nwjs_bin --user-data-dir=$HOME/.config/mv_games '$game_dir'\",{float=true, center=true, workspace=1, size={$WIDTH, $HEIGHT}})"
+ARGS="float = true, center = true, workspace = 1,$WINDOWSIZE"
+hyprctl dispatch "hl.dsp.exec_cmd(\"$NWJS_BIN --user-data-dir=$HOME/.config/mv_games '$GAME_DIR'\",{$ARGS})"

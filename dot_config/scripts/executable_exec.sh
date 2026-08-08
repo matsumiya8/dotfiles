@@ -3,14 +3,14 @@ FILE_PATH="$1"
 DIR_PATH=$(dirname "$FILE_PATH")
 cd "$DIR_PATH" || exit 1
 ARGS="float = true, center = true, workspace = 1"
-ELECTRON=$(ls -v /bin/electron* | tail -n 1)
+ELECTRON=$(compgen -c electron | sort -V | tail -n 1)
 PCK_FILE=$(ls $DIR_PATH/*.pck)
 systemctl --user start fluidsynth.service
 if [ -f "$DIR_PATH/package.json" ]; then
 	"$HOME/.config/scripts/rpglauncher.sh" "$DIR_PATH"
 elif [ -n $ELECTRON ] && [ -f "$DIR_PATH/resources/app.asar" ]; then
     hyprctl dispatch "hl.dsp.exec_cmd(\"$ELECTRON '$DIR_PATH/resources/app.asar'\", {$ARGS})"
-elif [ -f /bin/godot ] && [ -n "$PCK_FILE" ]; then
+elif [ -n "$(command -v godot)" ] && [ -n "$PCK_FILE" ]; then
     hyprctl dispatch "hl.dsp.exec_cmd(\"godot --main-pack '$PCK_FILE'\", {$ARGS})"
 else
 	COMPATDIR="$HOME/.steam/steam/compatibilitytools.d"

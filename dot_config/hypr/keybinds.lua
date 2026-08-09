@@ -44,16 +44,28 @@ hl.bind(mm .. "mouse:273", hl.dsp.window.resize(), {mouse = true})
 hl.bind(mm .. "Tab", hl.dsp.focus({monitor = "+1"}))
 hl.bind(mm .. "SHIFT+Tab", hl.dsp.window.move({monitor = "+1"}))
 
-local workspace_keys = { "insert", "a", "s", "d", "f", "z", "x", "c", "v" }
+local workspace_keys = {"insert", "a", "s", "d", "f", "z", "x", "c", "v"}
 for i = 1, #workspace_keys do
-	hl.bind(mm .. workspace_keys[i], hl.dsp.focus({workspace = i}))
-	hl.bind(mm .. "SHIFT+" .. workspace_keys[i], hl.dsp.window.move({workspace = i}))
+    hl.bind(mm .. workspace_keys[i], hl.dsp.focus({workspace = i}))
+    hl.bind(mm .. "SHIFT+" .. workspace_keys[i], hl.dsp.window.move({workspace = i}))
 end
 
-for _, key in ipairs({"left", "up", "down", "right"}) do
-	hl.bind(mm .. key, hl.dsp.focus({direction = key}))
-	hl.bind(mm .. "SHIFT+" .. key, hl.dsp.window.move({direction = key}))
+local arrow_keys = {"left", "up", "down", "right"}
+for _, key in ipairs(arrow_keys) do
+    hl.bind(mm .. key, hl.dsp.focus({direction = key}))
+    hl.bind(mm .. "SHIFT+" .. key, hl.dsp.window.move({direction = key}))
 end
+
+hl.define_submap("scrolloverview", function()
+    for _, key in ipairs(arrow_keys) do hl.bind(key, hl.plugin.scrolloverview.navigate(key)) end
+    hl.bind("escape", hl.plugin.scrolloverview.overview("off"))
+    hl.bind("mouse:272", function()
+        hl.plugin.scrolloverview.overview("select")
+        hl.plugin.scrolloverview.window("select")
+        hl.plugin.scrolloverview.overview("off")
+    end, { mouse = true })
+    hl.bind("mouse:274", hl.plugin.scrolloverview.window("close"), { mouse = true })
+end)
 
 -- layout shenanigans
 for _, key in ipairs({mm .. "grave", mm .. "dead_grave"}) do hl.bind(key, hl.dsp.group.toggle()) end

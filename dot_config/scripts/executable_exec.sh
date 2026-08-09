@@ -32,21 +32,14 @@ launch() {
 }
 
 proton() {
-    COMPATDIR="$HOME/.steam/steam/compatibilitytools.d"
-    D7VK="0"
-    DISC=""
-    DLLOVERRIDES=""
-    LOCALE="ja_JP.UTF-8"
-    PREFIX="main"
-    PROTON="Proton-GE Latest"
-    WAYLAND="0"
+    CONFIG_DEFAULT="$HOME/.config/proton.conf"
     CONFIG_FILE="$DIR_PATH/proton.conf"
-    [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
+    [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE" || source "$CONFIG_DEFAULT"
     [ -n "$DISC" ] && cdemu load 0 "$DISC" 
     if [[ "${PROTON,,}" == "wine" ]]; then
-        WINEDLLOVERRIDES="$DLLOVERRIDES" WINEPREFIX="$HOME/Games/umu/$PREFIX" LANG="$LOCALE" wine "$FILE_PATH" ${FILE_ARGS[@]}
+        WINEDLLOVERRIDES="$DLLOVERRIDES" WINEPREFIX="$PREFIXDIR/$PREFIX" LANG="$LOCALE" wine "$FILE_PATH" $FILE_ARGS
     else
-        GAMEID=$PREFIX PROTON_ENABLE_WAYLAND=$WAYLAND WINEDLLOVERRIDES="winepulse.drv=d;$DLLOVERRIDES" PROTON_USE_D7VK=$D7VK PROTONPATH="$COMPATDIR/$PROTON" LANG="$LOCALE" PRESSURE_VESSEL_FILESYSTEMS_RW=/storage umu-run "$FILE_PATH" ${FILE_ARGS[@]}
+        GAMEID=$PREFIX PROTON_ENABLE_WAYLAND=$WAYLAND WINEDLLOVERRIDES="winepulse.drv=d;$DLLOVERRIDES" PROTON_USE_D7VK=$D7VK PROTONPATH="$COMPATDIR/$PROTON" LANG="$LOCALE" PRESSURE_VESSEL_FILESYSTEMS_RW=/storage umu-run "$FILE_PATH" $FILE_ARGS
     fi
 }
 

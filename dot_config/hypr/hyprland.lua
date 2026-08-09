@@ -1,21 +1,22 @@
 local autoexec = {
-	"noctalia --daemon",
-	"fcitx5 -d",
-	"wl-clip-persist --clipboard regular",
-	"easyeffects -w --service-mode",
-	"xremap --watch=config,device --mouse ~/.config/xremap/config.yml",
-	"sleep 3; corectrl",
+    "noctalia --daemon",
+    "fcitx5 -d",
+    "wl-clip-persist --clipboard regular",
+    "easyeffects -w --service-mode",
+    "xremap --watch=config,device --mouse ~/.config/xremap/config.yml",
+    "hyprpm reload",
+    "sleep 3; corectrl",
 }
 
 local env_vars = {
-	["MESA_SHADER_CACHE_MAX_SIZE"] = "5G",
-	["MPD_HOST"] = os.getenv("XDG_RUNTIME_DIR") .. "/mpd.socket",
-	["XDG_CURRENT_DESKTOP"] = "Hyprland",
+    ["MESA_SHADER_CACHE_MAX_SIZE"] = "5G",
+    ["MPD_HOST"] = os.getenv("XDG_RUNTIME_DIR") .. "/mpd.socket",
+    ["XDG_CURRENT_DESKTOP"] = "Hyprland",
     ["SDL_VIDEODRIVER"] = "wayland",
-	["XDG_SESSION_TYPE"] = "wayland",
-	["QT_QPA_PLATFORM"] = "wayland;xcb",
-	["QT_QPA_PLATFORMTHEME"] = "qt6ct",
-	["QS_ICON_THEME"] = "Papirus-Light",
+    ["XDG_SESSION_TYPE"] = "wayland",
+    ["QT_QPA_PLATFORM"] = "wayland;xcb",
+    ["QT_QPA_PLATFORMTHEME"] = "qt6ct",
+    ["QS_ICON_THEME"] = "Papirus-Light",
     ["HYPRCURSOR_SIZE"] = "22",
     ["XCURSOR_SIZE"] = "22", 
     ["HYPRCURSOR_THEME"] = "Bibata-Modern-Ice",   
@@ -28,62 +29,62 @@ hl.on("hyprland.start", function() for _, cmd in ipairs(autoexec) do hl.exec_cmd
 -- variables
 local active_color, inactive_color = 0xafb4befe, 0x595959aa
 hl.config({
-	cursor = {
-		inactive_timeout = 10,
-	},
-	decoration = {
-		rounding = 11,
-		blur = {
-			enabled = false,
-		},
-	},
-	dwindle = {
-		preserve_split = true,
-	},
-	ecosystem = {
-		no_donation_nag = true,
-	},
-	general = {
-		gaps_in = 3.5,
-		gaps_out = 7,
-		border_size = 3,
-		col = {
-			active_border = active_color,
-			inactive_border = inactive_color,
-		},
-		layout = "dwindle",
-	},
-	group = {
-		col = {
-			border_active = active_color,
-			border_inactive = inactive_color,
-		},
-		groupbar = {
-			font_family = "IBM Plex Sans JP",
-			font_size = 18,
-			gradients = true,
-			height = 22,
-			col = {
-				active = active_color,
-				inactive = inactive_color,
-			},
-		},
-	},
-	input = {
-		kb_layout = "custom",
-		kb_options = "fkeys:basic_13-24",
-		repeat_delay = 350,
-		repeat_rate = 50,
-	},
-	misc = {
-		enable_anr_dialog = false,
-		middle_click_paste = false,
-		disable_hyprland_logo = true,
-		focus_on_activate = true,
-	},
-	render = {
-		direct_scanout = 2,
-	},
+    cursor = {
+        inactive_timeout = 10,
+    },
+    decoration = {
+        rounding = 11,
+        blur = {
+            enabled = false,
+        },
+    },
+    dwindle = {
+        preserve_split = true,
+    },
+    ecosystem = {
+        no_donation_nag = true,
+    },
+    general = {
+        gaps_in = 3.5,
+        gaps_out = 7,
+        border_size = 3,
+        col = {
+            active_border = active_color,
+            inactive_border = inactive_color,
+        },
+        layout = "dwindle",
+    },
+    group = {
+        col = {
+            border_active = active_color,
+            border_inactive = inactive_color,
+        },
+        groupbar = {
+            font_family = "IBM Plex Sans JP",
+            font_size = 18,
+            gradients = true,
+            height = 22,
+            col = {
+                active = active_color,
+                inactive = inactive_color,
+            },
+        },
+    },
+    input = {
+        kb_layout = "custom",
+        kb_options = "fkeys:basic_13-24",
+        repeat_delay = 350,
+        repeat_rate = 50,
+    },
+    misc = {
+        enable_anr_dialog = false,
+        middle_click_paste = false,
+        disable_hyprland_logo = true,
+        focus_on_activate = true,
+    },
+    render = {
+        direct_scanout = 2,
+    },
 })
 
 -- displays
@@ -105,14 +106,14 @@ hl.on("workspace.active", function(ws) hl.exec_cmd("noctalia msg wallpaper-set "
 
 -- mouse config
 for _, mouse_name in ipairs({"xremap-1", "realtek-mchose-m7-pro"}) do
-	hl.device({
-		name = mouse_name,
+    hl.device({
+        name = mouse_name,
         accel_profile = "flat",
-		scroll_method = "on_button_down",
-		scroll_button = 276,
-		scroll_factor = 1.4,
-		sensitivity = -0.5,
-	})
+        scroll_method = "on_button_down",
+        scroll_button = 276,
+        scroll_factor = 1.4,
+        sensitivity = -0.5,
+    })
 end
 
 require("animations")

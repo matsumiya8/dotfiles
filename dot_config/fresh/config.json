@@ -3,7 +3,8 @@
     "use_terminal_bg": true,
     "restore_previous_session": false,
     "hot_exit": false,
-    "auto_read_only": false
+    "auto_read_only": false,
+    "use_tabs": false
   },
   "theme": "builtin://terminal",
   "file_browser": {

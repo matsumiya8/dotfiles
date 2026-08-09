@@ -5,7 +5,7 @@ hl.window_rule({
   workspace = 1,
   match = {
     class = "^(spacecadetpinball|flycast|Light.vn|Godot|xsystem35|com.libretro.RetroArch|pcsx2-qt|gamescope|steam_proton|steam_app.*|.*\\.exe)$",
-	title = ".+"
+    title = ".+"
   },
 })
 

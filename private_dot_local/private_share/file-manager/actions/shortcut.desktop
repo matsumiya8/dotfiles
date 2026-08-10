@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Action
-Tooltip=Create a shortcut on the Start Menu
-Name=Create Shortcut
+Tooltip=Create a shortcut
+Name=Shortcut
 Icon=/usr/share/icons/Papirus-Dark/16x16/actions/link.svg
 Profiles=profile-one;
 

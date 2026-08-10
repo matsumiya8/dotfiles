@@ -3,6 +3,7 @@ local function noct(key, msg) hl.bind(key, hl.dsp.exec_cmd("noctalia msg " .. ms
 
 -- general binds
 hl.bind("CTRL+SHIFT+Escape", hl.dsp.exec_cmd("missioncenter", {size = {1020,900}, pin = true, float = true}))
+hl.bind(mm .. "Space", hl.dsp.exec_cmd("pgrep -x ff || kitty ff", {fullscreen=true}))
 hl.bind(mm .. "dead_acute", function() hl.dispatch(hl.dsp.exec_cmd("wl-copy " .. hl.get_active_window().class)) end)
 hl.bind(mm .. "Q", hl.dsp.window.close())
 hl.bind(mm .. "W", hl.dsp.exec_cmd("kitty"))
@@ -15,7 +16,6 @@ hl.bind(mm .. "B", hl.dsp.exec_cmd("zen-browser"))
 
 -- noctalia commands + screen recording
 noct(mm .. "SUPER_L", "panel-toggle launcher")
-noct(mm .. "Space", "panel-toggle launcher \"/fs \"")
 noct(mm .. "Y", "panel-toggle clipboard")
 noct(mm .. "G", "panel-toggle noctalia/timer:panel")
 noct(mm .. "N", "panel-toggle noctalia/notes:panel")

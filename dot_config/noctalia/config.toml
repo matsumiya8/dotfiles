@@ -150,7 +150,7 @@ panel_placement = "floating"
 panel_position = "bottom_right"
 
 [plugins]
-enabled = [ "noctalia/notes", "noctalia/timer", "dunarand/bookmarks", "nightwatch75/file-search" ]
+enabled = [ "noctalia/notes", "noctalia/timer", "dunarand/bookmarks" ]
 
 [shell]
 clipboard_confirm_clear_history = false
@@ -268,8 +268,7 @@ glyph = "cat"
 scale = 2.0
 
     [widget.launcher.actions]
-    back  = "panel-toggle dunarand/bookmarks:panel"
-    right = "panel-toggle launcher /fs"
+    right = "panel-toggle dunarand/bookmarks:panel"
 	
 [widget.media]
 art_size = 22
@@ -326,3 +325,6 @@ inactive_pill_size = 1.10
 occupied_color = "outline"
 scroll_repeat = "steps"
 show_labels = false
+
+    [widget.workspaces.actions]
+    right = "exec hyprctl dispatch 'hl.plugin.scrolloverview.overview(\"toggle\")'"

@@ -13,11 +13,11 @@ hl.window_rule({
   name = "transparency",
   opacity = 0.95,
   match = {
-    class = "^(dev.noctalia.Noctalia|transmission-qt|org.pulseaudio.pavucontrol|spotify|lxqt-archiver|protonvpn-app|Bitwarden|pcmanfm-qt|vesktop|org.nicotine_plus.Nicotine|tutanota-desktop|com.github.wwmm.easyeffects)$",
+    class = "^(zenity|dev.noctalia.Noctalia|transmission-qt|org.pulseaudio.pavucontrol|spotify|lxqt-archiver|protonvpn-app|Bitwarden|pcmanfm-qt|vesktop|org.nicotine_plus.Nicotine|tutanota-desktop|com.github.wwmm.easyeffects)$",
   },
 })
 
-hl.window_rule({opacity = 0.95, size = {281,422}, float = true, match = {title = "Proton Launch Config"}})
+hl.window_rule({opacity = 0.95, size = {281,417}, float = true, match = {title = "Proton Launch Config"}})
 
 -- windows that shouldn't be resized
 local fixed_res = {

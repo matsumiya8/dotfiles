@@ -16,10 +16,12 @@ export FZF_DEFAULT_OPTS=" \
 --bind 'tab:down' \
 --bind 'shift-tab:up' \
 --bind 'ctrl-c:execute-silent(wl-copy {})' \
+--bind 'ctrl-d:execute-silent(mpc insert {})'
 --bind 'ctrl-e:execute-silent(nohup xdg-open \"\$(dirname {})\" & disown)' \
 --bind 'ctrl-v:transform-query(wl-paste | sed \"s|^file://||\")' \
 --bind 'ctrl-backspace:transform-query(echo)' \
 --bind 'F1:transform-query(echo $HOME/)' \
+--bind 'F2:transform-query(echo /storage/music/)' \
 --bind 'F5:execute($INDEXCMD)+reload(cat $INDEX)' \
 --color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
 --color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \

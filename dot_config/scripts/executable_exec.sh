@@ -36,7 +36,7 @@ download_if_missing() {
     FILE="$1"
     URL="$2"
     [ -f "$FILE" ] || {
-        notify-send -t 4000 "Exec" "$(basename '$FILE') is missing, fetching from GitHub"
+        notify-send -t 4000 "Exec" "$(basename "$FILE") is missing, fetching from GitHub"
         mkdir -p "$(dirname $FILE)"
         curl -L -o "$FILE" "$URL" || {
             notify-send -t 4000 "Exec" "Download failed! Aborting..."
@@ -70,7 +70,7 @@ proton() {
     }
     [ -d "$COMPATDIR$PROTON" ] || {
         [ -d "$COMPATDIR$DEFAULTPROTON" ] && PROTON="$DEFAULTPROTON" || {
-            notify-send -t 6000 "Exec" "No configured Proton available. Downloading GE-Proton. Edit your '$DEFAULTCONFIG'"
+            notify-send -t 6000 "Exec" "No configured Proton available. Downloading GE-Proton. Edit your \"$DEFAULTCONFIG\""
             COMPATDIR="" PROTON="GE-Proton"
         }
     }

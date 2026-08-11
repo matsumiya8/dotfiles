@@ -90,5 +90,5 @@ elif [ -n "$GODOT_FILE" ] && [ -n "$(command -v godot)" ]; then
 elif [ -n "$SYSTEM35_FILE" ] && [ -n "$(command -v xsystem35)" ]; then
     xsystem35
 else
-    proton
+    proton "$DIR_PATH"
 fi

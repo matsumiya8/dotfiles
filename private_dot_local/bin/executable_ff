@@ -1,35 +1,29 @@
 #!/bin/bash
-[[ $(command -v fd fzf xdg-open) ]] || {
-    echo "Make sure fd, fzf and xdg-utils are installed first."
+
+[[ $(command -v fd fzf mpc mpd xdg-open) ]] || {
+    echo "Make sure fd, fzf, mpc, mpd and xdg-utils are installed first."
     exit 1
 }
 
-IGNOREDIRS="$HOME/.config/ignoredirs"
-INDEX="$HOME/.cache/file_index.txt"
-INDEXCMD="cd / && fd -a . --hidden --ignore-file '$IGNOREDIRS' | LC_ALL=C sort -f > '$INDEX'"
+arg=${1:-1}
+ignoredirs="$HOME/.config/ignoredirs"
+index="$HOME/.cache/file_index.txt"
+indexcmd="cd / && fd -a . --hidden --ignore-file '$ignoredirs' | LC_ALL=C sort -f > '$index'"
+preset1_cmd="cat $index"
+preset2_cmd="mpc listall"
+[[ -f "$ignoredirs" ]] || touch "$ignoredirs"
+[[ -f "$index" ]] || eval $(indexcmd)
+export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzfopts"
+export preset1_prompt="1. Files "
+export preset2_prompt="2. Songs "
+declare -n prompt="preset${arg}_prompt"
 
-[[ -f "$IGNOREDIRS" ]] || touch "$IGNOREDIRS"
-[[ -f "$INDEX" ]] || wait $(INDEXCMD)
-
-export FZF_DEFAULT_OPTS=" \
---bind 'change:first' \
---bind 'tab:down' \
---bind 'shift-tab:up' \
---bind 'ctrl-c:execute-silent(wl-copy {})' \
---bind 'ctrl-d:execute-silent(mpc insert {})'
---bind 'ctrl-e:execute-silent(nohup xdg-open \"\$(dirname {})\" & disown)' \
---bind 'ctrl-v:transform-query(wl-paste | sed \"s|^file://||\")' \
---bind 'ctrl-backspace:transform-query(echo)' \
---bind 'F1:transform-query(echo $HOME/)' \
---bind 'F2:transform-query(echo /storage/music/)' \
---bind 'F5:execute($INDEXCMD)+reload(cat $INDEX)' \
---color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
---color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
---color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
---color=selected-bg:#45475A \
---color=border:#6C7086,label:#CDD6F4 \
---layout=reverse \
---tiebreak=index"
-
-FILE=$(fzf < "$INDEX")
-[[ ${XDG_CURRENT_DESKTOP,,} == "hyprland" ]] && hyprctl dispatch "hl.dsp.exec_cmd('xdg-open \"$FILE\"')" || xdg-open "$FILE"
+starter_command="preset${arg}_cmd"
+eval "${!starter_command}" | fzf --prompt "$prompt" \
+--bind "F1:change-prompt($preset1_prompt)+reload($preset1_cmd)+rebind:F5" \
+--bind "F2:change-prompt($preset2_prompt)+reload($preset2_cmd)+unbind:F5" \
+--bind "F5:execute($indexcmd)+reload($preset1_cmd)" \
+--bind 'left-click,enter,ctrl-o:transform: case $FZF_PROMPT in "$preset1_prompt")echo +accept && sh -c "nohup xdg-open {} >/dev/null 2>&1 &" ;;
+$preset2_prompt)mpc insert {} ;; esac' \
+--bind 'right-click,ctrl-e,ctrl-j:transform: case $FZF_PROMPT in "$preset1_prompt")sh -c "nohup xdg-open \"\$(dirname {})\" >/dev/null 2>&1 &" ;;
+$preset2_prompt) mpc insert "$(dirname {})" ;; esac'

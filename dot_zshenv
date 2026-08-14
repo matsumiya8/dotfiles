@@ -10,3 +10,4 @@ VISUAL=fresh
 alias f="fresh"
 alias op="xdg-open"
 alias up="sudo pacman -Syu"
+export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzfopts"

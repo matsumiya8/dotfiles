@@ -57,7 +57,7 @@ schema_version = 2
 active_monitor_only = true
 auto_hide = false
 enabled = true
-pinned = [ "bitwarden", "tutanota-desktop", "zen", "pcmanfm-qt", "steam", "vesktop" ]
+pinned = [ "bitwarden", "tutanota-desktop", "zen", "pcmanfm-qt", "steam", "equibop" ]
 position = "top"
 reserve_space = false
 show_dots = true
@@ -138,15 +138,8 @@ nightlight = false
 power_profile = false
 wifi = false
 
-[plugin_settings."nightwatch75/file-search"]
-exclude_dirs = "downgrade, .cargo, mnt, Cos, wolf, mv_games, mozilla, chromium, retroarch, goldendict, queens, xqueens, blender_org, spicetify, BraveSoftware, .local, Spotify, bin, srv, dev, lib, boot, lib64, opt, ssl, ca-certificates, .mednafen, tutanota-desktop, Bitwarden, unity3d, proc, lost+found, root, run, sbin, tmp, var, usr, Screenshots, vesktop, .mozilla, sys, umu, {}, VN, RPG, Steam, .pki, .var, .java, .cmake, .wine, Games, .moc, .gnupg, .zen, .mono, .git, node_modules, .cache, .venv"
-search_folder = "/"
-show_hidden = true
-
 [plugin_settings."noctalia/notes"]
 extension = "txt"
-panel_open_near_click = true
-panel_placement = "floating"
 panel_position = "bottom_right"
 
 [plugins]
@@ -259,9 +252,6 @@ type = "noctalia/timer:bar"
 format = "{:%a %d・%H:%M}"
 scale = 0.95
 
-[widget.file-search]
-type = "nightwatch75/file-search:file-search"
-
 [widget.launcher]
 capsule_padding = 0
 glyph = "cat"
@@ -285,7 +275,7 @@ scroll_repeat = "steps"
     middle = "panel-toggle launcher /bk aaa_"
     scroll_down = "media next"
     scroll_up = "media previous"
-
+    
 [widget.notes]
 scale = 0.9
 type = "noctalia/notes:notes"

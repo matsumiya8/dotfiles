@@ -1,9 +1,13 @@
 local mm = "SUPER+"
 local function noct(key, msg) hl.bind(key, hl.dsp.exec_cmd("noctalia msg " .. msg)) end
+local function focus_running_or_exec(class, command, args) 
+    local match = hl.get_windows({ class = class })
+    if #match > 0 then hl.dispatch(hl.dsp.focus({window = match[1]})) else hl.dispatch(hl.dsp.exec_cmd(command, args)) end
+end
 
 -- general binds
 hl.bind("CTRL+SHIFT+Escape", hl.dsp.exec_cmd("missioncenter", {size = {1020,900}, pin = true, float = true}))
-hl.bind(mm .. "Space", hl.dsp.exec_cmd("pgrep -x ff || kitty ff", {fullscreen=true}))
+hl.bind(mm .. "Space", function() focus_running_or_exec("ff", "kitty --class ff ~/.local/bin/ff", {fullscreen=true}) end)
 hl.bind(mm .. "dead_acute", function() hl.dispatch(hl.dsp.exec_cmd("wl-copy " .. hl.get_active_window().class)) end)
 hl.bind(mm .. "Q", hl.dsp.window.close())
 hl.bind(mm .. "W", hl.dsp.exec_cmd("kitty"))

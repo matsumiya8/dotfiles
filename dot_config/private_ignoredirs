@@ -23,8 +23,10 @@ BraveSoftware
 ca-certificates
 chromium
 Cos
+DankMaterialShell
 dev
 downgrade
+equibop
 Games
 goldendict
 lib
@@ -42,7 +44,6 @@ quickshell
 retroarch
 rmmz-game
 root
-RPG
 run
 sbin
 Screenshots
@@ -51,6 +52,7 @@ Spotify
 srv
 ssl
 Steam
+storage
 sys
 tmp
 tutanota-desktop
@@ -58,8 +60,6 @@ umu
 unity3d
 usr
 var
-vesktop
-VN
 wolf
 xqueens
 \{\}/

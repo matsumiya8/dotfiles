@@ -29,6 +29,9 @@ hl.on("hyprland.start", function() for _, cmd in ipairs(autoexec) do hl.exec_cmd
 -- variables
 local active_color, inactive_color = 0xafb4befe, 0x595959aa
 hl.config({
+    binds = {
+        scroll_event_delay = 0,
+    },
     cursor = {
         inactive_timeout = 10,
     },

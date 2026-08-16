@@ -33,12 +33,12 @@ hl.bind("ALT+3", function() hl.dispatch(hl.dsp.exec_cmd("~/.config/scripts/captu
 noct(mm .. "F4", "media next-player")
 for _, key in ipairs({mm .. "F5", "XF86AudioPlay", "XF86AudioPause"}) do noct(key, "media toggle") end
 for _, key in ipairs({mm .. "F6", "XF86AudioStop"}) do noct(key, "media stop") end
-for _, key in ipairs({mm .. "F7", "XF86AudioPrev"}) do noct(key, "media previous") end
-for _, key in ipairs({mm .. "F8", "XF86AudioNext"}) do noct(key, "media next") end
+for _, key in ipairs({mm .. "F7", mm .. "mouse_up", "XF86AudioPrev"}) do noct(key, "media previous") end
+for _, key in ipairs({mm .. "F8", mm .. "mouse_down", "XF86AudioNext"}) do noct(key, "media next") end
 hl.bind(mm .. "J", hl.dsp.exec_cmd("kitty --class rmpc_search -o font_size=22 ~/.config/scripts/rmpc_dynamic.sh input", {float = true, pin = true, stay_focused = true, size = {500,50}}))
-hl.bind(mm .. "F9", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh"))
-hl.bind(mm .. "F10", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh artist"))
-hl.bind(mm .. "F11", hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh album"))
+for _, key in ipairs({mm .. "F9", mm .. "mouse:274"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh"))end
+for _, key in ipairs({mm .. "F10", mm .. "mouse:276"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh artist"))end
+for _, key in ipairs({mm .. "F11", mm .. "mouse:275"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/rmpc_dynamic.sh album"))end
 noct("F13", "volume-up 5")
 noct("F14", "volume-down 5")
 
@@ -60,6 +60,7 @@ for _, key in ipairs(arrow_keys) do
     hl.bind(mm .. "SHIFT+" .. key, hl.dsp.window.move({direction = key}))
 end
 
+--overview plugin
 hl.define_submap("scrolloverview", function()
     for _, key in ipairs(arrow_keys) do hl.bind(key, hl.plugin.scrolloverview.navigate(key)) end
     hl.bind("escape", hl.plugin.scrolloverview.overview("off"))

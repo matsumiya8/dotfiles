@@ -7,6 +7,8 @@ source "$DEFAULTCONFIG" && source "$GAMECONFIG"
 
 OUTPUT=$(yad --title="Proton Launch Config" --form \
  --field="Disc":SFL "$DISC" \
+ --field="FPS Cap":NUM "$FPSCAP\!0..999\!10\!0" \
+ --field="Joy Profile":CB "$(find $JOYPROFILEDIR/* -maxdepth 0 -type f -printf '%f\\!' && echo "None" | sed "s/$JOYPROFILE/^&/g")" \
  --field="Locale":CB "$(awk -v locale=$LOCALE 'NF && $1 !~ /^#/ {if (n++) printf "\\!"; if ($1 == locale) printf "^"; printf "%s", $1 } ' /etc/locale.gen)" \
  --field="Prefix":CB "$(find $PREFIXDIR/* -maxdepth 0 -type d -printf '%f\\!' | head -c -2 | sed 's/'"$PREFIX"'/^&/g')" \
  --field="Proton":CB "$({ find $COMPATDIR/* -maxdepth 0 -type d -printf '%f!'; [[ $(command -v wine) ]] && echo 'Wine'; } | sed "s/$PROTON/^&/g")" \
@@ -15,6 +17,6 @@ OUTPUT=$(yad --title="Proton Launch Config" --form \
  --field="DLL Overrides (; separated)":TXT "$GAMEOVERRIDES" \
  --separator=$SEP | sed 's/TRUE/1/g; s/FALSE/0/g') || exit 1
 
-VARS=(DISC LOCALE PREFIX PROTON D7VK WAYLAND GAMEOVERRIDES) 
+VARS=(DISC FPSCAP JOYPROFILE LOCALE PREFIX PROTON D7VK WAYLAND GAMEOVERRIDES) 
 IFS=$SEP read -r "${VARS[@]}" <<<"$OUTPUT"
 declare -p "${VARS[@]}" >"$GAMECONFIG"

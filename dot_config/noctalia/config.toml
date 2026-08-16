@@ -57,7 +57,7 @@ schema_version = 2
 active_monitor_only = true
 auto_hide = false
 enabled = true
-pinned = [ "bitwarden", "tutanota-desktop", "zen", "pcmanfm-qt", "steam", "equibop" ]
+pinned = [ "bitwarden", "tutanota-desktop", "pcmanfm-qt", "zen", "steam", "equibop" ]
 position = "top"
 reserve_space = false
 show_dots = true
@@ -224,12 +224,6 @@ show_location = false
     shortcut = "p"
     variant = "destructive"
 
-[theme]
-builtin = "Catppuccin"
-community_palette = "Catppuccin Mocha Lavender"
-mode = "dark"
-source = "community"
-
 [wallpaper]
 enabled = true
 fill_mode = "fit"
@@ -266,13 +260,12 @@ capsule = true
 capsule_opacity = 0.6
 capsule_padding = 8
 hide_when_no_media = true
-max_length = 350
+max_length = 380
 scroll_repeat = "steps"
 
     [widget.media.actions]
     back = "media previous-player"
     forward = "media next-player"
-    middle = "panel-toggle launcher /bk aaa_"
     scroll_down = "media next"
     scroll_up = "media previous"
     

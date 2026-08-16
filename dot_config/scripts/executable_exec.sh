@@ -16,11 +16,11 @@ systemctl --user start fluidsynth.service
 cleanup() {
     [ -n "$DISC" ] && cdemu unload 0
     systemctl --user stop fluidsynth.service
+    pgrep -x antimicrox && pkill -x antimicrox
 }
 
 launch() {
-    LAUNCHER="$1"
-    GAME="$2"
+    LAUNCHER="$1" GAME="$2"
     case "${XDG_CURRENT_DESKTOP,,}" in
         "hyprland")
             HYPR_ARGS="float = true, center = true, workspace = 1"
@@ -33,8 +33,7 @@ launch() {
 }
 
 download_if_missing() {
-    FILE="$1"
-    URL="$2"
+    FILE="$1" URL="$2"
     [ -f "$FILE" ] || {
         notify-send -t 4000 "Exec" "$(basename "$FILE") is missing, fetching from GitHub"
         mkdir -p "$(dirname $FILE)"
@@ -45,10 +44,20 @@ download_if_missing() {
     }
 }
 
+check_var_and_command() {
+    VAR="$1" CMD="$2" REQ="$3"
+    [[ -z "$VAR" || "$VAR" == "0" || "${VAR,,}" == "none" ]] && return 1
+    ! command -v "$CMD" >/dev/null && {
+        notify-send -t 6000 "Exec" "Warning: $REQ requested by proton.conf but $CMD is not installed"
+        return 1
+    } 
+    return 0
+}
+
 proton() { 
     download_if_missing "$DEFAULTCONFIG" "$DOTS_URL/proton.conf"
     source "$DEFAULTCONFIG" && source "$GAMECONFIG"
-    COMPATDIR="${COMPATDIR%/}/" PREFIXDIR="${PREFIXDIR%/}/"
+    COMPATDIR="${COMPATDIR%/}/" PREFIXDIR="${PREFIXDIR%/}/" JOYPROFILEDIR="${JOYPROFILEDIR/}/"
     DLLOVERRIDES="${DEFAULTOVERRIDES%;:+$DEFAULTOVERRIDES;}$GAMEOVERRIDES"
     [ ! "$(command -v umu-run)" ] && {
         [ "$(command -v wine)" ] || {
@@ -58,15 +67,12 @@ proton() {
         notify-send -t 6000 "Exec" "umu-run not found, using wine instead."
         PROTON="wine"
     }
-    [ -n "$DISC" ] && {
-        [ "$(command -v cdemu)" ] && cdemu load 0 "$DISC" || {
-            notify-send -t 6000 "Exec" "Warning: Disc requested by proton.conf but cdemu is not installed"
-            DISC=""
-        }
-    } 
+    check_var_and_command "$DISC" "cdemu" "DISC" && cdemu load 0 "$DISC" || DISC=""
+    check_var_and_command "$FPSCAP" "mangohud" "FPSCAP" && MANGOHUDENV="env MANGOHUD_CONFIG=fps_limit=$FPSCAP,no_display mangohud"
+    check_var_and_command "$JOYPROFILE" "antimicrox" "JOYPROFILE" && antimicrox --hidden --profile "$JOYPROFILEDIR$JOYPROFILE" &
     [ -z "$PROTON" ] && PROTON="$DEFAULTPROTON"
     [ "${PROTON,,}" == "wine" ] && {
-        WINEDLLOVERRIDES="$DLLOVERRIDES" WINEPREFIX="$PREFIXDIR$PREFIX" LANG="$LOCALE" wine "$FILE_PATH" $FILE_ARGS
+        WINEDLLOVERRIDES="$DLLOVERRIDES" WINEPREFIX="$PREFIXDIR$PREFIX" LANG="$LOCALE" $MANGOHUDENV wine "$FILE_PATH" $FILE_ARGS
         exit 0
     }
     [ -d "$COMPATDIR$PROTON" ] || {
@@ -75,7 +81,7 @@ proton() {
             COMPATDIR="" PROTON="GE-Proton"
         }
     }
-    GAMEID=$PREFIX UMU_RUNTIME_UPDATE=$RUNTIMEUPDATE UMU_HTTP_TIMEOUT=1 PROTONFIXES_DISABLE=$NOFIXES PROTON_ENABLE_WAYLAND=$WAYLAND WINEDLLOVERRIDES="$DLLOVERRIDES" PROTON_USE_D7VK=$D7VK PROTONPATH="$COMPATDIR$PROTON" LANG="$LOCALE" PRESSURE_VESSEL_FILESYSTEMS_RW="$RWDIRS" umu-run "$FILE_PATH" $FILE_ARGS
+    GAMEID=$PREFIX UMU_RUNTIME_UPDATE=$RUNTIMEUPDATE UMU_HTTP_TIMEOUT=1 PROTONFIXES_DISABLE=$NOFIXES PROTON_ENABLE_WAYLAND=$WAYLAND WINEDLLOVERRIDES="$DLLOVERRIDES" PROTON_USE_D7VK=$D7VK PROTONPATH="$COMPATDIR$PROTON" LANG="$LOCALE" PRESSURE_VESSEL_FILESYSTEMS_RW="$RWDIRS" $MANGOHUDENV umu-run "$FILE_PATH" $FILE_ARGS
     exit 0
 }
 

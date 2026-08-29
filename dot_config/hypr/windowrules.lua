@@ -13,7 +13,7 @@ hl.window_rule({
   name = "transparency",
   opacity = 0.95,
   match = {
-    class = "^(equibop|zenity|dev.noctalia.Noctalia|transmission-qt|org.pulseaudio.pavucontrol|spotify|lxqt-archiver|protonvpn-app|Bitwarden|pcmanfm-qt|org.nicotine_plus.Nicotine|tutanota-desktop|com.github.wwmm.easyeffects)$",
+    class = "^(vesktop|zenity|dev.noctalia.Noctalia|transmission-qt|org.pulseaudio.pavucontrol|spotify|lxqt-archiver|protonvpn-app|Bitwarden|pcmanfm-qt|org.nicotine_plus.Nicotine|tutanota-desktop|com.github.wwmm.easyeffects)$",
   },
 })
 
@@ -36,5 +36,8 @@ end
 -- workspace rules
 hl.window_rule({workspace = 5, match={title = "^(Steam|Sign in to Steam)$", class = "^(steam)$"}})
 hl.window_rule({workspace = 7, opacity = 0.93, match = {class="^(steam)", title = "^(Friends List.*)$"}})
-hl.window_rule({workspace = 7, match = {class="^(equibop)$"}})
+hl.window_rule({workspace = 7, match = {class="^(vesktop)$"}})
 hl.window_rule({workspace = 9, match = {class="^(spotify)$"}})
+
+-- App rules
+hl.window_rule({workspace = 1, float = true, fullscreen = true, confine_pointer = true, match={title = "^(Terraria.*)$", class = "^(dotnet)$"}})

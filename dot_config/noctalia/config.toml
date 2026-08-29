@@ -61,7 +61,7 @@ active_monitor_only = true
 auto_hide = false
 enabled = true
 monitors = [ "DP-2", "HDMI-A-1" ]
-pinned = [ "bitwarden", "tutanota-desktop", "pcmanfm-qt", "zen", "steam", "equibop" ]
+pinned = [ "bitwarden", "tutanota-desktop", "pcmanfm-qt", "zen", "steam", "vesktop" ]
 position = "top"
 reserve_space = false
 show_dots = true
@@ -70,6 +70,12 @@ smart_auto_hide = true
 
 [hot_corners.top_left]
 action = "window_switcher"
+
+[keybinds]
+down = [ "Tab" ]
+tab_next = [ "F2" ]
+tab_previous = [ "F1" ]
+up = [ "Shift+ISO_Left_Tab" ]
 
 [lockscreen_widgets]
 enabled = false
@@ -293,6 +299,7 @@ show_workspace_label = false
 
 [widget.tray]
 drawer = true
+hidden = [ "corectrl" ]
 pinned = [ "Fcitx" ]
 scale = 0.9
 

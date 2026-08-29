@@ -17,6 +17,8 @@ local env_vars = {
     ["QT_QPA_PLATFORM"] = "wayland;xcb",
     ["QT_QPA_PLATFORMTHEME"] = "qt6ct",
     ["QS_ICON_THEME"] = "Papirus-Light",
+    ["MANGOHUD_CONFIG"] = "fps_limit=237,no_display",
+    ["MANGOHUD"] = "1",
     ["HYPRCURSOR_SIZE"] = "22",
     ["XCURSOR_SIZE"] = "22", 
     ["HYPRCURSOR_THEME"] = "Bibata-Modern-Ice",   
@@ -74,6 +76,7 @@ hl.config({
         },
     },
     input = {
+        follow_mouse_shrink = 25,
         kb_layout = "custom",
         kb_options = "fkeys:basic_13-24",
         repeat_delay = 350,
@@ -92,9 +95,9 @@ hl.config({
 
 -- displays
 local main, secondary = "DP-2", "HDMI-A-1"
-hl.monitor({output = main, mode = "1920x1080@239.760", position = "0x0"})
+hl.monitor({output = main, mode = "1920x1080@240", position = "0x0", vrr = 1})
 hl.monitor({output = secondary, mode = "1920x1080@120.003", position = "1920x-385", transform = 3})
-hl.monitor({output = "SUNSHINE", mode = "800x600@90", position = "3000x0"})
+hl.monitor({output = "SUNSHINE", mode = "800x600@90", position = "auto", scale = 1})
 
 -- workspaces and per-workspace wallpapers
 local wallpapers = {}

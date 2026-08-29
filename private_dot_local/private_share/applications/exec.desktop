@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Exec
+Icon=/usr/share/icons/Papirus-Dark/96x96/mimetypes/application-x-ms-dos-executable.svg
+Exec=/home/pyne/.config/scripts/exec.sh %f
+MimeType=application/vnd.microsoft.portable-executable;application/x-msdownload;
+NoDisplay=true

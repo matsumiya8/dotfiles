@@ -16,7 +16,7 @@ systemctl --user start fluidsynth.service
 cleanup() {
     [ -n "$DISC" ] && cdemu unload 0
     systemctl --user stop fluidsynth.service
-    pgrep -x antimicrox && pkill -x antimicrox
+    [ -n "$JOYPROFILE" ] && pgrep -x antimicrox && pkill -x antimicrox
 }
 
 launch() {
@@ -95,7 +95,7 @@ elif [ -f "$ELECTRON_FILE" ] && [ -n $ELECTRON ]; then
 elif [ -n "$GODOT_FILE" ] && [ -n "$(command -v godot)" ]; then
     launch "godot --main-pack" "$GODOT_FILE"
 elif [ -n "$SYSTEM35_FILE" ] && [ -n "$(command -v xsystem35)" ]; then
-    xsystem35
+    xsystem35 -fullscreen
 else
     proton "$DIR_PATH"
 fi

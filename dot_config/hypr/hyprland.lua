@@ -95,7 +95,7 @@ hl.config({
 
 -- displays
 local main, secondary = "DP-2", "HDMI-A-1"
-hl.monitor({output = main, mode = "1920x1080@240", position = "0x0", vrr = 1})
+hl.monitor({output = main, mode = "1920x1080@240", position = "0x0", vrr = 3})
 hl.monitor({output = secondary, mode = "1920x1080@120.003", position = "1920x-385", transform = 3})
 hl.monitor({output = "SUNSHINE", mode = "800x600@90", position = "auto", scale = 1})
 

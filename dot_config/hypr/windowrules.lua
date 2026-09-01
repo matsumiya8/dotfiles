@@ -1,7 +1,8 @@
 hl.window_rule({
   name = "games-and-floating-apps",
-  float = true,
+  content = "game",
   center = true,
+  float = true,
   workspace = 1,
   match = {
     class = "^(flycast|Light.vn|Godot|xsystem35|com.libretro.RetroArch|pcsx2-qt|gamescope|steam_proton|steam_app.*|.*\\.exe)$",
@@ -40,4 +41,5 @@ hl.window_rule({workspace = 7, match = {class="^(vesktop)$"}})
 hl.window_rule({workspace = 9, match = {class="^(spotify)$"}})
 
 -- App rules
-hl.window_rule({workspace = 1, float = true, fullscreen = true, confine_pointer = true, match={title = "^(Terraria.*)$", class = "^(dotnet)$"}})
+hl.window_rule({workspace = 1, float = true, fullscreen = true, confine_pointer = true, match = {title = "^(Terraria.*)$", class = "^(dotnet)$"}})
+hl.window_rule({no_follow_mouse = true, match = {class = "^(meikipop)$"}})

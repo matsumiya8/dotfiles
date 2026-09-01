@@ -6,6 +6,7 @@ local function interact_or_exec(action, class, command, args)
 end
 
 -- general binds
+for _, key in ipairs({"ALT+grave", "ALT+dead_grave"}) do hl.bind(key, hl.dsp.exec_cmd("pkill -x meikipop || ~/Tools/meikipop/bin/meikipop")) end
 hl.bind("CTRL+SHIFT+Escape", hl.dsp.exec_cmd("missioncenter", {size = {1020,900}, pin = true, float = true}))
 hl.bind(mm .. "Space", function() interact_or_exec(hl.dsp.focus, "ff", "kitty --class ff ~/.local/bin/ff", {fullscreen=true}) end)
 hl.bind(mm .. "dead_acute", function() hl.dispatch(hl.dsp.exec_cmd("wl-copy " .. hl.get_active_window().class)) end)
@@ -27,7 +28,7 @@ noct(mm .. "M", "panel-toggle launcher \"/bk \"")
 noct("XF86AudioRaiseVolume", "panel-toggle session")
 noct("ALT+1", "screenshot-region")
 noct("ALT+2", "screenshot-fullscreen")
-hl.bind("ALT+3", function() hl.dispatch(hl.dsp.exec_cmd("~/.config/scripts/capture.sh " .. hl.get_active_monitor().name)) end)
+hl.bind("ALT+3", hl.dsp.exec_cmd("~/.config/scripts/capture.sh"))
 
 -- multimedia
 noct(mm .. "F4", "media next-player")

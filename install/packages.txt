@@ -17,6 +17,7 @@ corectrl
 cuetools
 downgrade
 easyeffects
+easyrpg-player
 fastfetch
 fcitx5-configtool
 fcitx5-gtk
@@ -45,6 +46,7 @@ hyprland
 icoextract
 imagemagick
 kdenlive
+kimageformats
 kitty
 kvantum
 kvantum-qt5

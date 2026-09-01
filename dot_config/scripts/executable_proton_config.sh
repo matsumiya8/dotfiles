@@ -2,6 +2,7 @@
 set -o pipefail
 SEP=$'\x1f'
 DEFAULTCONFIG="$HOME/.config/proton.conf"
+GAMECONFIG="$1/proton.conf"
 source "$DEFAULTCONFIG" && source "$GAMECONFIG"
 [ -z "$PROTON" ] && PROTON="$DEFAULTPROTON"
 

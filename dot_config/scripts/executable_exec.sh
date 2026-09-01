@@ -9,6 +9,9 @@ GODOT_FILE=$(compgen -G "$DIR_PATH/*.pck")
 SYSTEM35_FILE=$(compgen -G "$DIR_PATH/SYSTEM3*.EXE")
 RPGLAUNCHER="$HOME/.config/scripts/rpglauncher.sh"
 DEFAULTCONFIG="$HOME/.config/proton.conf"
+GAMECONFIG="$1/proton.conf"
+RPGMV_FILE="$DIR_PATH/package.json"
+RPG2000_FILE="$DIR_PATH/RPG_RT.ini"
 
 cd "$DIR_PATH" || exit 1
 systemctl --user start fluidsynth.service
@@ -23,7 +26,7 @@ launch() {
     LAUNCHER="$1" GAME="$2"
     case "${XDG_CURRENT_DESKTOP,,}" in
         "hyprland")
-            HYPR_ARGS="float = true, center = true, workspace = 1"
+            HYPR_ARGS="float = true, center = true, workspace = 1, $3"
             hyprctl dispatch "hl.dsp.exec_cmd(\"$LAUNCHER '$GAME'\", {$HYPR_ARGS})"
             ;;
         *)
@@ -87,13 +90,17 @@ proton() {
 
 trap cleanup EXIT
 
-if [ -f "$DIR_PATH/package.json" ]; then
+[ -f "$GAMECONFIG" ] && proton "$DIR_PATH"
+
+if [ -f "$RPGMV_FILE" ]; then
     download_if_missing "$RPGLAUNCHER" "$DOTS_URL/scripts/executable_rpglauncher.sh"
     "$RPGLAUNCHER" "$DIR_PATH"
+elif [ -f "$RPG2000_FILE" ] && [ -n "$(command -v easyrpg-player)" ]; then
+    easyrpg-player
 elif [ -f "$ELECTRON_FILE" ] && [ -n $ELECTRON ]; then
     launch "$ELECTRON" "$ELECTRON_FILE"
 elif [ -n "$GODOT_FILE" ] && [ -n "$(command -v godot)" ]; then
-    launch "godot --main-pack" "$GODOT_FILE"
+    launch "godot --main-pack" "$GODOT_FILE" "content = \"game\""
 elif [ -n "$SYSTEM35_FILE" ] && [ -n "$(command -v xsystem35)" ]; then
     xsystem35 -fullscreen
 else

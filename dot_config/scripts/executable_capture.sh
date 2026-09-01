@@ -2,7 +2,7 @@
 SS_FOLDER="/bog/Screenshots/$(date +%Y-%m)"
 FILENAME="$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 7; echo)"
 killall -SIGINT -q gpu-screen-recorder && exit 0
-gpu-screen-recorder -w $1 -f 60 -k av1 -a default_output -o "/tmp/$FILENAME.mp4" && {
+gpu-screen-recorder -w portal -f 60 -k av1 -a default_output -o "/tmp/$FILENAME.mp4" && {
 	zenity --question --text="Upload?" || { rm -f "/tmp/$FILENAME.mp4"; exit; }
     mkdir -p "$SS_FOLDER"
 	cp "/tmp/$FILENAME.mp4" "$SS_FOLDER" & sleep 0.5

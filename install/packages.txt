@@ -5,7 +5,6 @@ asar
 bibata-cursor-git
 bitwarden
 blender
-blueman
 bluez
 catppuccin-fcitx5-git
 catppuccin-gtk-theme-mocha
@@ -113,6 +112,7 @@ ttf-ibm-plex
 ttf-nerd-fonts-symbols
 ttf-twemoji
 tutanota-desktop-bin
+umbriel-git
 umu-launcher
 unarchiver
 vesktop-bin
@@ -127,6 +127,7 @@ wl-clip-persist
 xdg-desktop-portal
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
+xdg-desktop-portal-umbriel-git
 xdg-user-dirs-update
 xremap
 xorg-xwayland

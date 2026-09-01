@@ -28,3 +28,10 @@ keymap:
        F10: WIN-F10
        F11: WIN-F11
        F12: WIN-F12
+   - name: Pcmanfm
+     application:
+       only: [pcmanfm-qt]
+     remap:
+       CTRL-D: CTRL-L
+       CTRL-SHIFT-F: CTRL-F
+       CTRL-F: CTRL-I

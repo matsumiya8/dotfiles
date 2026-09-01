@@ -9,7 +9,7 @@ GODOT_FILE=$(compgen -G "$DIR_PATH/*.pck")
 SYSTEM35_FILE=$(compgen -G "$DIR_PATH/SYSTEM3*.EXE")
 RPGLAUNCHER="$HOME/.config/scripts/rpglauncher.sh"
 DEFAULTCONFIG="$HOME/.config/proton.conf"
-GAMECONFIG="$1/proton.conf"
+GAMECONFIG="$DIR_PATH/proton.conf"
 RPGMV_FILE="$DIR_PATH/package.json"
 RPG2000_FILE="$DIR_PATH/RPG_RT.ini"
 
@@ -26,7 +26,7 @@ launch() {
     LAUNCHER="$1" GAME="$2"
     case "${XDG_CURRENT_DESKTOP,,}" in
         "hyprland")
-            HYPR_ARGS="float = true, center = true, workspace = 1, $3"
+            HYPR_ARGS="float = true, center = true, workspace = 1"
             hyprctl dispatch "hl.dsp.exec_cmd(\"$LAUNCHER '$GAME'\", {$HYPR_ARGS})"
             ;;
         *)
@@ -100,7 +100,7 @@ elif [ -f "$RPG2000_FILE" ] && [ -n "$(command -v easyrpg-player)" ]; then
 elif [ -f "$ELECTRON_FILE" ] && [ -n $ELECTRON ]; then
     launch "$ELECTRON" "$ELECTRON_FILE"
 elif [ -n "$GODOT_FILE" ] && [ -n "$(command -v godot)" ]; then
-    launch "godot --main-pack" "$GODOT_FILE" "content = \"game\""
+    launch "godot --main-pack" "$GODOT_FILE"
 elif [ -n "$SYSTEM35_FILE" ] && [ -n "$(command -v xsystem35)" ]; then
     xsystem35 -fullscreen
 else

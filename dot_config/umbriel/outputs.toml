@@ -1,0 +1,17 @@
+[output.DP-2]
+mode = "1920x1080@239.760"
+position = [0, 0]
+scale = 1
+workspaces = ["1", "2", "3", "4", "5"]
+vrr = "fullscreen"
+
+[output.HDMI-A-1]
+mode = "1920x1080@120.003"
+position = [1920, -385]
+scale = 1
+transform = "270"
+workspaces = ["6", "7", "8", "9"]
+
+[output.SUNSHINE]
+mode = "800x600@90"
+scale = 1

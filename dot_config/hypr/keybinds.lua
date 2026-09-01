@@ -15,7 +15,7 @@ hl.bind(mm .. "W", hl.dsp.exec_cmd("kitty"))
 hl.bind(mm .. "E", hl.dsp.exec_cmd("pcmanfm-qt"))
 hl.bind(mm .. "R", function() hl.dispatch(hl.dsp.exec_cmd(string.format("~/.config/scripts/link_wallpaper.sh %s %s", hl.get_active_monitor().name, hl.get_active_workspace().id))) end)
 hl.bind(mm .. "T", hl.dsp.exec_cmd("tutanota-desktop"))
-hl.bind(mm .. "U", hl.dsp.exec_cmd("~/Tools/upscaler/.venv/bin/python ~/Tools/upscaler/.venv/bin/upscale -m 8x32 -f --target-delay 0", {float=true,fullscreen=true}))
+hl.bind(mm .. "U", hl.dsp.exec_cmd("~/.local/bin/upscale -m 8x32 --target-delay 0 --monitor DP-2", {float=true,fullscreen=true}))
 hl.bind(mm .. "P", hl.dsp.exec_cmd("~/.config/scripts/sunshine.sh"))
 hl.bind(mm .. "B", hl.dsp.exec_cmd("zen-browser"))
 
@@ -60,18 +60,6 @@ for _, key in ipairs(arrow_keys) do
     hl.bind(mm .. key, hl.dsp.focus({direction = key}))
     hl.bind(mm .. "SHIFT+" .. key, hl.dsp.window.move({direction = key}))
 end
-
---overview plugin
-hl.define_submap("scrolloverview", function()
-    for _, key in ipairs(arrow_keys) do hl.bind(key, hl.plugin.scrolloverview.navigate(key)) end
-    hl.bind("escape", hl.plugin.scrolloverview.overview("off"))
-    hl.bind("mouse:272", function()
-        hl.plugin.scrolloverview.overview("select")
-        hl.plugin.scrolloverview.window("select")
-        hl.plugin.scrolloverview.overview("off")
-    end, { mouse = true })
-    hl.bind("mouse:274", hl.plugin.scrolloverview.window("close"), { mouse = true })
-end)
 
 -- layout shenanigans
 for _, key in ipairs({mm .. "grave", mm .. "dead_grave"}) do hl.bind(key, hl.dsp.group.toggle()) end

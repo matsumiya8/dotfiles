@@ -1,0 +1,102 @@
+[keybinds]
+
+# General binds
+"Ctrl+Shift+Escape" = "spawn:missioncenter"
+"Mod+Space" = "spawn:kitty --class ff ~/.local/bin/ff"
+"Mod+Q" = "window-close"
+"Mod+W" = "spawn:kitty"
+"Mod+E" = "spawn:pcmanfm-qt"
+"Mod+R" = "spawn:~/.config/scripts/link_wallpaper.sh" 
+"Mod+T" = "spawn:tutanota-desktop"
+"Mod+U" = "spawn:~/.local/bin/upscale -m 8x32 --target-delay 0 --overlay-mode fullscreen --monitor DP-2"
+"Mod+P" = "spawn:~/.config/scripts/sunshine.sh"
+"Mod+B" = "spawn:zen-browser"
+
+# Noctalia commands + screen recording
+"Mod"   = "spawn:noctalia msg panel-toggle launcher" 
+"Mod+Y" = "spawn:noctalia msg panel-toggle clipboard"
+"Mod+G" = "spawn:noctalia msg panel-toggle noctalia/timer:panel"
+"Mod+N" = "spawn:noctalia msg panel-toggle noctalia/notes:panel"
+"Mod+M" = "spawn:noctalia msg panel-toggle launcher \"/bk \""
+"XF86AudioRaiseVolume" = "spawn:noctalia msg panel-toggle session"
+"Alt+1" = "spawn:noctalia msg screenshot-region"
+"Alt+2" = "spawn:noctalia msg screenshot-fullscreen"
+"Alt+3" = "spawn:~/.config/scripts/capture.sh" 
+
+# Multimedia 
+"Mod+F4" = "spawn:noctalia msg media next-player"
+
+"Mod+F5" = "spawn:noctalia msg media toggle"
+"XF86AudioPlay" = "spawn:noctalia msg media toggle"
+"XF86AudioPause" = "spawn:noctalia msg media toggle"
+
+"Mod+F6" = "spawn:noctalia msg media stop"
+"XF86AudioStop" = "spawn:noctalia msg media stop"
+
+"Mod+F7" = "spawn:noctalia msg media previous"
+"Mod+WheelUp" = { action = "spawn:noctalia msg media previous", cooldown_ms = 250 }
+"XF86AudioPrev" = "spawn:noctalia msg media previous"
+
+"Mod+F8" = "spawn:noctalia msg media next"
+"Mod+WheelDown" = { action = "spawn:noctalia msg media next", cooldown_ms = 250 }
+"XF86AudioNext" = "spawn:noctalia msg media next"
+
+"Mod+J" = "spawn:kitty --class rmpc_search -o font_size=22 ~/.config/scripts/rmpc_dynamic.sh input"
+
+"Mod+F9" = "spawn:~/.config/scripts/rmpc_dynamic.sh"
+"Mod+MouseMiddle" = "spawn:~/.config/scripts/rmpc_dynamic.sh"
+
+"Mod+F10" = "spawn:~/.config/scripts/rmpc_dynamic.sh artist"
+"Mod+MouseForward" = "spawn:~/.config/scripts/rmpc_dynamic.sh artist"
+
+"Mod+F11" = "spawn:~/.config/scripts/rmpc_dynamic.sh album"
+"Mod+MouseBack" = "spawn:~/.config/scripts/rmpc_dynamic.sh album"
+
+"F13" = "spawn:noctalia msg volume-up 5"
+"F14" = "spawn:noctalia msg volume-down 5"
+
+# Movement/Focus
+"Mod+Tab" = "output-focus-right"
+"Mod+Shift+Tab" = "window-move-to-output-right"
+
+# Workspaces 
+"Mod+Insert" = "workspace-switch:1"
+"Mod+A" = "workspace-switch:2"
+"Mod+S" = { action = "spawn:~/.config/scripts/umbriel_empty_ws_exec.sh DP-2:3", repeat = false }
+"Mod+D" = "workspace-switch:4"
+"Mod+F" = "workspace-switch:5"
+"Mod+Z" = "workspace-switch:6"
+"Mod+X" = "workspace-switch:7"
+"Mod+C" = { action = "spawn:~/.config/scripts/umbriel_empty_ws_exec.sh HDMI-A-1:3", repeat = false }
+"Mod+V" = "workspace-switch:9"
+
+"Mod+Shift+Insert" = "window-move-to-workspace:1"
+"Mod+Shift+A" = "window-move-to-workspace:2"
+"Mod+Shift+S" = "window-move-to-workspace:3"
+"Mod+Shift+D" = "window-move-to-workspace:4"
+"Mod+Shift+F" = "window-move-to-workspace:5"
+"Mod+Shift+Z" = "window-move-to-workspace:6"
+"Mod+Shift+X" = "window-move-to-workspace:7"
+"Mod+Shift+C" = "window-move-to-workspace:8"
+"Mod+Shift+V" = "window-move-to-workspace:9"
+
+# Arrow keys
+"Mod+Left" = "window-focus-or-output-left"
+"Mod+Up" = "window-focus-or-workspace-up"
+"Mod+Down" = "window-focus-or-workspace-down"
+"Mod+Right" = "window-focus-or-output-right"
+
+"Mod+Shift+Left" = "window-move-or-output-left"
+"Mod+Shift+Up" = "window-move-or-workspace-up"
+"Mod+Shift+Down" = "window-move-or-workspace-down"
+"Mod+Shift+Right" = "window-move-or-output-right"
+
+# Layout
+"Mod+1" = "workspace-set-layout:toggle"
+"Mod+2" = "window-toggle-fullscreen"
+"Mod+3" = "window-toggle-floating"
+
+# Config editing
+"Mod+comma" = "spawn:kitty fresh ~/.config/umbriel/config.toml"
+"Mod+period" = "spawn:kitty fresh ~/.config/umbriel/keybinds.toml"
+"Mod+slash" = "spawn:kitty fresh ~/.config/umbriel/rules.toml"

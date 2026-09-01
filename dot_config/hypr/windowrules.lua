@@ -1,8 +1,8 @@
 hl.window_rule({
   name = "games-and-floating-apps",
-  content = "game",
   center = true,
   float = true,
+  focus_on_activate = false,
   workspace = 1,
   match = {
     class = "^(flycast|Light.vn|Godot|xsystem35|com.libretro.RetroArch|pcsx2-qt|gamescope|steam_proton|steam_app.*|.*\\.exe)$",

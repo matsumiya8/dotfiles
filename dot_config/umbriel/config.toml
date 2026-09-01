@@ -1,0 +1,55 @@
+[appearance]
+border_width = 3
+
+[appearance.blur]
+enabled = false
+
+[environment]
+"MESA_SHADER_CACHE_MAX_SIZE" = "5G"
+"MPD_HOST" = "/run/user/1000/mpd.socket"
+"SDL_VIDEODRIVER" = "wayland"
+"QT_QPA_PLATFORM" = "wayland;xcb"
+"QT_QPA_PLATFORMTHEME" = "qt6ct"
+"QS_ICON_THEME" = "Papirus-Light"
+
+[general]
+autostart = ["noctalia -d", "fcitx5 -d", "easyeffects -w --service-mode", "xremap --watch=config,device --mouse ~/.config/xremap/config.yml", "corectrl --minimize-systray", "~/.config/scripts/umbriel_wallpaper.sh"]
+focus_on_activate = true
+show_cheatsheet = false
+
+[include]
+files = [
+    "keybinds.toml",
+    "outputs.toml",
+    "rules.toml",
+]
+
+[layout]
+mode = "dwindle"
+gap = 3
+
+[input]
+middle_click_paste = false
+
+[input.cursor]
+follows_focus = true
+theme = "Bibata-Modern-Ice"
+size = 22
+
+[input.focus]
+follows_mouse = true
+
+[input.keyboard]
+layout = "custom"
+options = "fkeys:basic_13-24"
+repeat_delay = 350
+repeat_rate = 50
+
+[input.mouse]
+accel_profile = "flat"
+sensitivity = -0.5
+scroll_method = "on_button_down"
+scroll_button = 276
+
+[workspaces]
+back_and_forth = false

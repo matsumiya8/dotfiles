@@ -57,7 +57,7 @@ width = 730
 schema_version = 2
 
 [dock]
-active_monitor_only = true
+active_monitor_only = false
 auto_hide = false
 enabled = true
 monitors = [ "DP-2", "HDMI-A-1" ]
@@ -72,10 +72,10 @@ smart_auto_hide = true
 action = "window_switcher"
 
 [keybinds]
-down = [ "Tab" ]
+down = [ "Tab", "Down" ]
 tab_next = [ "F2" ]
 tab_previous = [ "F1" ]
-up = [ "Shift+ISO_Left_Tab" ]
+up = [ "Shift+ISO_Left_Tab", "Up" ]
 
 [lockscreen_widgets]
 enabled = false
@@ -321,4 +321,4 @@ scroll_repeat = "steps"
 show_labels = false
 
     [widget.workspaces.actions]
-    right = "exec hyprctl dispatch 'hl.plugin.scrolloverview.overview(\"toggle\")'"
+    right = "exec umbriel msg overview-open"

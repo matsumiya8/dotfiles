@@ -23,7 +23,7 @@ eval "${!starter_command}" | fzf --prompt "$prompt" \
 --bind "F1:change-prompt($preset1_prompt)+reload($preset1_cmd)+rebind:F5" \
 --bind "F2:change-prompt($preset2_prompt)+reload($preset2_cmd)+unbind:F5" \
 --bind "F5:execute($indexcmd)+reload($preset1_cmd)" \
---bind 'left-click,enter,ctrl-o:transform: case $FZF_PROMPT in "$preset1_prompt")echo +accept && sh -c "nohup xdg-open {} >/dev/null 2>&1 &" ;;
+--bind 'left-click,enter,ctrl-o:transform: case $FZF_PROMPT in "$preset1_prompt")echo +accept && setsid -f xdg-open {} >/dev/null 2>&1 ;;
 $preset2_prompt)mpc insert {} ;; esac' \
---bind 'right-click,ctrl-e,ctrl-j:transform: case $FZF_PROMPT in "$preset1_prompt")sh -c "nohup xdg-open \"\$(dirname {})\" >/dev/null 2>&1 &" ;;
+--bind 'right-click,ctrl-e,ctrl-j:transform: case $FZF_PROMPT in "$preset1_prompt")setsid -f xdg-open "$(dirname {})" >/dev/null 2>&1 ;;
 $preset2_prompt) mpc insert "$(dirname {})" ;; esac'

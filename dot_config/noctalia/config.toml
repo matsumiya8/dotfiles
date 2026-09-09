@@ -1,7 +1,7 @@
 [bar.default]
 background_opacity = 0.88
 center = [ "media" ]
-end = [ "privacy", "group:g3" ]
+end = [ "privacy", "bar", "group:g3" ]
 font_family = "IBM Plex Sans JP"
 margin_edge = 0
 margin_ends = 0
@@ -18,30 +18,37 @@ widget_spacing = 8
     enabled = false
 
     [[bar.default.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
     enabled = true
     fill = "surface_variant"
     id = "g2"
     members = [ "media", "volume" ]
-    opacity = 0.6
+    opacity = 0.60000002384185791
     padding = 8.0
 
     [[bar.default.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
     enabled = true
     fill = "surface_variant"
     id = "g3"
-    members = [ "tray", "bluetooth", "volume", "notifications", "notes", "clock" ]
-    opacity = 0.6
+    members = [ "tray", "volume", "notifications", "clock" ]
+    opacity = 0.60000002384185791
     padding = 6.0
 
     [[bar.default.capsule_group]]
+    accordion = false
+    accordion_direction = "end"
     enabled = true
     fill = "surface_variant"
     id = "g4"
-    members = [ "weather", "bar" ]
-    opacity = 0.6
+    members = [ "weather" ]
+    opacity = 0.60000002384185791
     padding = 6.0
 
 [control_center]
+show_session_button = false
 show_shortcut_labels = false
 sidebar_section = "none"
 hidden_tabs = [ "monitor", "system", "power", "network", "screen-time" ]
@@ -49,6 +56,12 @@ width = 730
 
     [[control_center.shortcuts]]
     type = "nightlight"
+    
+    [[control_center.shortcuts]]
+    type = "bluetooth"
+
+    [[control_center.shortcuts]]
+    type = "session"
 
     [control_center.calendar]
     show_events_card = false
@@ -249,7 +262,7 @@ transition_duration = 400
 
 [widget.bar]
 scale = 0.95000000000000007
-show_idle_on_horizontal = false
+show_idle_on_horizontal = true
 type = "noctalia/timer:bar"
 
 [widget.clock]
@@ -274,8 +287,9 @@ max_length = 380
 scroll_repeat = "steps"
 
     [widget.media.actions]
-    back = "media previous-player"
-    forward = "media next-player"
+    back = "exec ~/.config/scripts/rmpc_dynamic.sh album"
+    forward = "exec ~/.config/scripts/rmpc_dynamic.sh artist"
+    middle = "exec ~/.config/scripts/rmpc_dynamic.sh"
     scroll_down = "media next"
     scroll_up = "media previous"
     
@@ -285,6 +299,7 @@ type = "noctalia/notes:notes"
 
 [widget.notifications]
 scale = 0.9
+hide_when_no_unread = true
 
 [widget.privacy]
 hide_inactive = true

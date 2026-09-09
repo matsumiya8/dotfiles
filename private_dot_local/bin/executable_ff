@@ -14,6 +14,7 @@ preset2_cmd="mpc listall"
 [[ -f "$ignoredirs" ]] || touch "$ignoredirs"
 [[ -f "$index" ]] || eval $(indexcmd)
 export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzfopts"
+export run_player="setsid -f kitty --class rmpc ~/.config/scripts/run_rmpc.sh >/dev/null 2>&1"
 export preset1_prompt="1. Files "
 export preset2_prompt="2. Songs "
 declare -n prompt="preset${arg}_prompt"
@@ -24,6 +25,8 @@ eval "${!starter_command}" | fzf --prompt "$prompt" \
 --bind "F2:change-prompt($preset2_prompt)+reload($preset2_cmd)+unbind:F5" \
 --bind "F5:execute($indexcmd)+reload($preset1_cmd)" \
 --bind 'left-click,enter,ctrl-o:transform: case $FZF_PROMPT in "$preset1_prompt")echo +accept && setsid -f xdg-open {} >/dev/null 2>&1 ;;
-$preset2_prompt)mpc insert {} ;; esac' \
+$preset2_prompt)mpc insert {}; st=$(playerctl -p mpd status); [ "$st" = "Playing" ] && exit; playerctl --all-players pause;
+[ "$st" = "Paused" ] || eval $run_player ; playerctl -p mpd next ;; esac' \
 --bind 'right-click,ctrl-e,ctrl-j:transform: case $FZF_PROMPT in "$preset1_prompt")setsid -f xdg-open "$(dirname {})" >/dev/null 2>&1 ;;
-$preset2_prompt) mpc insert "$(dirname {})" ;; esac'
+$preset2_prompt) mpc insert "$(dirname {})"; st=$(playerctl -p mpd status); [ "$st" = "Playing" ] && exit; playerctl --all-players pause;
+[ "$st" = "Paused" ] ||  eval $run_player; playerctl -p mpd next ;; esac'

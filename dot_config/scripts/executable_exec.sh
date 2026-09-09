@@ -100,7 +100,7 @@ elif [ -f "$RPG2000_FILE" ] && [ -n "$(command -v easyrpg-player)" ]; then
 elif [ -f "$ELECTRON_FILE" ] && [ -n $ELECTRON ]; then
     launch "$ELECTRON" "$ELECTRON_FILE"
 elif [ -n "$GODOT_FILE" ] && [ -n "$(command -v godot)" ]; then
-    launch "godot --main-pack" "$GODOT_FILE"
+    launch "godot --display-driver wayland --main-pack" "$GODOT_FILE"
 elif [ -n "$SYSTEM35_FILE" ] && [ -n "$(command -v xsystem35)" ]; then
     xsystem35 -fullscreen
 else

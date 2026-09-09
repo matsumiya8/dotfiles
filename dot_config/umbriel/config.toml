@@ -19,6 +19,7 @@ show_cheatsheet = false
 
 [include]
 files = [
+    "temp.toml",
     "keybinds.toml",
     "outputs.toml",
     "rules.toml",
@@ -48,8 +49,7 @@ repeat_rate = 50
 [input.mouse]
 accel_profile = "flat"
 sensitivity = -0.5
-scroll_method = "on_button_down"
-scroll_button = 276
+scroll_button = "MouseForward"
 
 [workspaces]
 back_and_forth = false

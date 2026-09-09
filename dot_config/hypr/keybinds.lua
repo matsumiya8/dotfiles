@@ -1,8 +1,24 @@
 local mm = "SUPER+"
+
 local function noct(key, msg) hl.bind(key, hl.dsp.exec_cmd("noctalia msg " .. msg)) end
+
 local function interact_or_exec(action, class, command, args) 
     local match = hl.get_windows({class = class})
     if #match > 0 then hl.dispatch(action({window = match[1]})) else hl.dispatch(hl.dsp.exec_cmd(command, args)) end
+end
+
+local music = {
+    rmpc    = {player = "mpd", next = {class = "spotify", cmd = "spotify", player = "spotify"}},
+    spotify = {player = "spotify", next = {class = "rmpc", cmd = "kitty --class rmpc ~/.config/scripts/run_rmpc.sh", player = "mpd"}}
+}
+
+local function music_workspace()
+    local win = hl.get_active_window()
+    local p = win and music[win.class]
+    if p == nil then return end
+    interact_or_exec(hl.dsp.focus, p.next.class, p.next.cmd)
+    hl.exec_cmd(("playerctl -p %s pause"):format(p.player))
+    hl.exec_cmd(("playerctl -p %s play"):format(p.next.player))
 end
 
 -- general binds
@@ -18,13 +34,13 @@ hl.bind(mm .. "T", hl.dsp.exec_cmd("tutanota-desktop"))
 hl.bind(mm .. "U", hl.dsp.exec_cmd("~/.local/bin/upscale -m 8x32 --target-delay 0 --monitor DP-2", {float=true,fullscreen=true}))
 hl.bind(mm .. "P", hl.dsp.exec_cmd("~/.config/scripts/sunshine.sh"))
 hl.bind(mm .. "B", hl.dsp.exec_cmd("zen-browser"))
+hl.bind(mm .. "M", function() music_workspace() end)
 
 -- noctalia commands + screen recording
 noct(mm .. "SUPER_L", "panel-toggle launcher")
 noct(mm .. "Y", "panel-toggle clipboard")
 noct(mm .. "G", "panel-toggle noctalia/timer:panel")
 noct(mm .. "N", "panel-toggle noctalia/notes:panel")
-noct(mm .. "M", "panel-toggle launcher \"/bk \"")
 noct("XF86AudioRaiseVolume", "panel-toggle session")
 noct("ALT+1", "screenshot-region")
 noct("ALT+2", "screenshot-fullscreen")
@@ -48,12 +64,13 @@ hl.bind(mm .. "mouse:272", hl.dsp.window.drag(),   {mouse = true})
 hl.bind(mm .. "mouse:273", hl.dsp.window.resize(), {mouse = true})
 hl.bind(mm .. "Tab", hl.dsp.focus({monitor = "+1"}))
 hl.bind(mm .. "SHIFT+Tab", hl.dsp.window.move({monitor = "+1"}))
-
+hl.bind(mm .. "c", function() music_workspace() end)
 local workspace_keys = {"insert", "a", "s", "d", "f", "z", "x", "c", "v"}
 for i = 1, #workspace_keys do
     hl.bind(mm .. workspace_keys[i], hl.dsp.focus({workspace = i}))
     hl.bind(mm .. "SHIFT+" .. workspace_keys[i], hl.dsp.window.move({workspace = i}))
 end
+
 
 local arrow_keys = {"left", "up", "down", "right"}
 for _, key in ipairs(arrow_keys) do

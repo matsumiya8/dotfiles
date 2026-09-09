@@ -104,7 +104,7 @@ hl.monitor({output = "SUNSHINE", mode = "640x480@90", position = "3000x0", scale
 
 -- workspaces and per-workspace wallpapers
 local wallpapers = {}
-local exec_on = {[3] = "zen-browser", [4] = "kitty", [8] = "kitty --class rmpc ~/.config/scripts/run_rmpc.sh", [9] = "spotify"}
+local exec_on = {[3] = "zen-browser", [8] = "kitty --class rmpc ~/.config/scripts/run_rmpc.sh"}
 for i = 1, 9 do
     local is_default = (i == 2 or i == 6)
     local output_name = (i <= 5) and main or secondary

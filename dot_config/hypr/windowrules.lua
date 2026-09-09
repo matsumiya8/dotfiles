@@ -34,12 +34,13 @@ for res, titles in pairs(fixed_res) do
     })
 end
 
--- workspace rules
+-- App rules
 hl.window_rule({workspace = 5, match={title = "^(Steam|Sign in to Steam)$", class = "^(steam)$"}})
 hl.window_rule({workspace = 7, opacity = 0.93, match = {class="^(steam)", title = "^(Friends List.*)$"}})
 hl.window_rule({workspace = 7, match = {class="^(vesktop)$"}})
-hl.window_rule({workspace = 9, match = {class="^(spotify)$"}})
-
--- App rules
+hl.window_rule({workspace = 8, match = {class="^(rmpc|spotify)$"}})
 hl.window_rule({workspace = 1, float = true, fullscreen = true, confine_pointer = true, match = {title = "^(Terraria.*)$", class = "^(dotnet)$"}})
 hl.window_rule({no_follow_mouse = true, match = {class = "^(meikipop)$"}})
+
+-- Workspace rules
+hl.workspace_rule({ workspace = "8", layout = "monocle" })

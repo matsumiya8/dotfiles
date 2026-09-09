@@ -31,7 +31,7 @@ case $1 in
             elif [[ ${workspace_windows[0]} == "rmpc" ]]; then
                 playerctl -p mpd pause
                 (( ${#workspace_windows[@]} > 1 )) && umbriel msg window-focus-next && playerctl -p spotify play && exit
-                spotify
+                spotify &
             fi
         } ;;
 esac

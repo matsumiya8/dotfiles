@@ -19,7 +19,6 @@ show_cheatsheet = false
 
 [include]
 files = [
-    "temp.toml",
     "keybinds.toml",
     "outputs.toml",
     "rules.toml",

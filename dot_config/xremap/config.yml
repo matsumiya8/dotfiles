@@ -9,6 +9,11 @@ modmap:
       only: [steam_app_881020]
     remap:
       BTN_SIDE: Q
+  - name: Music Player Search
+    application:
+      only: [mp]
+    remap:
+      BTN_SIDE: F12
 
 keymap:
    - name: Home Workspace

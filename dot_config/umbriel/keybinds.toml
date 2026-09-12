@@ -24,7 +24,7 @@
 "Alt+3" = "spawn:~/.config/scripts/capture.sh" 
 
 # Multimedia 
-"Mod+J" = "spawn:kitty --class rmpc_search -o font_size=22 ~/.config/scripts/rmpc_dynamic.sh input"
+"Mod+J" = "spawn:kitty --class rmpc_search -o font_size=22 ~/.config/scripts/music/dynamic_queue.sh input"
 "Mod+F4" = "spawn:noctalia msg media next-player"
 
 "Mod+F5" = "spawn:noctalia msg media toggle"
@@ -40,26 +40,26 @@
 "Mod+F8" = "spawn:noctalia msg media next"
 "XF86AudioNext" = "spawn:noctalia msg media next"
 
-"Mod+F9" = "spawn:~/.config/scripts/rmpc_dynamic.sh"
-"Mod+F10" = "spawn:~/.config/scripts/rmpc_dynamic.sh artist"
-"Mod+F11" = "spawn:~/.config/scripts/rmpc_dynamic.sh album"
+"Mod+F9" = "spawn:~/.config/scripts/music/dynamic_queue.sh"
+"Mod+F10" = "spawn:~/.config/scripts/music/dynamic_queue.sh artist"
+"Mod+F11" = "spawn:~/.config/scripts/music/dynamic_queue.sh album"
 "F13" = "spawn:noctalia msg volume-up 5"
 "F14" = "spawn:noctalia msg volume-down 5"
 
 # Movement/Focus
 "Alt+Tab" = "overview-toggle"
-"Mod+Tab" = { action = "spawn:~/.config/scripts/umbriel_wrap.sh output-focus", repeat = false }
-"Mod+Shift+Tab" = { action = "spawn:~/.config/scripts/umbriel_wrap.sh window-move-to-output", repeat = false }
+"Mod+Tab" = { action = "spawn:~/.config/scripts/umbriel/wrap_around.sh output-focus", repeat = false }
+"Mod+Shift+Tab" = { action = "spawn:~/.config/scripts/umbriel/wrap_around.sh window-move-to-output", repeat = false }
 
 # Workspaces 
 "Mod+Insert" = "workspace-switch:1"
 "Mod+A" = "workspace-switch:2"
-"Mod+S" = { action = "spawn:~/.config/scripts/umbriel_empty_ws_exec.sh DP-2:3", repeat = false }
+"Mod+S" = { action = "spawn:~/.config/scripts/umbriel/empty_ws_exec.sh DP-2:3", repeat = false }
 "Mod+D" = "workspace-switch:4"
 "Mod+F" = "workspace-switch:5"
 "Mod+Z" = "workspace-switch:6"
 "Mod+X" = "workspace-switch:7"
-"Mod+C" = { action = "spawn:~/.config/scripts/umbriel_empty_ws_exec.sh HDMI-A-1:3", repeat = false }
+"Mod+C" = { action = "spawn:~/.config/scripts/umbriel/empty_ws_exec.sh HDMI-A-1:3", repeat = false }
 "Mod+V" = "workspace-switch:9"
 
 "Mod+Shift+Insert" = "window-move-to-workspace:1"

@@ -38,7 +38,8 @@ end
 hl.window_rule({workspace = 5, match={title = "^(Steam|Sign in to Steam)$", class = "^(steam)$"}})
 hl.window_rule({workspace = 7, opacity = 0.93, match = {class="^(steam)", title = "^(Friends List.*)$"}})
 hl.window_rule({workspace = 7, match = {class="^(vesktop)$"}})
-hl.window_rule({workspace = 8, match = {class="^(rmpc|spotify)$"}})
+hl.window_rule({workspace = 8, match = {class="^(rmpc)$"}})
+hl.window_rule({workspace = 8, focus_on_activate = false, match = {class="^(spotify)$"}})
 hl.window_rule({workspace = 1, float = true, fullscreen = true, confine_pointer = true, match = {title = "^(Terraria.*)$", class = "^(dotnet)$"}})
 hl.window_rule({no_follow_mouse = true, match = {class = "^(meikipop)$"}})
 

@@ -83,6 +83,8 @@ pipewire
 pipewire-alsa
 pipewire-pulse
 protonplus
+python-dotenv
+python-spotipy
 qdirstat-bin
 qmplay2-git
 qt5-imageformats

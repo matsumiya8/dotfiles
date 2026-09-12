@@ -1,0 +1,49 @@
+#!/bin/bash
+cd $HOME/.config/scripts/music
+mode=${1:-0}
+index_dir="$HOME/.cache/indexes"
+mkdir -p $index_dir
+playlist_file="$index_dir/playlist.tsv"
+snapshot=$(< "$index_dir/snapshot.txt")
+export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzfopts"
+export build_spot_index="$HOME/.config/scripts/music/spoti_index.py $index_dir $snapshot"
+
+[ -f "$playlist_file" ] || eval "$build_spot_index"
+prompt=("0. Local " "1. Spotify ")
+cmd=("mpc listall" "tac '$playlist_file'")
+
+play() {
+    type="$1" player_id="$2" song="$3"
+    player_name=("mpd" "spotify") current=${player_name[$player_id]}
+    st=$(playerctl -p $current status)
+    [[ $st == "Paused" ]] && playerctl --all-players pause
+
+    case "$type:$current" in
+        album:mpd) song="$(dirname "$song")" ;;
+        track:spotify) song="$(cut -f2 <<<"$song")" ;;
+        album:spotify) song="$(cut -f3 <<<"$song")" ;;
+    esac
+   
+    case "$st:$current" in
+        Playing:mpd) mpc insert "$song" ;;
+        Paused:mpd) mpc insert "$song" && mpc next ;;
+        *:mpd) setsid -f kitty --class rmpc $HOME/.config/scripts/music/rmpc.sh "$song" > /dev/null 2>&1 ;;
+        Playing:spotify) setsid -f python3 $HOME/.config/scripts/music/spoti_queue.py $type $song > /dev/null 2>&1 ;;
+        Paused:spotify) dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri string:spotify:$type:$song ;;
+        *:spotify) setsid -f spotify --uri spotify:$type:$song > /dev/null 2>&1 ;;
+    esac
+}
+
+export -f play
+
+b() { 
+    binds+=("--bind" "$1") 
+}
+
+b "F1:change-prompt(${prompt[0]})+reload(${cmd[0]})+unbind:F5"
+b "F2:change-prompt(${prompt[1]})+reload(${cmd[1]})+rebind:F5"
+b "F5:execute($build_spot_index)+reload(${cmd[1]})"
+b "F12:execute-silent(noctalia msg media toggle)"
+b 'left-click,enter:execute-silent(play track ${FZF_PROMPT:0:1} {})'
+b 'right-click:execute-silent(play album ${FZF_PROMPT:0:1} {})'
+fzf --with-shell 'bash -c' --with-nth=1 --delimiter=$'\t' --prompt "${prompt[$mode]}" "${binds[@]}" < <(eval ${cmd[$mode]})

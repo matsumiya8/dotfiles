@@ -57,6 +57,10 @@ sudo tee "/etc/udev/rules.d/98-mchose-mouse.rules" > /dev/null <<'EOF'
 KERNEL=="hidraw*", ATTRS{idVendor}=="5253", ATTRS{idProduct}=="1021", MODE="0666", TAG+="uaccess"
 EOF
 
+sudo tee "/etc/udev/rules.d/88-xremap.rules" > /dev/null <<'EOF'
+ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="xremap", ENV{ID_INPUT_MOUSE}="1"
+EOF
+
 echo ":executo:M::MZ::${HOME}/.config/scripts/exec.sh:" | sudo tee "/etc/binfmt.d/wine.conf" > /dev/null
 
 xdg-user-dirs-update

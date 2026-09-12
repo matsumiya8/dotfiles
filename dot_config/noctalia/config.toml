@@ -1,7 +1,7 @@
 [bar.default]
 background_opacity = 0.88
 center = [ "media" ]
-end = [ "privacy", "bar", "group:g3" ]
+end = [ "bar", "group:g3" ]
 font_family = "IBM Plex Sans JP"
 margin_edge = 0
 margin_ends = 0
@@ -10,7 +10,7 @@ position = "bottom"
 radius = 0
 scale = 1.05
 shadow = false
-start = [ "launcher", "workspaces", "group:g4" ]
+start = [ "launcher", "workspaces", "group:g4", "privacy" ]
 thickness = 40
 widget_spacing = 8
 
@@ -287,9 +287,9 @@ max_length = 380
 scroll_repeat = "steps"
 
     [widget.media.actions]
-    back = "exec ~/.config/scripts/rmpc_dynamic.sh album"
-    forward = "exec ~/.config/scripts/rmpc_dynamic.sh artist"
-    middle = "exec ~/.config/scripts/rmpc_dynamic.sh"
+    back = "exec ~/.config/scripts/music/dynamic_queue.sh album"
+    forward = "exec ~/.config/scripts/music/dynamic_queue.sh artist"
+    middle = "exec ~/.config/scripts/music/dynamic_queue.sh"
     scroll_down = "media next"
     scroll_up = "media previous"
     

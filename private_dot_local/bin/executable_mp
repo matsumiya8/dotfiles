@@ -1,35 +1,26 @@
 #!/bin/bash
-cd $HOME/.config/scripts/music
 mode=${1:-0}
 index_dir="$HOME/.cache/indexes"
 mkdir -p $index_dir
 playlist_file="$index_dir/playlist.tsv"
-snapshot=$(< "$index_dir/snapshot.txt")
 export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzfopts"
-export build_spot_index="$HOME/.config/scripts/music/spoti_index.py $snapshot"
-
-[ -f "$playlist_file" ] || eval "$build_spot_index"
+export build_spot_index="$HOME/.config/scripts/music/spoti_index.py \$(< "$index_dir/snapshot.txt")"
+export actions="python3 $HOME/.config/scripts/music/spoti_actions.py"
+[ -f "$playlist_file" ] || eval $build_spot_index
 prompt=("0. Local " "1. Spotify ")
 cmd=("mpc listall" "tac '$playlist_file'")
 
 play() {
-    type="$1" player_id="$2" media="$3"
-    player_name=("mpd" "spotify") current=${player_name[$player_id]}
+    type="$1" current="$2" media="$3"
     st=$(playerctl -p $current status)
     [[ $st == "Paused" ]] && playerctl --all-players pause
 
-    case "$type:$current" in
-        album:mpd) media="$(dirname "$media")" ;;
-        track:spotify) media="$(cut -f2 <<<"$media")" ;;
-        album:spotify) media="$(cut -f3 <<<"$media")" ;;
-    esac
-   
     case "$st:$current" in
         Playing:mpd) mpc insert "$media" ;;
         Paused:mpd) mpc insert "$media" && mpc next ;;
         *:mpd) setsid -f kitty --class rmpc $HOME/.config/scripts/music/rmpc.sh "$media" > /dev/null 2>&1 ;;
-        Playing:spotify) setsid -f python3 $HOME/.config/scripts/music/spoti_actions.py queue_$type $media > /dev/null 2>&1 ;;
-        Paused:spotify) dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri string:spotify:$type:$media ;;
+        Playing:spotify) setsid -f $actions queue_$type $media > /dev/null 2>&1 ;;
+        Paused:spotify) dbus-send --session --print-reply=literal --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri string:spotify:$type:$media ;;
         *:spotify) setsid -f spotify --uri spotify:$type:$media > /dev/null 2>&1 ;;
     esac
 }
@@ -42,8 +33,8 @@ b() {
 
 b "F1:change-prompt(${prompt[0]})+reload(${cmd[0]})+unbind:F5"
 b "F2:change-prompt(${prompt[1]})+reload(${cmd[1]})+rebind:F5"
-b "F5:execute($build_spot_index)+reload(${cmd[1]})"
+b "F5:execute(eval $build_spot_index)+reload(${cmd[1]})"
 b "F12:execute-silent(noctalia msg media toggle)"
-b 'left-click,enter:execute-silent(play track ${FZF_PROMPT:0:1} {})'
-b 'right-click:execute-silent(play album ${FZF_PROMPT:0:1} {})'
-fzf --with-shell 'bash -c' --with-nth=1 --delimiter=$'\t' --prompt "${prompt[$mode]}" "${binds[@]}" < <(eval ${cmd[$mode]})
+b 'left-click,enter:execute-silent(if [[ $FZF_BORDER_LABEL != {} ]]; then [[ ${FZF_PROMPT:0:1} == 0 ]] && play track mpd {1} || play track spotify {2}; fi)+transform-border-label(echo '{}')'
+b 'right-click:execute-silent(if [[ $FZF_BORDER_LABEL != {} ]]; then [[ ${FZF_PROMPT:0:1} == 0 ]] && play track mpd "$(dirname {1})" || play album spotify {3}; fi)+transform-border-label(echo '{}')'
+fzf --with-shell 'bash -c' --border-label="Music" --with-nth=1 --delimiter=$'\t' --prompt "${prompt[$mode]}" "${binds[@]}" < <(eval ${cmd[$mode]})

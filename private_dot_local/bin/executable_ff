@@ -1,10 +1,5 @@
 #!/bin/bash
 
-[[ $(command -v fd fzf mpc mpd xdg-open) ]] || {
-    echo "Make sure fd, fzf, and xdg-utils are installed first."
-    exit 1
-}
-
 export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzfopts"
 ignoredirs="$HOME/.config/ignoredirs"
 index="$HOME/.cache/file_index.txt"
@@ -16,5 +11,6 @@ runcmd="cat $index"
 
 eval "$runcmd" | fzf --prompt "Files " \
 --bind "F5:execute($indexcmd)+reload($runcmd)" \
---bind 'left-click,enter,ctrl-o:execute: xdg-open {}' \
---bind 'right-click,ctrl-e,ctrl-j:execute-silent: xdg-open "$(dirname {})"'
+--bind "ctrl-w:execute-silent:setsid -f kitty fresh {}" \
+--bind 'left-click,enter,ctrl-o:transform:echo +accept && setsid -f xdg-open {} >/dev/null 2>&1' \
+--bind "right-click,ctrl-e:execute-silent:setsid -f xdg-open $(dirname {})"

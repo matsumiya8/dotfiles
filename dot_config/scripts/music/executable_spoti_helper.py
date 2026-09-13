@@ -8,6 +8,7 @@ cache_path = str(Path("~/.cache/indexes").expanduser().resolve())
 script_path = Path("~/.config/scripts/music").expanduser().resolve()
 playlist_uri = "spotify:playlist:0dc7fzzqZlbck2WXf5N5bz"
 load_dotenv(script_path / "spoti.env")
+red, mint, yellow, white = "\033[35m", "\033[36m", "\033[33m", "\033[0m"
 
 sp = spotipy.Spotify(
     auth_manager=SpotifyOAuth(
@@ -16,13 +17,17 @@ sp = spotipy.Spotify(
     )
 )
 
-def get_server_snapshot():
+def server_snapshot():
     return sp.playlist(playlist_uri, fields="snapshot_id").get("snapshot_id")
+
+def playlist_changed():
+    local_snapshot=Path('~/.cache/indexes/snapshot.txt').expanduser().read_text()
+    return (local_snapshot != server_snapshot())
 
 def format_track(track):
     artists = " / ".join(a["name"] for a in track["artists"])
     album = track["album"]
-    display = f"{artists} - {track['name']} ({album['name']})"
+    display = f"{red}{artists} {white}- {mint}{track['name']} {yellow}({album['name']}){white}"
     return f"{display}\t{track['id']}\t{album['id']}\n"
 
 def write_to_disc(lines, append_or_write):
@@ -30,5 +35,5 @@ def write_to_disc(lines, append_or_write):
         file.writelines(lines)
     
     with open(f"{cache_path}/snapshot.txt", "w", encoding="utf-8") as file: 
-        file.writelines(get_server_snapshot())
+        file.writelines(server_snapshot())
 

@@ -1,5 +1,4 @@
 #!/bin/bash
-cd "$HOME/.config/scripts/music"
 dyn=./dyn
 active=$(hyprctl clients -j | jq -r '.[] | select(.workspace.id == '8' and .visible == true).class')
 [[ "$active" == "spotify" ]] && {
@@ -8,7 +7,7 @@ active=$(hyprctl clients -j | jq -r '.[] | select(.workspace.id == '8' and .visi
     [ -z $mode ] && {
         mode="playlist" id="0dc7fzzqZlbck2WXf5N5bz"
     } || {
-        id=$(python3 $HOME/.config/scripts/music/spoti_aaa.py $mode ${id##*/})
+        id=$(python3 $HOME/.config/scripts/music/spoti_actions.py print_$mode\_id ${id##*/})
     }
     dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri string:spotify:$mode:$id
     exit

@@ -6,31 +6,31 @@ mkdir -p $index_dir
 playlist_file="$index_dir/playlist.tsv"
 snapshot=$(< "$index_dir/snapshot.txt")
 export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzfopts"
-export build_spot_index="$HOME/.config/scripts/music/spoti_index.py $index_dir $snapshot"
+export build_spot_index="$HOME/.config/scripts/music/spoti_index.py $snapshot"
 
 [ -f "$playlist_file" ] || eval "$build_spot_index"
 prompt=("0. Local " "1. Spotify ")
 cmd=("mpc listall" "tac '$playlist_file'")
 
 play() {
-    type="$1" player_id="$2" song="$3"
+    type="$1" player_id="$2" media="$3"
     player_name=("mpd" "spotify") current=${player_name[$player_id]}
     st=$(playerctl -p $current status)
     [[ $st == "Paused" ]] && playerctl --all-players pause
 
     case "$type:$current" in
-        album:mpd) song="$(dirname "$song")" ;;
-        track:spotify) song="$(cut -f2 <<<"$song")" ;;
-        album:spotify) song="$(cut -f3 <<<"$song")" ;;
+        album:mpd) media="$(dirname "$media")" ;;
+        track:spotify) media="$(cut -f2 <<<"$media")" ;;
+        album:spotify) media="$(cut -f3 <<<"$media")" ;;
     esac
    
     case "$st:$current" in
-        Playing:mpd) mpc insert "$song" ;;
-        Paused:mpd) mpc insert "$song" && mpc next ;;
-        *:mpd) setsid -f kitty --class rmpc $HOME/.config/scripts/music/rmpc.sh "$song" > /dev/null 2>&1 ;;
-        Playing:spotify) setsid -f python3 $HOME/.config/scripts/music/spoti_queue.py $type $song > /dev/null 2>&1 ;;
-        Paused:spotify) dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri string:spotify:$type:$song ;;
-        *:spotify) setsid -f spotify --uri spotify:$type:$song > /dev/null 2>&1 ;;
+        Playing:mpd) mpc insert "$media" ;;
+        Paused:mpd) mpc insert "$media" && mpc next ;;
+        *:mpd) setsid -f kitty --class rmpc $HOME/.config/scripts/music/rmpc.sh "$media" > /dev/null 2>&1 ;;
+        Playing:spotify) setsid -f python3 $HOME/.config/scripts/music/spoti_actions.py queue_$type $media > /dev/null 2>&1 ;;
+        Paused:spotify) dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.OpenUri string:spotify:$type:$media ;;
+        *:spotify) setsid -f spotify --uri spotify:$type:$media > /dev/null 2>&1 ;;
     esac
 }
 

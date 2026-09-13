@@ -55,6 +55,7 @@ hl.bind(mm .. "J", hl.dsp.exec_cmd("kitty --class rmpc_search -o font_size=22 ~/
 for _, key in ipairs({mm .. "F9", mm .. "mouse:274"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/music/dynamic_queue.sh"))end
 for _, key in ipairs({mm .. "F10", mm .. "mouse:276"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/music/dynamic_queue.sh artist"))end
 for _, key in ipairs({mm .. "F11", mm .. "mouse:275"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/music/dynamic_queue.sh album"))end
+hl.bind(mm .. "F12", hl.dsp.exec_cmd("ID=$(playerctl --player=spotify metadata mpris:trackid); rg -F -q -m1 $'\t'\"${ID##*/}\"$'\t' ~/.cache/indexes/playlist.tsv || python3 /home/pyne/.config/scripts/music/spoti_actions.py favorite ${ID##*/}"))
 noct("F13", "volume-up 5")
 noct("F14", "volume-down 5")
 

@@ -3,12 +3,13 @@ mode=${1:-0}
 index_dir="$HOME/.cache/indexes"
 mkdir -p $index_dir
 playlist_file="$index_dir/playlist.tsv"
+touch "$index_dir/snapshot.txt"
 export FZF_DEFAULT_OPTS_FILE="$HOME/.config/fzfopts"
 export build_spot_index="$HOME/.config/scripts/music/spoti_index.py"
 export actions="python3 $HOME/.config/scripts/music/spoti_actions.py"
 [ -f "$playlist_file" ] || $build_spot_index
 prompt=("0. Local " "1. Spotify ")
-cmd=("mpc listall -f '[\e\[35m%artist%\e\[0m - \e\[36m %track%. %title%\e\ \e\[33m(%album%)\t%file%'" "tac '$playlist_file'")
+cmd=("mpc listall -f '[\e\[35m%artist% \e\[33m %album% \e\[36m %title%\t%file%'" "tac '$playlist_file'")
 
 play() {
     type="$1" current="$2" media="$3"

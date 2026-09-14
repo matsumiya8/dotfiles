@@ -8,7 +8,7 @@ cache_path = str(Path("~/.cache/indexes").expanduser().resolve())
 script_path = Path("~/.config/scripts/music").expanduser().resolve()
 playlist_uri = "spotify:playlist:0dc7fzzqZlbck2WXf5N5bz"
 load_dotenv(script_path / "spoti.env")
-red, mint, yellow, white = "\033[35m", "\033[36m", "\033[33m", "\033[0m"
+red, mint, yellow = "\033[35m", "\033[36m", "\033[33m"
 
 sp = spotipy.Spotify(
     auth_manager=SpotifyOAuth(
@@ -27,7 +27,7 @@ def playlist_changed():
 def format_track(track):
     artists = " / ".join(a["name"] for a in track["artists"])
     album = track["album"]
-    display = f"{red}{artists} {white}- {mint}{track['name']} {yellow}({album['name']}){white}"
+    display = f"{red}{artists} {yellow} {album['name']} {mint} {track['name']}"
     return f"{display}\t{track['id']}\t{album['id']}\n"
 
 def write_to_disc(lines, append_or_write):

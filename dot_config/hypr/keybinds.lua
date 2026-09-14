@@ -51,7 +51,7 @@ for _, key in ipairs({mm .. "F5", "XF86AudioPlay", "XF86AudioPause"}) do noct(ke
 for _, key in ipairs({mm .. "F6", "XF86AudioStop"}) do noct(key, "media stop") end
 for _, key in ipairs({mm .. "F7", mm .. "mouse_up", "XF86AudioPrev"}) do noct(key, "media previous") end
 for _, key in ipairs({mm .. "F8", mm .. "mouse_down", "XF86AudioNext"}) do noct(key, "media next") end
-hl.bind(mm .. "J", hl.dsp.exec_cmd("kitty --class rmpc_search -o font_size=22 ~/.config/scripts/rmpc_dynamic.sh input", {float = true, pin = true, stay_focused = true, size = {500,50}}))
+hl.bind(mm .. "J", hl.dsp.exec_cmd("kitty --class rmpc_search -o font_size=22 ~/.config/scripts/music/dynamic_queue.sh input", {float = true, pin = true, stay_focused = true, size = {500,50}}))
 for _, key in ipairs({mm .. "F9", mm .. "mouse:274"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/music/dynamic_queue.sh"))end
 for _, key in ipairs({mm .. "F10", mm .. "mouse:276"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/music/dynamic_queue.sh artist"))end
 for _, key in ipairs({mm .. "F11", mm .. "mouse:275"}) do hl.bind(key, hl.dsp.exec_cmd("~/.config/scripts/music/dynamic_queue.sh album"))end

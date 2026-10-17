@@ -19,7 +19,7 @@ case $1 in
             if [ $launch == "Spotify" ]; then
                 spotify 
             elif [ $launch == "rmpc" ]; then
-                kitty --class rmpc ~/.config/scripts/run_rmpc.sh &
+                kitty --class rmpc ~/.config/scripts/music/rmpc.sh &
             fi
         } || {
             ! $is_same_as_current && exit 0
@@ -27,7 +27,7 @@ case $1 in
             if [[ ${workspace_windows[0]} == "spotify" ]]; then
                 playerctl -p spotify pause
                 (( ${#workspace_windows[@]} > 1 )) && umbriel msg window-focus-next && playerctl -p mpd play && exit
-                kitty --class rmpc ~/.config/scripts/run_rmpc.sh &
+                kitty --class rmpc ~/.config/scripts/music/rmpc.sh &
             elif [[ ${workspace_windows[0]} == "rmpc" ]]; then
                 playerctl -p mpd pause
                 (( ${#workspace_windows[@]} > 1 )) && umbriel msg window-focus-next && playerctl -p spotify play && exit

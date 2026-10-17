@@ -14,6 +14,14 @@ modmap:
       only: [mp]
     remap:
       BTN_SIDE: F12
+  - name: Mahou Shoujo
+    application:
+      only: /^steam_app_.*/
+    window:
+      only: /新説魔法少女/
+    remap:
+      Esc: X
+      BTN_EXTRA: F14
 
 keymap:
    - name: Home Workspace
@@ -25,14 +33,6 @@ keymap:
        only: [xqueens,upscaler-overlay,com.libretro.RetroArch]
      remap:
        BTN_EXTRA: [WIN-X,WIN-S]
-   - name: RMPC general config
-     application:
-       only: [rmpc]
-     remap:
-       F9: WIN-F9
-       F10: WIN-F10
-       F11: WIN-F11
-       F12: WIN-F12
    - name: Pcmanfm
      application:
        only: [pcmanfm-qt]

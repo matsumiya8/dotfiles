@@ -5,7 +5,7 @@ hl.window_rule({
   focus_on_activate = false,
   workspace = 1,
   match = {
-    class = "^(flycast|Light.vn|Godot|xsystem35|com.libretro.RetroArch|pcsx2-qt|gamescope|steam_proton|steam_app.*|.*\\.exe)$",
+    class = "^(STUNTBOOST|flycast|Light.vn|Godot|xsystem35|com.libretro.RetroArch|pcsx2-qt|gamescope|steam_proton|steam_app.*|.*\\.exe)$",
     title = ".+"
   },
 })
@@ -41,6 +41,11 @@ hl.window_rule({workspace = 7, match = {class="^(vesktop)$"}})
 hl.window_rule({workspace = 8, match = {class="^(rmpc)$"}})
 hl.window_rule({workspace = 8, focus_on_activate = false, match = {class="^(spotify)$"}})
 hl.window_rule({workspace = 1, float = true, fullscreen = true, confine_pointer = true, match = {title = "^(Terraria.*)$", class = "^(dotnet)$"}})
+hl.window_rule({workspace = 1, float = true, fullscreen = true, match = {class = "^(upscaler-overlay)$"}})
+hl.window_rule({render_unfocused = true, match = {title = "^(新設魔法少女)$"}})
+hl.window_rule({suppress_event = "maximize", match = {class = "kitty"}})
+
+
 hl.window_rule({no_follow_mouse = true, match = {class = "^(meikipop)$"}})
 
 -- Workspace rules

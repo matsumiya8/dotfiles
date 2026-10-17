@@ -221,9 +221,13 @@ $playQueueHistoryPos = 0;
 sub canAdd() {
     my $file = shift;
     my $numSongs = shift;
+    
+    return 1 if $numSongs == 1;
+
     my $pqLimit = ($numSongs < 5) ? int(($numSongs / 2) + 0.5)
                : int(($numSongs * 0.75) + 0.5);
     $pqLimit = 200 if $pqLimit > 200;
+    
     if ($pqLimit != $playQueueHistoryLimit) {
         $playQueueHistoryLimit = $pqLimit;
         @playQueueHistory = ();
@@ -236,7 +240,6 @@ sub canAdd() {
     }
     return 1;
 }
-
 sub storeSong() {
     my $file = shift;
     $playQueueHistoryLimit = 5 if $playQueueHistoryLimit <= 0;

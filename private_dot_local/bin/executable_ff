@@ -12,5 +12,5 @@ runcmd="cat $index"
 eval "$runcmd" | fzf --prompt "Files " \
 --bind "F5:execute($indexcmd)+reload($runcmd)" \
 --bind "ctrl-w:execute-silent:setsid -f kitty fresh {}" \
---bind 'left-click,enter,ctrl-o:transform:echo +accept && setsid -f xdg-open {} >/dev/null 2>&1' \
+--bind 'left-click,enter,ctrl-o:transform:setsid -f xdg-open {} >/dev/null 2>&1 && echo +accept' \
 --bind "right-click,ctrl-e:execute-silent:setsid -f xdg-open $(dirname {})"

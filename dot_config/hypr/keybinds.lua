@@ -26,6 +26,7 @@ for _, key in ipairs({"ALT+grave", "ALT+dead_grave"}) do hl.bind(key, hl.dsp.exe
 hl.bind("CTRL+SHIFT+Escape", hl.dsp.exec_cmd("missioncenter", {size = {1020,900}, pin = true, float = true}))
 hl.bind(mm .. "Space", function() interact_or_exec(hl.dsp.focus, "ff", "kitty --class ff ~/.local/bin/ff", {fullscreen=true}) end)
 hl.bind(mm .. "dead_acute", function() hl.dispatch(hl.dsp.exec_cmd("wl-copy " .. hl.get_active_window().class)) end)
+hl.bind(mm .. "Escape", hl.dsp.window.kill())
 hl.bind(mm .. "Q", hl.dsp.window.close())
 hl.bind(mm .. "W", hl.dsp.exec_cmd("kitty"))
 hl.bind(mm .. "E", hl.dsp.exec_cmd("pcmanfm-qt"))
@@ -40,6 +41,7 @@ noct(mm .. "SUPER_L", "panel-toggle launcher")
 noct(mm .. "Y", "panel-toggle clipboard")
 noct(mm .. "G", "panel-toggle noctalia/timer:panel")
 noct(mm .. "N", "panel-toggle noctalia/notes:panel")
+noct(mm .. "M", "panel-toggle dunarand/bookmarks:panel search")
 noct("XF86AudioRaiseVolume", "panel-toggle session")
 noct("ALT+1", "screenshot-region")
 noct("ALT+2", "screenshot-fullscreen")
@@ -79,7 +81,7 @@ for _, key in ipairs(arrow_keys) do
 end
 
 -- layout shenanigans
-hl.bind(mm .. "dead_grave", function() interact_or_exec(hl.dsp.focus, "mp", "kitty --class mp ~/.local/bin/mp", {fullscreen=true}) end)
+hl.bind(mm .. "dead_grave", function() interact_or_exec(hl.dsp.focus, "mp", "kitty --class mp ~/.local/bin/mp", {float = true, fullscreen = true, size = {1000, 1000}}) end)
 hl.bind(mm .. "mouse_down", hl.dsp.group.next())
 hl.bind(mm .. "mouse_up", hl.dsp.group.prev())
 hl.bind(mm .. "1", hl.dsp.layout("togglesplit"))

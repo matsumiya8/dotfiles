@@ -53,15 +53,9 @@ show_shortcut_labels = false
 sidebar_section = "none"
 hidden_tabs = [ "monitor", "system", "power", "network", "screen-time" ]
 width = 730
-
-    [[control_center.shortcuts]]
-    type = "nightlight"
-    
+  
     [[control_center.shortcuts]]
     type = "bluetooth"
-
-    [[control_center.shortcuts]]
-    type = "session"
 
     [control_center.calendar]
     show_events_card = false
@@ -70,10 +64,9 @@ width = 730
 schema_version = 2
 
 [dock]
-active_monitor_only = false
+active_monitor_only = true
 auto_hide = false
 enabled = true
-monitors = [ "DP-2", "HDMI-A-1" ]
 pinned = [ "bitwarden", "tutanota-desktop", "pcmanfm-qt", "zen", "steam", "vesktop" ]
 position = "top"
 reserve_space = false
@@ -166,18 +159,29 @@ extension = "txt"
 panel_position = "bottom_right"
 
 [plugins]
-enabled = [ "noctalia/notes", "noctalia/timer", "dunarand/bookmarks" ]
+auto_update = "all"
+enabled = [ "noctalia/notes", "dunarand/bookmarks", "thaer99ob/default-apps", "noctalia/timer" ]
 
 [shell]
+button_borders = false
+card_borders = false
 clipboard_confirm_clear_history = false
 clipboard_history_max_entries = 150
 font_family = "IBM Plex Sans Medm"
 polkit_agent = true
-settings_show_advanced = false
+popup_borders = false
+settings_show_advanced = true
+show_close_buttons = false
 show_location = false
 
     [shell.animation]
     speed = 1.10
+    
+    [shell.launcher]
+    category_icons_only = true
+    default_view = "all"
+    show_settings_button = false
+    width = 560
 
     [shell.launcher.providers.calculator]
     prefix = ""
@@ -275,7 +279,7 @@ glyph = "cat"
 scale = 2.0
 
     [widget.launcher.actions]
-    right = "panel-toggle dunarand/bookmarks:panel"
+    right = "panel-toggle dunarand/bookmarks:panel search"
 	
 [widget.media]
 art_size = 22

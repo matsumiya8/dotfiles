@@ -20,6 +20,7 @@ local env_vars = {
     ["XCURSOR_SIZE"] = "22", 
     ["HYPRCURSOR_THEME"] = "Bibata-Modern-Ice",   
     ["XCURSOR_THEME"] = "Bibata-Modern-Ice",
+    ["TERMINAL"] = "kitty",
 }
 
 for key, value in pairs(env_vars) do hl.env(key, value) end
@@ -87,9 +88,6 @@ hl.config({
     },
     render = {
         direct_scanout = 1,
-    },
-    quirks = {
-        skip_non_kms_dmabuf_formats = 1,
     },
     xwayland = {
         enabled = true,

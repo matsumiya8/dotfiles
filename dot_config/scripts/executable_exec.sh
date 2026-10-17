@@ -25,6 +25,10 @@ cleanup() {
 launch() {
     LAUNCHER="$1" GAME="$2"
     case "${XDG_CURRENT_DESKTOP,,}" in
+        "umbriel")
+            $LAUNCHER $GAME & PID=$!
+            while read -r id; do umbriel msg window-toggle-floating:$id; break; done < <(umbriel subscribe windows | jq --unbuffered -r '.data[] | select(.app_id == \"$PID\").id') 
+            ;;
         "hyprland")
             HYPR_ARGS="float = true, center = true, workspace = 1"
             hyprctl dispatch "hl.dsp.exec_cmd(\"$LAUNCHER '$GAME'\", {$HYPR_ARGS})"

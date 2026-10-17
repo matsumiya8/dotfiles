@@ -5,7 +5,7 @@
     address: "127.0.0.1:6600",
     password: None,
     theme: Some("cool"),
-    cache_dir: None,
+    cache_dir: Some("~/.cache/rmpc/"),
     on_song_change: None,
     volume_step: 5,
     max_fps: 120,
@@ -36,85 +36,21 @@
             "q":          Quit,
             "?":          ShowHelp,
             ":":          CommandMode,
-            "z":          ToggleRepeat,
-            "x":          ToggleRandom,
-            "c":          ToggleConsume,
-            "v":          ToggleSingle,
-            "p":          TogglePause,
-            "s":          Stop,
-            ">":          NextTrack,
-            "<":          PreviousTrack,
-            "f":          SeekForward,
-            "b":          SeekBack,
-            ".":          VolumeUp,
-            ",":          VolumeDown,
-            "<Tab>":      NextTab,
-            "gt":         NextTab,
-            "<S-Tab>":    PreviousTab,
-            "gT":         PreviousTab,
-            "1":          SwitchToTab("Queue"),
-            "2":          SwitchToTab("Directories"),
-            "3":          SwitchToTab("Artists"),
-            "4":          SwitchToTab("Albums"),
-            "5":          SwitchToTab("Playlists"),
-            "6":          SwitchToTab("Search"),
-            "<C-u>":      Update,
-            "<C-U>":      Rescan,
+            "a":          ExternalCommand(command:["~/.config/scripts/music/dynamic_queue.sh"]),
+            "s":          ExternalCommand(command:["~/.config/scripts/music/dynamic_queue.sh", "artist"]),
+            "d":          ExternalCommand(command:["~/.config/scripts/music/dynamic_queue.sh", "album"]),
+            "c":          TogglePause,
+            "v":          NextTrack,
+            "x":          PreviousTrack,
+            ".":          SeekForward,
+            ",":          SeekBack,
             "R":          AddRandom,
         },
-        navigation: {
-            "<C-c>":      Close,
-            "<Esc>":      Close,
-            "<CR>":       Confirm,
-            "k":          Up,
-            "<Up>":       Up,
-            "j":          Down,
-            "<Down>":     Down,
-            "h":          Left,
-            "<Left>":     Left,
-            "l":          Right,
-            "<Right>":    Right,
-            "<C-w>k":     PaneUp,
-            "<C-Up>":     PaneUp,
-            "<C-w>j":     PaneDown,
-            "<C-Down>":   PaneDown,
-            "<C-w>h":     PaneLeft,
-            "<C-Left>":   PaneLeft,
-            "<C-w>l":     PaneRight,
-            "<C-Right>":  PaneRight,
-            "K":          MoveUp,
-            "J":          MoveDown,
-            "<C-u>":      UpHalf,
-            "<C-d>":      DownHalf,
-            "<C-b>":      PageUp,
-            "<PageUp>":   PageUp,
-            "<C-f>":      PageDown,
-            "<PageDown>": PageDown,
-            "gg":         Top,
-            "G":          Bottom,
-            "<Space>":    Select,
-            "<C-Space>":  InvertSelection,
-            "/":          EnterSearch,
-            "n":          NextResult,
-            "N":          PreviousResult,
-            "a":          AddOptions(kind: Action(all: false, autoplay: None, position: AfterCurrentSong)),
-            "A":          AddAll,
-            "D":          Delete,
-            "<C-r>":      Rename,
-            "<Space>":    FocusInput,
-            "i":          ShowInfo,
-            "<C-z>":      ContextMenu(),
-            "<C-s>s":     Save(kind: Modal(all: false, duplicates_strategy: Ask)),
-            "<C-s>a":     Save(kind: Modal(all: true, duplicates_strategy: Ask)),
-            "r":          Rate(),
-        },
         queue: {
-            "d":          Delete,
-            "D":          DeleteAll,
+            "D":          Delete,
             "C":          JumpToCurrent,
             "<Space>":	  Play,
             "<Enter>":	  Play,
-            "X":          Shuffle,
         },
     ),
     search: (
@@ -141,7 +77,7 @@
                     direction: Vertical,
                     panes: [
                         (
-                            size: "20%", 
+                            size: "18%", 
                             pane: Split(
                                 direction: Horizontal,
                                 panes: [
@@ -152,16 +88,14 @@
                                         pane: Pane(AlbumArt)
                                     ),
                                     (
-                                        // Replaces your previous 68% pane
                                         size: "70%",
                                         borders: "LEFT | TOP | BOTTOM | RIGHT",
                                         border_symbols: Rounded,
                                         pane: Split(
                                             direction: Vertical, // Stack items vertically
                                             panes: [
-                                                // Row 1: Song Title
                                                 (
-                                                    size: "1", // 1 line height
+                                                    size: "1",
                                                     pane: Pane(Property(
                                                         content: [
                                                             (kind: Property(Song(Title)), style: (fg: Some("#ffffff"), modifiers: "Bold")),
@@ -169,7 +103,6 @@
                                                         align: Center,
                                                     ))
                                                 ),
-                                                // Row 2: Artist
                                                 (
                                                     size: "1",
                                                     pane: Pane(Property(
@@ -187,23 +120,25 @@
                                                     pane: Pane(Empty())
                                                 ),
                                                 (
-                                                    size: "1", 
-                                                    pane: Pane(Property(
-                                                        content: [
-                                                            (kind: Text("["), style:(fg: Some("#b4befe"))),
-                                                            (kind: Property(Status(StateV2())), style:(fg: Some("#b4befe"))),
-                                                            (kind: Text("] "), style:(fg: Some("#b4befe"))),
-                                                            (kind: Property(Status(Elapsed))),
-                                                            (kind: Text(" / ")),
-                                                            (kind: Property(Status(Duration))),
-                                                            (kind: Group([
-                                                                (kind: Text(" (")),
-                                                                (kind: Property(Status(Bitrate))),
-                                                                (kind: Text(" kbps)")),
-                                                            ])),
-                                                        ],
-                                                        align: Center,
-                                                    ))
+                                                    // Needs size: "2" so there is 1 row for the top border and 1 row for the bar
+                                                    size: "2",
+                                                    borders: "TOP",
+                                                    border_title: [
+                                                        (kind: Text(" ["), style: (fg: Some("#b4befe"))),
+                                                        (kind: Property(Status(StateV2())), style: (fg: Some("#b4befe"))),
+                                                        (kind: Text("] "), style: (fg: Some("#b4befe"))),
+                                                        (kind: Property(Status(Elapsed))),
+                                                        (kind: Text(" / ")),
+                                                        (kind: Property(Status(Duration))),
+                                                        (kind: Group([
+                                                            (kind: Text(" (")),
+                                                            (kind: Property(Status(Bitrate))),
+                                                            (kind: Text(" kbps)")),
+                                                        ])),
+                                                        (kind: Text(" ")),
+                                                    ],
+                                                    border_title_alignment: Center, // or Left / Right
+                                                    pane: Pane(ProgressBar),
                                                 ),
                                             ]
                                         )
@@ -212,8 +147,7 @@
                             ),
                         ),
                         (
-                            // Bottom Pane: Queue Header and List
-                            size: "80%",
+                            size: "82%",
                             pane: Split(
                                 direction: Vertical,
                                 panes: [
@@ -259,55 +193,5 @@
                     ],
                 ),
             ),
-        (
-            name: "Directories",
-            borders: "ALL",
-            border_symbols: Rounded,
-            pane: Split(
-                size: "100%",
-                direction: Vertical,
-                panes: [(pane: Pane(Directories), size: "100%", borders: "ALL", border_symbols: Rounded)],
-            )
-        ),
-        (
-            name: "Artists",
-            borders: "ALL",
-            border_symbols: Rounded,
-            pane: Split(
-                size: "100%",
-                direction: Vertical,
-                panes: [(pane: Pane(Artists), size: "100%", borders: "ALL", border_symbols: Rounded)],
-            )
-        ),
-        (
-            name: "Albums",
-            borders: "ALL",
-            border_symbols: Rounded,
-            pane: Split(
-                size: "100%",
-                direction: Vertical,
-                panes: [(pane: Pane(Albums), size: "100%", borders: "ALL", border_symbols: Rounded)],
-            )
-        ),
-        (
-            name: "Playlists",
-            borders: "ALL",
-            border_symbols: Rounded,
-            pane: Split(
-                size: "100%",
-                direction: Vertical,
-                panes: [(pane: Pane(Playlists), size: "100%", borders: "ALL", border_symbols: Rounded)],
-            )
-        ),
-        (
-            name: "Search",
-            borders: "ALL",
-            border_symbols: Rounded,
-            pane: Split(
-                size: "100%",
-                direction: Vertical,
-                panes: [(pane: Pane(Search), size: "100%", borders: "ALL", border_symbols: Rounded)],
-            )
-        ),
     ],
 )

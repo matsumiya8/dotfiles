@@ -47,6 +47,6 @@ mpc crop || mpc clear
 
 [[ $mpd_status != "Playing" ]] && {
     playerctl --all-players pause
-    playerctl -p mpd next
+    mpc next
 }
-
+exit 0

@@ -1,5 +1,6 @@
 [appearance]
 border_width = 3
+opaque_fullscreen = false
 
 [appearance.blur]
 enabled = false
@@ -13,7 +14,7 @@ enabled = false
 "QS_ICON_THEME" = "Papirus-Light"
 
 [general]
-autostart = ["noctalia -d", "fcitx5 -d", "easyeffects -w --service-mode", "xremap --watch=config,device --mouse ~/.config/xremap/config.yml", "corectrl --minimize-systray", "~/.config/scripts/umbriel_wallpaper.sh"]
+autostart = ["noctalia -d", "fcitx5 -d", "easyeffects -w --service-mode", "xremap --watch=config,device --mouse ~/.config/xremap/config.yml", "corectrl --minimize-systray", "~/.config/scripts/umbriel/per_ws_wallpaper.sh"]
 focus_on_activate = true
 show_cheatsheet = false
 
@@ -27,6 +28,10 @@ files = [
 [layout]
 mode = "dwindle"
 gap = 3
+
+[layout.dwindle]
+new_toward_cursor = true
+preserve_split = true
 
 [input]
 middle_click_paste = false
@@ -49,6 +54,7 @@ repeat_rate = 50
 accel_profile = "flat"
 sensitivity = -0.5
 scroll_button = "MouseForward"
+scroll_wheel_step = 10
 
 [workspaces]
 back_and_forth = false

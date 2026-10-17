@@ -57,20 +57,20 @@
 "Mod+S" = { action = "spawn:~/.config/scripts/umbriel/empty_ws_exec.sh DP-2:3", repeat = false }
 "Mod+D" = "workspace-switch:4"
 "Mod+F" = "workspace-switch:5"
-"Mod+Z" = "workspace-switch:6"
-"Mod+X" = "workspace-switch:7"
+"Mod+Z" = "workspace-switch:1/HDMI-A-1"
+"Mod+X" = "workspace-switch:2/HDMI-A-1"
 "Mod+C" = { action = "spawn:~/.config/scripts/umbriel/empty_ws_exec.sh HDMI-A-1:3", repeat = false }
-"Mod+V" = "workspace-switch:9"
+"Mod+V" = "workspace-switch:4/HDMI-A-1"
 
 "Mod+Shift+Insert" = "window-move-to-workspace:1"
 "Mod+Shift+A" = "window-move-to-workspace:2"
 "Mod+Shift+S" = "window-move-to-workspace:3"
 "Mod+Shift+D" = "window-move-to-workspace:4"
 "Mod+Shift+F" = "window-move-to-workspace:5"
-"Mod+Shift+Z" = "window-move-to-workspace:6"
-"Mod+Shift+X" = "window-move-to-workspace:7"
-"Mod+Shift+C" = "window-move-to-workspace:8"
-"Mod+Shift+V" = "window-move-to-workspace:9"
+"Mod+Shift+Z" = "window-move-to-workspace:1/HDMI-A-1"
+"Mod+Shift+X" = "window-move-to-workspace:2/HDMI-A-1"
+"Mod+Shift+C" = "window-move-to-workspace:3/HDMI-A-1"
+"Mod+Shift+V" = "window-move-to-workspace:4/HDMI-A-1"
 
 # Arrow keys
 "Mod+Left" = "window-focus-or-output-left"
